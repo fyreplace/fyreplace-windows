@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Fyreplace (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Fyreplace (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

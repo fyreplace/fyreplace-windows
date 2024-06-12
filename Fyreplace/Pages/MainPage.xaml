@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Fyreplace.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fyreplace.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d"
+    KeyboardAcceleratorPlacementMode="Hidden"
+    PointerPressed="MainPage_PointerPressed">
+
+    <Page.KeyboardAccelerators>
+        <KeyboardAccelerator
+            Key="Left"
+            Modifiers="Menu"
+            Invoked="MainPage_Accelerators_GoBack" />
+        <KeyboardAccelerator
+            Key="Right"
+            Modifiers="Menu"
+            Invoked="MainPage_Accelerators_GoForward" />
+        <KeyboardAccelerator
+            Key="Back"
+            Modifiers="Windows"
+            Invoked="MainPage_Accelerators_GoBack" />
+    </Page.KeyboardAccelerators>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="TitleBarStates">
+                <VisualState x:Name="TitleBar_Default" />
+                <VisualState x:Name="TitleBar_Compact">
+                    <VisualState.Setters>
+                        <Setter Target="TitleBar.Margin" Value="96,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="Window_Active" />
+                <VisualState x:Name="Window_Inactive">
+                    <VisualState.Setters>
+                        <Setter Target="TitleBarText.Foreground" Value="{ThemeResource WindowCaptionForegroundDisabled}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid
+            x:Name="TitleBar"
+            Height="48"
+            Margin="48,0,0,0"
+            VerticalAlignment="Top"
+            Loaded="TitleBar_Loaded"
+            SizeChanged="TitleBar_SizeChanged">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="TitleBarLeftPadding" Width="0" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="48" />
+                <ColumnDefinition x:Name="TitleBarRightPadding" Width="0" />
+            </Grid.ColumnDefinitions>
+            <Image
+                x:Name="TitleBarIcon"
+                Grid.Column="1"
+                Source="ms-appx:///Assets/Icon.ico"
+                Width="16"
+                Height="16"
+                Margin="0,0,16,0" />
+            <TextBlock
+                x:Name="TitleBarText"
+                x:Uid="MainWindow_Title"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}" />
+        </Grid>
+        
+        <NavigationView
+            x:Name="Navigation"
+            PaneDisplayMode="Auto"
+            IsTitleBarAutoPaddingEnabled="False"
+            IsBackEnabled="{x:Bind Host.CanGoBack, Mode=OneWay}"
+            IsTabStop="False"
+            DisplayModeChanged="Navigation_DisplayModeChanged"
+            ItemInvoked="Navigation_ItemInvoked"
+            BackRequested="Navigation_BackRequested">
+            <NavigationView.Resources>
+                <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
+            </NavigationView.Resources>
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    x:Name="Feed"
+                    x:Uid="MainWindow_Feed"
+                    Tag="FeedPage"
+                    Icon="{ui:FontIcon Glyph=&#xE80F;}"
+                    IsSelected="True" />
+                <NavigationViewItem
+                    x:Uid="MainWindow_Notifications"
+                    Tag="NotificationsPage"
+                    Icon="{ui:FontIcon Glyph=&#xEA8F;}" />
+                <NavigationViewItem
+                    x:Uid="MainWindow_Archive"
+                    Tag="ArchivePage"
+                    Icon="{ui:FontIcon Glyph=&#xE81C;}" />
+                <NavigationViewItem
+                    x:Uid="MainWindow_Drafts"
+                    Tag="DraftsPage"
+                    Icon="{ui:FontIcon Glyph=&#xE8A5;}" />
+                <NavigationViewItem
+                    x:Uid="MainWindow_Published"
+                    Tag="PublishedPage"
+                    Icon="{ui:FontIcon Glyph=&#xE8B7;}" />
+            </NavigationView.MenuItems>
+            <Frame x:Name="Host" Navigated="Host_Navigated" NavigationFailed="Host_NavigationFailed" />
+        </NavigationView>
+    </Grid>
+</Page>

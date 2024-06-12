@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Fyreplace.Tests (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Fyreplace.Tests (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

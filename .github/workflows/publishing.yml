@@ -1,0 +1,70 @@
+name: Publishing
+
+on:
+  push:
+    branches:
+      - develop
+      - hotfix/*
+      - release/*
+    tags:
+      - v*.*.*
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    environment: microsoft-store
+    strategy:
+      matrix:
+        architecture:
+          - x86
+          - x64
+          - arm64
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Set Up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Set Up Store CLI
+        uses: microsoft/setup-msstore-cli@v1
+
+      - name: Configure Store CLI
+        env:
+          TENANT_ID: ${{ vars.TENANT_ID }}
+          SELLER_ID: ${{ vars.SELLER_ID }}
+          CLIENT_ID: ${{ vars.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        run: msstore reconfigure `
+          --tenantId $env:TENANT_ID `
+          --sellerId $env:SELLER_ID `
+          --clientId $env:CLIENT_ID `
+          --clientSecret $env:CLIENT_SECRET
+
+      - name: Prepare files
+        run: .\prepare.bat
+
+      - name: Build app
+        env:
+          PackageName: ${{ vars.PACKAGE_NAME }}
+          PackagePublisher: ${{ vars.PACKAGE_PUBLISHER }}
+          PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
+        run: msstore package Fyreplace --arch ${{ matrix.architecture }}
+
+      - name: Upload MSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fyreplace.${{ matrix.architecture }}.msix
+          path: Fyreplace/AppPackages/*/*.msix
+          if-no-files-found: error
