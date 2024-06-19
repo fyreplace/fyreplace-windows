@@ -46,11 +46,12 @@ jobs:
           SELLER_ID: ${{ vars.SELLER_ID }}
           CLIENT_ID: ${{ vars.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        run: msstore reconfigure `
-          --tenantId $env:TENANT_ID `
-          --sellerId $env:SELLER_ID `
-          --clientId $env:CLIENT_ID `
-          --clientSecret $env:CLIENT_SECRET
+        run: |
+          msstore reconfigure `
+            --tenantId $env:TENANT_ID `
+            --sellerId $env:SELLER_ID `
+            --clientId $env:CLIENT_ID `
+            --clientSecret $env:CLIENT_SECRET
 
       - name: Prepare files
         run: .\prepare.bat
@@ -62,9 +63,12 @@ jobs:
           PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
         run: msstore package Fyreplace --arch ${{ matrix.architecture }}
 
+      - name: Simplify export path
+        run: move .\Fyreplace\AppPackages\* .\Fyreplace\AppPackages\Result
+
       - name: Upload MSIX
         uses: actions/upload-artifact@v4
         with:
           name: Fyreplace.${{ matrix.architecture }}.msix
-          path: Fyreplace/AppPackages/*/*.msix
+          path: Fyreplace\AppPackages\Result\*.msix
           if-no-files-found: error
