@@ -36,6 +36,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.0.240109" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240607001" />
+    <PackageReference Include="Sentry" Version="4.7.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -115,6 +116,20 @@
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <SentryOrg>$(SentryOrg)</SentryOrg>
+    <SentryProject>$(SentryProject)</SentryProject>
+    <SentryUploadSymbols>True</SentryUploadSymbols>
+    <SentryUploadSources>True</SentryUploadSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>Sentry.Dsn</_Parameter1>
+      <_Parameter2>$(SentryDsn)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
   <Target Name="GetVersionNumber">
     <Exec Command="git rev-list --count HEAD" ConsoleToMSBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="VersionNumber" />
@@ -139,9 +154,27 @@
     </Exec>
   </Target>
 
+  <Target Name="GetSentryEnvironment" BeforeTargets="PrepareForBuild" DependsOnTargets="GetBranch">
+    <Exec Command="powershell -Command &quot;('$(CurrentBranch)' -Split '/')[0]&quot;" ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="SentryEnvironment" />
+    </Exec>
+    <ItemGroup>
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+        <_Parameter1>Sentry.Environment</_Parameter1>
+        <_Parameter2>$(SentryEnvironment)</_Parameter2>
+      </AssemblyAttribute>
+    </ItemGroup>
+  </Target>
+
   <Target Name="GetVersion" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetBranchNumber">
     <PropertyGroup>
       <Version>1.$(VersionNumber).$(BranchNumber).0</Version>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="GetInformationalVersion" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetVersionString">
+    <PropertyGroup>
+      <InformationalVersion>$(VersionString)+$(VersionNumber)</InformationalVersion>
     </PropertyGroup>
   </Target>
 
@@ -155,7 +188,7 @@
     <XmlPoke Condition="$(PackageName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Name" Value="$(PackageName)" />
     <XmlPoke Condition="$(PackageName) == ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Name" Value="$(AssemblyName)" />
     <XmlPoke Condition="$(PackagePublisher) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Publisher" Value="$(PackagePublisher)" />
-    <XmlPoke Condition="$(PackagePublisherName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/ns:PublisherDisplayName" Value="$(PackagePublisherName)" />
+    <XmlPoke Condition="$(PackagePublisherName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Properties/ns:PublisherDisplayName" Value="$(PackagePublisherName)" />
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Version" Value="$(Version)" />
   </Target>
 </Project>
