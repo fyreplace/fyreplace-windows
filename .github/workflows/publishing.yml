@@ -41,7 +41,7 @@ jobs:
         run: .\prepare.bat
 
       - name: Restore Nuget packages
-        run: msbuild /t:Restore /p:Platform=${{ matrix.architecture }}
+        run: msbuild Fyreplace /t:Restore /p:Platform=${{ matrix.architecture }}
 
       - name: Build app
         env:
@@ -53,19 +53,22 @@ jobs:
           SentryProject: ${{ vars.SENTRY_PROJECT }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: |
-          msbuild /t:Build `
-            /p:Configuration=Release `
+          msbuild Fyreplace `
+            /t:Build `
             /p:Platform=${{ matrix.architecture }} `
+            /p:Configuration=Release `
             /p:GenerateAppxPackageOnBuild=True `
             /p:UapAppxPackageBuildMode=StoreUpload `
             /p:AppxPackageDir=AppPackages\
 
       - name: Simplify export path
-        run: move .\Fyreplace\AppPackages\* .\Fyreplace\AppPackages\Result
+        run: |
+          move .\Fyreplace\AppPackages\* .\Fyreplace\AppPackages\Result
+          move .\Fyreplace\AppPackages\Result\*.msix .\Fyreplace\AppPackages\Result\Fyreplace.msix
 
       - name: Upload MSIX
         uses: actions/upload-artifact@v4
         with:
           name: Fyreplace.unsigned.${{ matrix.architecture }}.msix
-          path: Fyreplace\AppPackages\Result\*.msix
+          path: Fyreplace\AppPackages\Result\Fyreplace.msix
           if-no-files-found: error
