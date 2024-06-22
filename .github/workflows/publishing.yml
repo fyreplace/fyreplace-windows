@@ -59,7 +59,8 @@ jobs:
             /p:Configuration=Release `
             /p:GenerateAppxPackageOnBuild=True `
             /p:UapAppxPackageBuildMode=StoreUpload `
-            /p:AppxPackageDir=AppPackages\
+            /p:AppxPackageDir=AppPackages\ `
+            /p:PublishReadyToRun=false
 
       - name: Simplify export path
         run: |
