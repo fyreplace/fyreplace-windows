@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
     <defs>
-        <linearGradient id="gradient" gradientTransform="rotate(90)">
-            <stop offset="0%" stop-color="#FFB243"/>
-            <stop offset="100%" stop-color="#FF7233"/>
+        <linearGradient id="gradient" gradientTransform="rotate(60)">
+            <stop offset="0%" stop-color="#FFA253"/>
+            <stop offset="100%" stop-color="#FF7243"/>
         </linearGradient>
     </defs>
     <path
