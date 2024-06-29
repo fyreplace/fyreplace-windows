@@ -53,6 +53,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Assets\Icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Pages\ArchivePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
