@@ -25,6 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fyreplace.Tests", "Fyreplac
 		{E7B50EC2-EC1A-4F1D-B327-A6CBECE3CAF5} = {E7B50EC2-EC1A-4F1D-B327-A6CBECE3CAF5}
 	EndProjectSection
 EndProject
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "Fyreplace.Installer", "Fyreplace.Installer\Fyreplace.Installer.wixproj", "{8EA59820-1B5D-47F9-A668-A86AFEAD407D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E7B50EC2-EC1A-4F1D-B327-A6CBECE3CAF5} = {E7B50EC2-EC1A-4F1D-B327-A6CBECE3CAF5}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -71,6 +76,18 @@ Global
 		{08500A3F-FA7B-4C54-BB13-B91A4994DB22}.Release|x86.ActiveCfg = Release|x86
 		{08500A3F-FA7B-4C54-BB13-B91A4994DB22}.Release|x86.Build.0 = Release|x86
 		{08500A3F-FA7B-4C54-BB13-B91A4994DB22}.Release|x86.Deploy.0 = Release|x86
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Debug|ARM64.Build.0 = Debug|ARM64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Debug|x64.ActiveCfg = Debug|x64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Debug|x64.Build.0 = Debug|x64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Debug|x86.ActiveCfg = Debug|x86
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Debug|x86.Build.0 = Debug|x86
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Release|ARM64.ActiveCfg = Release|ARM64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Release|ARM64.Build.0 = Release|ARM64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Release|x64.ActiveCfg = Release|x64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Release|x64.Build.0 = Release|x64
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Release|x86.ActiveCfg = Release|x86
+		{8EA59820-1B5D-47F9-A668-A86AFEAD407D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

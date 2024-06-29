@@ -1,0 +1,29 @@
+﻿<Project Sdk="WixToolset.Sdk/5.0.0">
+  <PropertyGroup>
+    <OutputName>Fyreplace</OutputName>
+    <SuppressIces>ICE03</SuppressIces>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Package.template.xml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Fyreplace\Fyreplace.csproj" Publish="true" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <BindPath Include="$(IntermediateOutputPath)\publish\Fyreplace" BindName="Publish" />
+  </ItemGroup>
+  
+  <Import Project="..\Fyreplace\Directory.Build.targets" />
+  
+  <Target Name="UpdatePackage" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersion">
+    <Copy SourceFiles="Package.template.xml" DestinationFiles="Package.wxs" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://wixtoolset.org/schemas/v4/wxs' /&gt;" XmlInputPath="Package.wxs" Query="/ns:Wix/ns:Package/@Version" Value="$(Version)" />
+    <XmlPoke Condition="$(UpgradeCode) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://wixtoolset.org/schemas/v4/wxs' /&gt;" XmlInputPath="Package.wxs" Query="/ns:Wix/ns:Package/@UpgradeCode" Value="$(UpgradeCode)" />
+  </Target>
+</Project>

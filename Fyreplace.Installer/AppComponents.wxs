@@ -1,0 +1,13 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
+      <Files Include="!(bindpath.Publish)\**">
+        <Exclude Files="!(bindpath.Publish)\Fyreplace.exe" />
+        <Exclude Files="!(bindpath.Publish)\*.pdb" />
+      </Files>
+      <File Source="Fyreplace.exe" Vital="yes" KeyPath="yes">
+        <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="!(bind.Property.ProductName)" Icon="Fyreplace.ico" IconIndex="0" Advertise="yes" />
+      </File>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

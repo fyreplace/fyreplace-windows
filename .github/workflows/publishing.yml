@@ -20,6 +20,9 @@ jobs:
           - x86
           - x64
           - arm64
+        distribution:
+          - app-store
+          - standalone
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -44,6 +47,7 @@ jobs:
         run: msbuild Fyreplace /t:Restore /p:Platform=${{ matrix.architecture }}
 
       - name: Build app
+        if: ${{ matrix.distribution == 'app-store' }}
         env:
           PackageName: ${{ vars.PACKAGE_NAME }}
           PackagePublisher: ${{ vars.PACKAGE_PUBLISHER }}
@@ -62,14 +66,37 @@ jobs:
             /p:AppxPackageDir=AppPackages\ `
             /p:PublishReadyToRun=false
 
-      - name: Simplify export path
+      - name: Build app and installer
+        if: ${{ matrix.distribution == 'standalone' }}
+        env:
+          PackageName: ${{ vars.PACKAGE_NAME }}
+          PackagePublisher: ${{ vars.PACKAGE_PUBLISHER }}
+          PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
+        run: |
+          msbuild Fyreplace.Installer `
+            /t:Build `
+            /p:Platform=${{ matrix.architecture }} `
+            /p:Configuration=Release `
+            /p:PublishReadyToRun=false
+
+      - name: Simplify MSIX export path
+        if: ${{ matrix.distribution == 'app-store' }}
         run: |
           move .\Fyreplace\AppPackages\* .\Fyreplace\AppPackages\Result
           move .\Fyreplace\AppPackages\Result\*.msix .\Fyreplace\AppPackages\Result\Fyreplace.msix
 
       - name: Upload MSIX
+        if: ${{ matrix.distribution == 'app-store' }}
         uses: actions/upload-artifact@v4
         with:
-          name: Fyreplace.unsigned.${{ matrix.architecture }}.msix
+          name: Fyreplace.${{ matrix.architecture }}.msix
           path: Fyreplace\AppPackages\Result\Fyreplace.msix
+          if-no-files-found: error
+
+      - name: Upload MSI
+        if: ${{ matrix.distribution == 'standalone' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fyreplace.standalone.${{ matrix.architecture }}.msi
+          path: Fyreplace.Installer\bin\${{ matrix.architecture }}\Release\en\Fyreplace.msi
           if-no-files-found: error

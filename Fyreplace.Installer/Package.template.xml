@@ -1,0 +1,14 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Fyreplace" Manufacturer="Fyreplace" Version="0.0.0.0" UpgradeCode="00000000-0000-4000-2000-000000000000">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+    <MediaTemplate EmbedCab="yes"/>
+    <Icon Id="Fyreplace.ico" SourceFile="..\Fyreplace\Assets\Icon.ico" />
+
+    <Property Id="ARPPRODUCTICON" Value="Fyreplace.ico" />
+    <Property Id="ARPNOMODIFY" Value="yes" />
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="AppComponents" />
+    </Feature>
+  </Package>
+</Wix>

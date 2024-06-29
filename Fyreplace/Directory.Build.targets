@@ -1,0 +1,37 @@
+<Project>
+  <Target Name="GetVersionNumber">
+    <Exec Command="git rev-list --count HEAD" ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="VersionNumber" />
+    </Exec>
+  </Target>
+
+  <Target Name="GetVersionString">
+    <Exec Command="powershell -Command &quot;(git describe --tags --abbrev=0) -Replace '^v',''&quot;" ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="VersionString" />
+    </Exec>
+  </Target>
+
+  <Target Name="GetBranch">
+    <Exec Command="git rev-parse --abbrev-ref HEAD" ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="CurrentBranch" />
+    </Exec>
+  </Target>
+
+  <Target Name="GetBranchNumber" DependsOnTargets="GetBranch">
+    <Exec Command="powershell -Command &quot;switch -Wildcard ('$(CurrentBranch)') { 'main' { 3 } 'hotfix/*' { 2 } 'release/*' { 1 } default { 0 } }&quot;" ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="BranchNumber" />
+    </Exec>
+  </Target>
+
+  <Target Name="GetVersion" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetBranchNumber">
+    <PropertyGroup>
+      <Version>1.$(VersionNumber).$(BranchNumber).0</Version>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="GetInformationalVersion" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetVersionString">
+    <PropertyGroup>
+      <InformationalVersion>$(VersionString)+$(VersionNumber)</InformationalVersion>
+    </PropertyGroup>
+  </Target>
+</Project>
