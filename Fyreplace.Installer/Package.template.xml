@@ -1,5 +1,5 @@
 ﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="Fyreplace" Manufacturer="Fyreplace" Version="0.0.0.0" UpgradeCode="00000000-0000-4000-2000-000000000000">
+  <Package Name="Fyreplace" Manufacturer="Fyreplace" Version="0.0.0.0" UpgradeCode="00000000-0000-4000-8000-000000000000">
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
     <MediaTemplate EmbedCab="yes"/>
     <Icon Id="Fyreplace.ico" SourceFile="..\Fyreplace\Assets\Icon.ico" />
