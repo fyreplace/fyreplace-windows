@@ -19,16 +19,9 @@
     <PackageLicenseFile>COPYING.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <None Remove="Pages\ArchivePage.xaml" />
-    <None Remove="Pages\DraftsPage.xaml" />
-    <None Remove="Pages\ErrorPage.xaml" />
-    <None Remove="Pages\FeedPage.xaml" />
-    <None Remove="Pages\MainPage.xaml" />
-    <None Remove="Pages\NotificationsPage.xaml" />
-    <None Remove="Pages\PublishedPage.xaml" />
-    <None Remove="Pages\SettingsPage.xaml" />
+
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
+    <ProjectCapability Include="Msix" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,9 +32,24 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
-    <ProjectCapability Include="Msix" />
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>Sentry.Dsn</_Parameter1>
+      <_Parameter2>$(SentryDsn)</_Parameter2>
+    </AssemblyAttribute>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\ArchivePage.xaml" />
+    <None Remove="Pages\DraftsPage.xaml" />
+    <None Remove="Pages\ErrorPage.xaml" />
+    <None Remove="Pages\FeedPage.xaml" />
+    <None Remove="Pages\MainPage.xaml" />
+    <None Remove="Pages\NotificationsPage.xaml" />
+    <None Remove="Pages\PublishedPage.xaml" />
+    <None Remove="Pages\SettingsPage.xaml" />
+  </ItemGroup>
+  
   <ItemGroup>
     <None Include="..\COPYING.txt">
       <Pack>true</Pack>
@@ -126,13 +134,6 @@
     <SentryUploadSymbols>true</SentryUploadSymbols>
     <SentryUploadSources>true</SentryUploadSources>
   </PropertyGroup>
-
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
-      <_Parameter1>Sentry.Dsn</_Parameter1>
-      <_Parameter2>$(SentryDsn)</_Parameter2>
-    </AssemblyAttribute>
-  </ItemGroup>
 
   <Target Name="GetSentryEnvironment" BeforeTargets="PrepareForBuild" DependsOnTargets="GetBranch">
     <Exec Command="powershell -Command &quot;('$(CurrentBranch)' -Split '/')[0]&quot;" ConsoleToMSBuild="true">

@@ -15,11 +15,13 @@
     <DefaultLanguage>en</DefaultLanguage>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Page Remove="UnitTestApp.xaml" />
-    <ApplicationDefinition Include="UnitTestApp.xaml" />
-    <ProjectCapability Include="TestContainer" />
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
+    <ProjectCapability Include="Msix" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
@@ -32,15 +34,13 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
-    <ProjectCapability Include="Msix" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Fyreplace\Fyreplace.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
-    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
-  </PropertyGroup>
+  <ItemGroup>
+    <Page Remove="UnitTestApp.xaml" />
+    <ApplicationDefinition Include="UnitTestApp.xaml" />
+    <ProjectCapability Include="TestContainer" />
+  </ItemGroup>
 </Project>
