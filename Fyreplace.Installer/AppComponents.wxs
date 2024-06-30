@@ -2,11 +2,16 @@
   <Fragment>
     <ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
       <Files Include="!(bindpath.Publish)\**">
-        <Exclude Files="!(bindpath.Publish)\Fyreplace.exe" />
         <Exclude Files="!(bindpath.Publish)\*.pdb" />
+        <Exclude Files="!(bindpath.Publish)\Fyreplace.exe" />
       </Files>
       <File Source="Fyreplace.exe" Vital="yes" KeyPath="yes">
-        <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="!(bind.Property.ProductName)" Icon="Fyreplace.ico" IconIndex="0" Advertise="yes" />
+        <Shortcut
+          Id="StartMenuShortcut"
+          Directory="ProgramMenuFolder"
+          Name="!(bind.Property.ProductName)"
+          Icon="Fyreplace.ico"
+          Advertise="yes" />
       </File>
     </ComponentGroup>
   </Fragment>
