@@ -23,6 +23,12 @@ jobs:
         distribution:
           - app-store
           - standalone
+        format:
+          - msix
+          - msi
+        exclude:
+          - distribution: app-store
+            format: msi
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,11 +72,26 @@ jobs:
             /p:AppxPackageDir=AppPackages\ `
             /p:PublishReadyToRun=false
 
-      - name: Build app and installer
-        if: ${{ matrix.distribution == 'standalone' }}
+      - name: Build app
+        if: ${{ matrix.distribution == 'standalone' && matrix.format == 'msix' }}
         env:
           PackageName: ${{ vars.PACKAGE_NAME }}
-          PackagePublisher: ${{ vars.PACKAGE_PUBLISHER }}
+          PackagePublisher: ${{ vars.PACKAGE_PUBLISHER_STANDALONE }}
+          PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
+        run: |
+          msbuild Fyreplace `
+            /t:Build `
+            /p:Platform=${{ matrix.architecture }} `
+            /p:Configuration=Release `
+            /p:GenerateAppxPackageOnBuild=True `
+            /p:UapAppxPackageBuildMode=StoreUpload `
+            /p:AppxPackageDir=AppPackages\ `
+            /p:PublishReadyToRun=false
+
+      - name: Build app
+        if: ${{ matrix.format == 'msi' }}
+        env:
+          PackageName: ${{ vars.PACKAGE_NAME }}
           PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
         run: |
           msbuild Fyreplace.Installer `
@@ -79,24 +100,46 @@ jobs:
             /p:Configuration=Release `
             /p:PublishReadyToRun=false
 
-      - name: Simplify MSIX export path
-        if: ${{ matrix.distribution == 'app-store' }}
+      - name: Simplify MSIX path
+        if: ${{ matrix.format == 'msix' }}
         run: |
-          move .\Fyreplace\AppPackages\* .\Fyreplace\AppPackages\Result
-          move .\Fyreplace\AppPackages\Result\*.msix .\Fyreplace\AppPackages\Result\Fyreplace.msix
+          ren .\Fyreplace\AppPackages\* Result
+          ren .\Fyreplace\AppPackages\Result\*.msix Fyreplace.msix
+          move .\Fyreplace\AppPackages\Result\Fyreplace.msix .\Deploy\
+
+      - name: Simplify MSI path
+        if: ${{ matrix.format == 'msi' }}
+        run: |
+          move .\Fyreplace.Installer\bin\${{ matrix.architecture }}\Release\en\Fyreplace.msi .\Deploy\
+
+      - name: Sign installer
+        uses: azure/trusted-signing-action@v0.3.20
+        if: ${{ matrix.distribution != 'app-store' }}
+        with:
+          azure-tenant-id: ${{ vars.TENANT_ID }}
+          azure-client-id: ${{ vars.TRUSTED_SIGNING_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.TRUSTED_SIGNING_CLIENT_SECRET }}
+          endpoint: ${{ vars.TRUSTED_SIGNING_ENDPOINT }}
+          trusted-signing-account-name: ${{ vars.TRUSTED_SIGNING_ACCOUNT }}
+          certificate-profile-name: ${{ vars.TRUSTED_SIGNING_CERTIFICATE }}
+          files-folder: ${{ github.workspace }}\Deploy
+          files-folder-filter: msix,msi
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
 
       - name: Upload MSIX
         if: ${{ matrix.distribution == 'app-store' }}
         uses: actions/upload-artifact@v4
         with:
           name: Fyreplace.${{ matrix.architecture }}.msix
-          path: Fyreplace\AppPackages\Result\Fyreplace.msix
+          path: Deploy\Fyreplace.msix
           if-no-files-found: error
 
-      - name: Upload MSI
+      - name: Upload ${{ matrix.format == 'msix' && 'MSIX' || 'MSI' }}
         if: ${{ matrix.distribution == 'standalone' }}
         uses: actions/upload-artifact@v4
         with:
-          name: Fyreplace.${{ matrix.architecture }}.standalone.msi
-          path: Fyreplace.Installer\bin\${{ matrix.architecture }}\Release\en\Fyreplace.msi
+          name: Fyreplace.${{ matrix.architecture }}.standalone.${{ matrix.format }}
+          path: Deploy\Fyreplace.${{ matrix.format }}
           if-no-files-found: error

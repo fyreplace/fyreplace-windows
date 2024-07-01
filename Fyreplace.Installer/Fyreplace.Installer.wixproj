@@ -24,5 +24,7 @@
   <Target Name="UpdatePackage" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersion">
     <Copy SourceFiles="Package.template.xml" DestinationFiles="Package.wxs" />
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://wixtoolset.org/schemas/v4/wxs' /&gt;" XmlInputPath="Package.wxs" Query="/ns:Wix/ns:Package/@Version" Value="$(Version)" />
+    <XmlPoke Condition="$(PackageName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://wixtoolset.org/schemas/v4/wxs' /&gt;" XmlInputPath="Package.wxs" Query="/ns:Wix/ns:Package/@Name" Value="$(PackageName)" />
+    <XmlPoke Condition="$(PackagePublisherName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://wixtoolset.org/schemas/v4/wxs' /&gt;" XmlInputPath="Package.wxs" Query="/ns:Wix/ns:Package/@Manufacturer" Value="$(PackagePublisherName)" />
   </Target>
 </Project>
