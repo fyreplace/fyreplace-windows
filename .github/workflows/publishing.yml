@@ -29,6 +29,8 @@ jobs:
         exclude:
           - distribution: app-store
             format: msi
+          - distribution: standalone
+            format: msix
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -91,7 +93,6 @@ jobs:
       - name: Build app
         if: ${{ matrix.format == 'msi' }}
         env:
-          PackageName: ${{ vars.PACKAGE_NAME }}
           PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
         run: |
           msbuild Fyreplace.Installer `
@@ -111,22 +112,6 @@ jobs:
         if: ${{ matrix.format == 'msi' }}
         run: |
           move .\Fyreplace.Installer\bin\${{ matrix.architecture }}\Release\en\Fyreplace.msi .\Deploy\
-
-      - name: Sign installer
-        uses: azure/trusted-signing-action@v0.3.20
-        if: ${{ matrix.distribution != 'app-store' }}
-        with:
-          azure-tenant-id: ${{ vars.TENANT_ID }}
-          azure-client-id: ${{ vars.TRUSTED_SIGNING_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.TRUSTED_SIGNING_CLIENT_SECRET }}
-          endpoint: ${{ vars.TRUSTED_SIGNING_ENDPOINT }}
-          trusted-signing-account-name: ${{ vars.TRUSTED_SIGNING_ACCOUNT }}
-          certificate-profile-name: ${{ vars.TRUSTED_SIGNING_CERTIFICATE }}
-          files-folder: ${{ github.workspace }}\Deploy
-          files-folder-filter: msix,msi
-          file-digest: SHA256
-          timestamp-rfc3161: http://timestamp.acs.microsoft.com
-          timestamp-digest: SHA256
 
       - name: Upload MSIX
         if: ${{ matrix.distribution == 'app-store' }}
