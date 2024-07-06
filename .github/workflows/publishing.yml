@@ -99,7 +99,8 @@ jobs:
             /t:Build `
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release `
-            /p:PublishReadyToRun=false
+            /p:PublishReadyToRun=false `
+            /p:SDKSelfContained=true
 
       - name: Simplify MSIX path
         if: ${{ matrix.format == 'msix' }}

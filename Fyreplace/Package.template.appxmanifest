@@ -43,6 +43,7 @@
   </Applications>
 
   <Capabilities>
+    <rescap:Capability Name="packageManagement" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>

@@ -1,4 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
+using Microsoft.Windows.Management.Deployment;
 using Sentry;
 using Sentry.Protocol;
 using System;
@@ -14,6 +16,13 @@ namespace Fyreplace
 
         public App()
         {
+            var selfContained = GetCustomAttribute("App.SDKSelfContained")?.ToLower() == "true";
+
+            if (!selfContained && DeploymentManager.GetStatus().Status != DeploymentStatus.Ok)
+            {
+                DeploymentManager.Initialize();
+            }
+
             var dsn = GetCustomAttribute("Sentry.Dsn");
 
             if (dsn != "")

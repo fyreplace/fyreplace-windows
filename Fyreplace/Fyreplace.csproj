@@ -10,7 +10,6 @@
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <EnableMsixTooling>true</EnableMsixTooling>
     <UseWinUI>true</UseWinUI>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -21,6 +20,12 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(SDKSelfContained)' == 'true'">
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
     <ProjectCapability Include="Msix" />
   </ItemGroup>
@@ -31,6 +36,13 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
     <PackageReference Include="Sentry" Version="4.8.1" />
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>App.SDKSelfContained</_Parameter1>
+      <_Parameter2>$(SDKSelfContained)</_Parameter2>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <ItemGroup>
@@ -107,9 +119,6 @@
     </Page>
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)' != 'true' and '$(EnableMsixTooling)' == 'true'">
-    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
