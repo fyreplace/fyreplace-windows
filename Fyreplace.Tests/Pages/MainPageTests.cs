@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
 using System;
 using System.Linq;
 
-namespace Fyreplace.Tests
+namespace Fyreplace.Tests.Pages
 {
     [TestClass]
     public class MainPageTests
@@ -32,11 +32,30 @@ namespace Fyreplace.Tests
             Assert.AreEqual(5, items.Count());
         }
 
+        [UITestMethod]
+        public void TestNavigationItemsAreUnique()
+        {
+            var navigation = GetNavigation();
+            var items = navigation.MenuItems.OfType<NavigationViewItem>();
+            
+            foreach (var first in items)
+            {
+                foreach (var second in items)
+                {
+                    if (first != second)
+                    {
+                        Assert.AreNotEqual(first.Content, second.Content);
+                        Assert.AreNotEqual(first.Icon, second.Icon);
+                        Assert.AreNotEqual(first.Tag, second.Tag);
+                    }
+                }
+            }
+        }
+
         private static NavigationView GetNavigation()
         {
-            var app = Application.Current as UnitTestApp;
-            var mainPage = app?.window?.Content as MainPage;
-            var navigation = mainPage?.FindChild("Navigation") as NavigationView;
+            var mainPage = new MainPage();
+            var navigation = mainPage.FindChild("Navigation") as NavigationView;
             Assert.IsNotNull(navigation);
             return navigation;
         }

@@ -1,17 +1,23 @@
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Linq;
 using System.Reflection;
+using Windows.Foundation;
+using Windows.Graphics;
+using Windows.System;
 
 namespace Fyreplace.Pages
 {
     public sealed partial class MainPage : Page
     {
-        public AppWindowTitleBar? WindowTitleBar { get; set; }
+        public AppWindow? AppWindow { get; set; }
         private NavigationViewItemBase currentInvokedItem;
 
         public MainPage()
@@ -27,8 +33,25 @@ namespace Fyreplace.Pages
 
         private void UpdateRegionsForTitleBar()
         {
-            TitleBarLeftPadding.Width = new GridLength((WindowTitleBar?.LeftInset ?? 0) / XamlRoot.RasterizationScale);
-            TitleBarRightPadding.Width = new GridLength((WindowTitleBar?.RightInset ?? 0) / XamlRoot.RasterizationScale);
+            if (AppWindow == null)
+            {
+                return;
+            }
+
+            var scale = XamlRoot.RasterizationScale;
+            TitleBarLeftPadding.Width = new GridLength((AppWindow.TitleBar.LeftInset) / scale);
+            TitleBarRightPadding.Width = new GridLength((AppWindow.TitleBar.RightInset) / scale);
+
+            var transform = Avatar.TransformToVisual(null);
+            var bounds = transform.TransformBounds(new Rect(0, 0, Avatar.ActualWidth, Avatar.ActualHeight));
+            var avatarRect = new RectInt32(
+                _X: (int)Math.Round(bounds.X * scale),
+                _Y: (int)Math.Round(bounds.Y * scale),
+                _Width: (int)Math.Round(bounds.Width * scale),
+                _Height: (int)Math.Round(bounds.Height * scale)
+            );
+            var nonClientInput = InputNonClientPointerSource.GetForWindowId(AppWindow.Id);
+            nonClientInput.SetRegionRects(NonClientRegionKind.Passthrough, [avatarRect]);
         }
 
         private void GoBack()
@@ -126,6 +149,17 @@ namespace Fyreplace.Pages
         private void Host_Navigated(object sender, NavigationEventArgs e) => UpdateNavigationSelection();
 
         private void Host_NavigationFailed(object sender, NavigationFailedEventArgs e) => Host.Navigate(typeof(ErrorPage), e.Exception);
+
+        private void Avatar_Click(object sender, RoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(Avatar);
+        }
+
+        private void AccountPageSelector_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) => AccountHost.Navigate(
+                sender.SelectedItem == Login ? typeof(LoginPage) : typeof(RegisterPage),
+                null,
+                new SuppressNavigationTransitionInfo()
+            );
 
         #endregion
     }

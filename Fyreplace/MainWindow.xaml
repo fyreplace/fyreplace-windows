@@ -15,5 +15,5 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <pages:MainPage x:Name="MainPage" WindowTitleBar="{x:Bind AppWindow.TitleBar}" />
+    <pages:MainPage x:Name="MainPage" AppWindow="{x:Bind AppWindow}" />
 </Window>

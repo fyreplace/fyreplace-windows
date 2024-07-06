@@ -57,22 +57,63 @@
                 <ColumnDefinition x:Name="TitleBarLeftPadding" Width="0" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" MinWidth="48" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition x:Name="TitleBarRightPadding" Width="0" />
             </Grid.ColumnDefinitions>
             <Image
-                x:Name="TitleBarIcon"
                 Grid.Column="1"
-                Source="ms-appx:///Assets/Icon.ico"
                 Width="16"
                 Height="16"
-                Margin="0,0,16,0" />
+                Margin="0,0,16,0"
+                Source="ms-appx:///Assets/Icon.ico" />
             <TextBlock
                 x:Name="TitleBarText"
-                x:Uid="MainWindow_Title"
+                x:Uid="MainPage_Title"
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 Style="{StaticResource CaptionTextBlockStyle}" />
+            <Button
+                Grid.Column="4"
+                Width="32"
+                Height="32"
+                CornerRadius="16"
+                Margin="0,0,48,0"
+                Padding="0"
+                BorderThickness="0"
+                Click="Avatar_Click">
+                <PersonPicture
+                    x:Name="Avatar"
+                    Width="32"
+                    Height="32"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout>
+                            <StackPanel
+                                MinWidth="240"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <SelectorBar
+                                    x:Name="AccountPageSelector"
+                                    HorizontalAlignment="Center"
+                                    SelectionChanged="AccountPageSelector_SelectionChanged">
+                                    <SelectorBarItem
+                                        x:Name="Login"
+                                        x:Uid="MainPage_Login"
+                                        IsSelected="True" />
+                                    <SelectorBarItem
+                                        x:Name="Register"
+                                        x:Uid="MainPage_Register" />
+                                </SelectorBar>
+                                <Frame x:Name="AccountHost">
+                                    <local:LoginPage />
+                                </Frame>
+                            </StackPanel>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </PersonPicture>
+            </Button>
         </Grid>
         
         <NavigationView
@@ -90,24 +131,24 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem
                     x:Name="Feed"
-                    x:Uid="MainWindow_Feed"
+                    x:Uid="MainPage_Feed"
                     Tag="FeedPage"
                     Icon="{ui:FontIcon Glyph=&#xE80F;}"
                     IsSelected="True" />
                 <NavigationViewItem
-                    x:Uid="MainWindow_Notifications"
+                    x:Uid="MainPage_Notifications"
                     Tag="NotificationsPage"
                     Icon="{ui:FontIcon Glyph=&#xEA8F;}" />
                 <NavigationViewItem
-                    x:Uid="MainWindow_Archive"
+                    x:Uid="MainPage_Archive"
                     Tag="ArchivePage"
                     Icon="{ui:FontIcon Glyph=&#xE81C;}" />
                 <NavigationViewItem
-                    x:Uid="MainWindow_Drafts"
+                    x:Uid="MainPage_Drafts"
                     Tag="DraftsPage"
                     Icon="{ui:FontIcon Glyph=&#xE8A5;}" />
                 <NavigationViewItem
-                    x:Uid="MainWindow_Published"
+                    x:Uid="MainPage_Published"
                     Tag="PublishedPage"
                     Icon="{ui:FontIcon Glyph=&#xE8B7;}" />
             </NavigationView.MenuItems>

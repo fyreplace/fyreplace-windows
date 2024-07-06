@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
-using Microsoft.Windows.Management.Deployment;
 using Sentry;
 using Sentry.Protocol;
 using System;

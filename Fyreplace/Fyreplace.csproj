@@ -57,9 +57,11 @@
     <None Remove="Pages\DraftsPage.xaml" />
     <None Remove="Pages\ErrorPage.xaml" />
     <None Remove="Pages\FeedPage.xaml" />
+    <None Remove="Pages\LoginPage.xaml" />
     <None Remove="Pages\MainPage.xaml" />
     <None Remove="Pages\NotificationsPage.xaml" />
     <None Remove="Pages\PublishedPage.xaml" />
+    <None Remove="Pages\RegisterPage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
   </ItemGroup>
 
@@ -77,6 +79,16 @@
     <Content Update="Assets\Icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\RegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\ArchivePage.xaml">
@@ -117,6 +129,9 @@
     <Page Update="Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">

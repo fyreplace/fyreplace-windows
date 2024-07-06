@@ -123,22 +123,58 @@
   <data name="ErrorPage_Title.Text" xml:space="preserve">
     <value>Something went wrong. This page does not exist!</value>
   </data>
-  <data name="MainWindow_Archive.Content" xml:space="preserve">
+  <data name="LoginPage_Identifier.Header" xml:space="preserve">
+    <value>Identifier:</value>
+  </data>
+  <data name="LoginPage_Identifier.PlaceholderText" xml:space="preserve">
+    <value>Username or email</value>
+  </data>
+  <data name="LoginPage_Submit.Content" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginPage_Title.Text" xml:space="preserve">
+    <value>Sign in to your account</value>
+  </data>
+  <data name="MainPage_Archive.Content" xml:space="preserve">
     <value>Archive</value>
   </data>
-  <data name="MainWindow_Drafts.Content" xml:space="preserve">
+  <data name="MainPage_Drafts.Content" xml:space="preserve">
     <value>Drafts</value>
   </data>
-  <data name="MainWindow_Feed.Content" xml:space="preserve">
+  <data name="MainPage_Feed.Content" xml:space="preserve">
     <value>Feed</value>
   </data>
-  <data name="MainWindow_Notifications.Content" xml:space="preserve">
+  <data name="MainPage_Login.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="MainPage_Notifications.Content" xml:space="preserve">
     <value>Notifications</value>
   </data>
-  <data name="MainWindow_Published.Content" xml:space="preserve">
+  <data name="MainPage_Published.Content" xml:space="preserve">
     <value>Published</value>
   </data>
-  <data name="MainWindow_Title.Text" xml:space="preserve">
+  <data name="MainPage_Register.Text" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="MainPage_Title.Text" xml:space="preserve">
     <value>Fyreplace</value>
+  </data>
+  <data name="RegisterPage_Email.Header" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="RegisterPage_Email.PlaceholderText" xml:space="preserve">
+    <value>email@example.org</value>
+  </data>
+  <data name="RegisterPage_Submit.Content" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="RegisterPage_Title.Text" xml:space="preserve">
+    <value>Create a new account</value>
+  </data>
+  <data name="RegisterPage_Username.Header" xml:space="preserve">
+    <value>Username:</value>
+  </data>
+  <data name="RegisterPage_Username.PlaceholderText" xml:space="preserve">
+    <value>Only letters, numbers and dashes</value>
   </data>
 </root>
