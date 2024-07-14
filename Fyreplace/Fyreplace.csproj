@@ -172,17 +172,17 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="UpdateAppManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersion">
+  <Target Name="UpdateAppManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionString;GetVersionNumber">
     <Copy SourceFiles="app.template.manifest" DestinationFiles="app.manifest" />
-    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='urn:schemas-microsoft-com:asm.v1' /&gt;" XmlInputPath="app.manifest" Query="/ns:assembly/ns:assemblyIdentity/@version" Value="$(Version)" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='urn:schemas-microsoft-com:asm.v1' /&gt;" XmlInputPath="app.manifest" Query="/ns:assembly/ns:assemblyIdentity/@version" Value="$(VersionString).$(VersionNumber)" />
   </Target>
 
-  <Target Name="UpdateAppxManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersion">
+  <Target Name="UpdateAppxManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetBranchNumber">
     <Copy SourceFiles="Package.template.appxmanifest" DestinationFiles="Package.appxmanifest" />
     <XmlPoke Condition="$(PackageName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Name" Value="$(PackageName)" />
     <XmlPoke Condition="$(PackageName) == ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Name" Value="$(AssemblyName)" />
     <XmlPoke Condition="$(PackagePublisher) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Publisher" Value="$(PackagePublisher)" />
     <XmlPoke Condition="$(PackagePublisherName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Properties/ns:PublisherDisplayName" Value="$(PackagePublisherName)" />
-    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Version" Value="$(Version)" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Version" Value="1.$(VersionNumber).$(BranchNumber).0" />
   </Target>
 </Project>

@@ -23,9 +23,9 @@
     </Exec>
   </Target>
 
-  <Target Name="GetVersion" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetBranchNumber">
+  <Target Name="GetVersion" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionString;GetVersionNumber">
     <PropertyGroup>
-      <Version>1.$(VersionNumber).$(BranchNumber).0</Version>
+      <Version>$(VersionString).$(VersionNumber)</Version>
     </PropertyGroup>
   </Target>
 
