@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Fyreplace.Helpers;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
 using Sentry;
 using Sentry.Protocol;
@@ -15,21 +16,17 @@ namespace Fyreplace
 
         public App()
         {
-            var selfContained = GetCustomAttribute("App.SDKSelfContained")?.ToLower() == "true";
-
-            if (!selfContained && DeploymentManager.GetStatus().Status != DeploymentStatus.Ok)
+            if (!Config.App.SelfContained && DeploymentManager.GetStatus().Status != DeploymentStatus.Ok)
             {
                 DeploymentManager.Initialize();
             }
 
-            var dsn = GetCustomAttribute("Sentry.Dsn");
-
-            if (dsn != "")
+            if (Config.Sentry.Dsn != "")
             {
                 SentrySdk.Init(options =>
                 {
-                    options.Dsn = dsn;
-                    options.Environment = GetCustomAttribute("Sentry.Environment");
+                    options.Dsn = Config.Sentry.Dsn;
+                    options.Environment = Config.Sentry.Environment;
                     options.AutoSessionTracking = true;
                     options.IsGlobalModeEnabled = true;
                     options.CaptureFailedRequests = true;
@@ -63,12 +60,5 @@ namespace Fyreplace
             SentrySdk.CaptureException(exception);
             SentrySdk.FlushAsync(TimeSpan.FromSeconds(3)).GetAwaiter().GetResult();
         }
-
-        private static string GetCustomAttribute(string key) => Assembly.GetExecutingAssembly()
-                .GetCustomAttributes(false)
-                .OfType<AssemblyMetadataAttribute>()
-                .Where(a => a.Key == key)
-                .Select(a => a.Value)
-                .FirstOrDefault() ?? "";
     }
 }

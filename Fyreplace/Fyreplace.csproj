@@ -32,8 +32,17 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.0.240109" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="14.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Sentry" Version="4.9.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -43,9 +52,18 @@
       <_Parameter1>App.SDKSelfContained</_Parameter1>
       <_Parameter2>$(SDKSelfContained)</_Parameter2>
     </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>Api.MainUrl</_Parameter1>
+      <_Parameter2>$(FyreplaceApiUrlMain)</_Parameter2>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>Api.DevUrl</_Parameter1>
+      <_Parameter2>$(FyreplaceApiUrlDev)</_Parameter2>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>Api.LocalUrl</_Parameter1>
+      <_Parameter2>$(FyreplaceApiUrlLocal)</_Parameter2>
+    </AssemblyAttribute>
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>Sentry.Dsn</_Parameter1>
       <_Parameter2>$(SentryDsn)</_Parameter2>
@@ -63,6 +81,7 @@
     <None Remove="Pages\PublishedPage.xaml" />
     <None Remove="Pages\RegisterPage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
+    <None Remove="Services\openapi.yaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -131,7 +150,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <OpenApiReference Include="Services\openapi.yaml" OutputPath="$(MSBuildProjectDirectory)\Services\APIClient.g.cs" CodeGenerator="NSwagCSharp" Namespace="Fyreplace.Services" ClassName="APIClient">
+      <Options>/GenerateClientInterfaces:true</Options>
+    </OpenApiReference>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">

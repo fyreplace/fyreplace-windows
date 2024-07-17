@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <FyreplaceApiUrlMain>https://rest.api.fyreplace.app</FyreplaceApiUrlMain>
+    <FyreplaceApiUrlDev>https://dev.rest.api.fyreplace.app</FyreplaceApiUrlDev>
+    <FyreplaceApiUrlLocal Condition="'$(Debug)' == 'true'">https://localhost:8080</FyreplaceApiUrlLocal>
+  </PropertyGroup>
+</Project>
