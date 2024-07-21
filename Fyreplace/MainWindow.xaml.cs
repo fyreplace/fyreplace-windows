@@ -1,6 +1,6 @@
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Windows.ApplicationModel.Resources;
+using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace Fyreplace
 {
@@ -9,7 +9,8 @@ namespace Fyreplace
         public MainWindow()
         {
             InitializeComponent();
-            Title = ResourceLoader.GetForViewIndependentUse().GetString("AppName");
+            var resourceLoader = new ResourceLoader();
+            Title = resourceLoader.GetString("AppName");
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
             AppWindow.SetIcon(@"Assets\Icon.ico");
