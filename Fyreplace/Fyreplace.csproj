@@ -182,7 +182,7 @@
   </PropertyGroup>
 
   <Target Name="GetSentryEnvironment" BeforeTargets="PrepareForBuild" DependsOnTargets="GetBranch">
-    <Exec Command="powershell -Command &quot;('$(CurrentBranch)' -Split '/')[0]&quot;" ConsoleToMSBuild="true">
+    <Exec Command="powershell -Command &quot;switch ('$(CurrentBranch)') { 'develop' { 'dev' } default { ('$(CurrentBranch)' -Split '/')[0] } }&quot;" ConsoleToMSBuild="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="SentryEnvironment" />
     </Exec>
     <ItemGroup>
