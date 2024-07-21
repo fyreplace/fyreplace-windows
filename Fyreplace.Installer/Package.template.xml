@@ -3,7 +3,7 @@
     Name="Fyreplace"
     Manufacturer="Fyreplace"
     Version="0.0.0.0"
-    UpgradeCode="00000000-0000-4000-8000-000000000000">
+    UpgradeCode="6f1bd025-da67-40b9-b2f4-5b6385c69c0c">
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
     <MediaTemplate EmbedCab="yes"/>
     <Icon Id="Fyreplace.ico" SourceFile="..\Fyreplace\Assets\Icon.ico" />

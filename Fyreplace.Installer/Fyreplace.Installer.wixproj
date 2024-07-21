@@ -1,4 +1,4 @@
-﻿<Project Sdk="WixToolset.Sdk/5.0.0">
+﻿<Project Sdk="WixToolset.Sdk/5.0.1">
   <PropertyGroup>
     <OutputName>Fyreplace</OutputName>
     <SuppressIces>ICE03</SuppressIces>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Page
+<local:AccountPageBase
     x:Class="Fyreplace.Pages.RegisterPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,6 +13,11 @@
             x:Uid="RegisterPage_Title"
             HorizontalAlignment="Center"
             Style="{StaticResource BodyStrongTextBlockStyle}" />
+        <ComboBox
+            x:Uid="AccountPageBase_Environment"
+            HorizontalAlignment="Stretch"
+            ItemsSource="{x:Bind EnvironmentNames}"
+            SelectedIndex="{x:Bind SelectedEnvironmentIndex, Mode=TwoWay}" />
         <TextBox
             x:Name="Username"
             x:Uid="RegisterPage_Username" />
@@ -28,4 +33,4 @@
             IsEnabled="{x:Bind AreInputsValid(Username.Text, Email.Text), Mode=OneWay}">
         </Button>
     </StackPanel>
-</Page>
+</local:AccountPageBase>

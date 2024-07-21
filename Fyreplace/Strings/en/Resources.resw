@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccountPageBase_Environment.Header" xml:space="preserve">
+    <value>Environment:</value>
+  </data>
+  <data name="AccountPageBase_Environment.ToolTipService.ToolTip" xml:space="preserve">
+    <value>If you don't know what this is, pick the default one.</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Fyreplace</value>
+  </data>
+  <data name="Environment_DefaultSuffix" xml:space="preserve">
+    <value>(default)</value>
+  </data>
+  <data name="Environment_Dev" xml:space="preserve">
+    <value>Testing server</value>
+  </data>
+  <data name="Environment_Local" xml:space="preserve">
+    <value>Local server</value>
+  </data>
+  <data name="Environment_Main" xml:space="preserve">
+    <value>Production server</value>
   </data>
   <data name="ErrorPage_Title.Text" xml:space="preserve">
     <value>Something went wrong. This page does not exist!</value>

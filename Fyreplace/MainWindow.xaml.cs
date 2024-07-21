@@ -19,11 +19,7 @@ namespace Fyreplace
 
         #region Event Handlers
 
-        private void Root_Activated(object sender, WindowActivatedEventArgs args)
-        {
-            var windowDeactivated = args.WindowActivationState == WindowActivationState.Deactivated;
-            MainPage.SetIsTitleBarActive(!windowDeactivated);
-        }
+        private void Root_Activated(object sender, WindowActivatedEventArgs args) => MainPage.SetIsTitleBarActive(args.WindowActivationState != WindowActivationState.Deactivated);
 
         #endregion
     }

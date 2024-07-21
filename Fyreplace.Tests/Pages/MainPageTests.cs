@@ -1,6 +1,5 @@
 using CommunityToolkit.WinUI;
 using Fyreplace.Pages;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
@@ -54,8 +53,9 @@ namespace Fyreplace.Tests.Pages
 
         private static NavigationView GetNavigation()
         {
-            var mainPage = new MainPage();
-            var navigation = mainPage.FindChild("Navigation") as NavigationView;
+            var window = AppBase.GetService<MainWindow>();
+            var mainPage = window.Content as MainPage;
+            var navigation = mainPage?.FindChild("Navigation") as NavigationView;
             Assert.IsNotNull(navigation);
             return navigation;
         }

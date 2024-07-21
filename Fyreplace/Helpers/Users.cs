@@ -1,6 +1,6 @@
 ﻿namespace Fyreplace.Helpers
 {
-    public sealed class Users
+    public static class Users
     {
         public static bool IsUsernameValid(string username) => !string.IsNullOrWhiteSpace(username)
             && username.Length >= 3

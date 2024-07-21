@@ -1,39 +1,37 @@
-﻿using Fyreplace.Helpers;
+﻿using Fyreplace.Config;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
 using Sentry;
 using Sentry.Protocol;
 using System;
-using System.Linq;
-using System.Reflection;
 using System.Security;
 
 namespace Fyreplace
 {
-    public partial class App : Application
+    public partial class App : AppBase
     {
-        private Window? window;
-
         public App()
         {
-            if (!Config.App.SelfContained && DeploymentManager.GetStatus().Status != DeploymentStatus.Ok)
+            var info = GetService<BuildInfo>();
+
+            if (!info.App.SelfContained && DeploymentManager.GetStatus().Status != DeploymentStatus.Ok)
             {
                 DeploymentManager.Initialize();
             }
 
-            if (Config.Sentry.Dsn != "")
+            if (info.Sentry.Dsn != "")
             {
                 SentrySdk.Init(options =>
                 {
-                    options.Dsn = Config.Sentry.Dsn;
-                    options.Environment = Config.Sentry.Environment;
+                    options.Dsn = info.Sentry.Dsn;
+                    options.Environment = info.Sentry.Environment;
                     options.AutoSessionTracking = true;
                     options.IsGlobalModeEnabled = true;
                     options.CaptureFailedRequests = true;
                     options.DisableWinUiUnhandledExceptionIntegration();
                 });
 
-                UnhandledException += OnUnhandledException;
+                base.UnhandledException += OnUnhandledException;
             }
 
             InitializeComponent();
@@ -41,8 +39,8 @@ namespace Fyreplace
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            window = new MainWindow();
-            window.Activate();
+            base.OnLaunched(args);
+            GetService<MainWindow>().Activate();
         }
 
         [SecurityCritical]
