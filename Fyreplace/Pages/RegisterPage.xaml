@@ -10,6 +10,7 @@
 
     <StackPanel Orientation="Vertical" Spacing="12">
         <TextBlock
+            x:Name="Title"
             x:Uid="RegisterPage_Title"
             HorizontalAlignment="Center"
             Style="{StaticResource BodyStrongTextBlockStyle}" />

@@ -11,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using Windows.Foundation;
 using Windows.Graphics;
-using Windows.System;
 
 namespace Fyreplace.Pages
 {
@@ -150,10 +149,7 @@ namespace Fyreplace.Pages
 
         private void Host_NavigationFailed(object sender, NavigationFailedEventArgs e) => Host.Navigate(typeof(ErrorPage), e.Exception);
 
-        private void Avatar_Click(object sender, RoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout(Avatar);
-        }
+        private void Avatar_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout(Avatar);
 
         private void AccountPageSelector_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) => AccountHost.Navigate(
                 sender.SelectedItem == Login ? typeof(LoginPage) : typeof(RegisterPage),

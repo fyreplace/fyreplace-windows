@@ -106,9 +106,7 @@
                                         x:Name="Register"
                                         x:Uid="MainPage_Register" />
                                 </SelectorBar>
-                                <Frame x:Name="AccountHost">
-                                    <local:LoginPage />
-                                </Frame>
+                                <Frame x:Name="AccountHost" />
                             </StackPanel>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
