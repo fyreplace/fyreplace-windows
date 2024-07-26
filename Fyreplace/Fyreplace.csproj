@@ -74,6 +74,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Controls\KeyboardShortcut.xaml" />
     <None Remove="Pages\ArchivePage.xaml" />
     <None Remove="Pages\DraftsPage.xaml" />
     <None Remove="Pages\ErrorPage.xaml" />
@@ -103,14 +104,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\RegisterPage.xaml">
+    <Page Update="Controls\KeyboardShortcut.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\LoginPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Folder Include="Controls\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\ArchivePage.xaml">
@@ -133,6 +132,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,6 +148,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\PublishedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\RegisterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

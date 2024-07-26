@@ -231,17 +231,11 @@
   <data name="SettingsPage_Shortcuts_Archive_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Archive_Detail.Text" xml:space="preserve">
-    <value>CTRL + 3</value>
-  </data>
   <data name="SettingsPage_Shortcuts_Drafts.Header" xml:space="preserve">
     <value>Go to drafts</value>
   </data>
   <data name="SettingsPage_Shortcuts_Drafts_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
-  </data>
-  <data name="SettingsPage_Shortcuts_Drafts_Detail.Text" xml:space="preserve">
-    <value>CTRL + 4</value>
   </data>
   <data name="SettingsPage_Shortcuts_Feed.Header" xml:space="preserve">
     <value>Go to feed</value>
@@ -249,17 +243,11 @@
   <data name="SettingsPage_Shortcuts_Feed_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Feed_Detail.Text" xml:space="preserve">
-    <value>CTRL + 1</value>
-  </data>
   <data name="SettingsPage_Shortcuts_Notifications.Header" xml:space="preserve">
     <value>Go to notifications</value>
   </data>
   <data name="SettingsPage_Shortcuts_Notifications_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
-  </data>
-  <data name="SettingsPage_Shortcuts_Notifications_Detail.Text" xml:space="preserve">
-    <value>CTRL + 2</value>
   </data>
   <data name="SettingsPage_Shortcuts_Published.Header" xml:space="preserve">
     <value>Go to published</value>
@@ -267,10 +255,16 @@
   <data name="SettingsPage_Shortcuts_Published_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Published_Detail.Text" xml:space="preserve">
-    <value>CTRL + 5</value>
-  </data>
   <data name="SettingsPage_Title.Text" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="Settings_KeyboardShortcut_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="Settings_KeyboardShortcut_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="Settings_KeyboardShortcut_Shift" xml:space="preserve">
+    <value>Shift</value>
   </data>
 </root>

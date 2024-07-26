@@ -4,17 +4,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fyreplace.Pages"
+    xmlns:local_controls="using:Fyreplace.Controls.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
-
-    <Page.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
-        </Style>
-    </Page.Resources>
 
     <ScrollView>
         <StackPanel Orientation="Vertical" Spacing="4" Margin="36">
@@ -30,27 +25,27 @@
                     <controls:SettingsCard
                         x:Uid="SettingsPage_Shortcuts_Feed"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE80F;}">
-                        <TextBlock x:Uid="SettingsPage_Shortcuts_Feed_Detail" />
+                        <local_controls:KeyboardShortcut Key="1" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
                         x:Uid="SettingsPage_Shortcuts_Notifications"
                         HeaderIcon="{ui:FontIcon Glyph=&#xEA8F;}">
-                        <TextBlock x:Uid="SettingsPage_Shortcuts_Notifications_Detail" />
+                        <local_controls:KeyboardShortcut Key="2" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
                         x:Uid="SettingsPage_Shortcuts_Archive"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE81C;}">
-                        <TextBlock x:Uid="SettingsPage_Shortcuts_Archive_Detail" />
+                        <local_controls:KeyboardShortcut Key="3" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
                         x:Uid="SettingsPage_Shortcuts_Drafts"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE8A5;}">
-                        <TextBlock x:Uid="SettingsPage_Shortcuts_Drafts_Detail" />
+                        <local_controls:KeyboardShortcut Key="4" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
                         x:Uid="SettingsPage_Shortcuts_Published"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}">
-                        <TextBlock x:Uid="SettingsPage_Shortcuts_Published_Detail" />
+                        <local_controls:KeyboardShortcut Key="5" Ctrl="True" />
                     </controls:SettingsCard>
                 </controls:SettingsExpander.Items>
             </controls:SettingsExpander>
