@@ -195,6 +195,30 @@
   <data name="RegisterPage_Username.PlaceholderText" xml:space="preserve">
     <value>Only letters, numbers and dashes</value>
   </data>
+  <data name="SettingsPage_About.Description" xml:space="preserve">
+    <value>Made with lots of ❤️</value>
+  </data>
+  <data name="SettingsPage_About.Header" xml:space="preserve">
+    <value>Fyreplace</value>
+  </data>
+  <data name="SettingsPage_About_Privacy.Content" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="SettingsPage_About_Privacy.NavigateUri" xml:space="preserve">
+    <value>https://fyreplace.net/privacy-policy</value>
+  </data>
+  <data name="SettingsPage_About_Terms.Content" xml:space="preserve">
+    <value>Terms of service</value>
+  </data>
+  <data name="SettingsPage_About_Terms.NavigateUri" xml:space="preserve">
+    <value>https://fyreplace.net/terms-of-service</value>
+  </data>
+  <data name="SettingsPage_About_Website.Content" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="SettingsPage_About_Website.NavigateUri" xml:space="preserve">
+    <value>https://fyreplace.net</value>
+  </data>
   <data name="SettingsPage_Shortcuts.Description" xml:space="preserve">
     <value>List of all available keyboard shortcuts</value>
   </data>

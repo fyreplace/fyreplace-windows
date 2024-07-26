@@ -10,12 +10,19 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+        </Style>
+    </Page.Resources>
+
     <ScrollView>
-        <StackPanel Margin="36">
+        <StackPanel Orientation="Vertical" Spacing="4" Margin="36">
             <TextBlock
                 x:Uid="SettingsPage_Title"
                 Style="{StaticResource TitleTextBlockStyle}"
                 Margin="0,0,0,32" />
+
             <controls:SettingsExpander
                 x:Uid="SettingsPage_Shortcuts"
                 HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}">
@@ -44,6 +51,21 @@
                         x:Uid="SettingsPage_Shortcuts_Published"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}">
                         <TextBlock x:Uid="SettingsPage_Shortcuts_Published_Detail" />
+                    </controls:SettingsCard>
+                </controls:SettingsExpander.Items>
+            </controls:SettingsExpander>
+
+            <controls:SettingsExpander
+                x:Uid="SettingsPage_About"
+                HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Icon.ico}">
+                <TextBlock Text="{x:Bind appVersion}" />
+                <controls:SettingsExpander.Items>
+                    <controls:SettingsCard ContentAlignment="Left">
+                        <StackPanel Orientation="Vertical" Margin="-12,0,0,0">
+                            <HyperlinkButton x:Uid="SettingsPage_About_Website" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Terms" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Privacy" />
+                        </StackPanel>
                     </controls:SettingsCard>
                 </controls:SettingsExpander.Items>
             </controls:SettingsExpander>

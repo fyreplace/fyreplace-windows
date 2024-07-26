@@ -1,13 +1,21 @@
 ﻿using static Fyreplace.Helpers.Metadata;
 using System;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Fyreplace.Config
 {
     public class BuildInfo
     {
+        public readonly Version Version = new();
         public readonly App App = new();
-
         public readonly Sentry Sentry = new();
+    }
+
+    public class Version
+    {
+        public string Main => Assembly.GetExecutingAssembly().GetName().Version!.ToString();
+        public string Informational => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion!;
     }
 
     public class App
