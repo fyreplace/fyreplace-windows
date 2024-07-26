@@ -132,23 +132,43 @@
                     x:Uid="MainPage_Feed"
                     Tag="FeedPage"
                     Icon="{ui:FontIcon Glyph=&#xE80F;}"
-                    IsSelected="True" />
+                    IsSelected="True">
+                    <NavigationViewItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number1" Modifiers="Control" />
+                    </NavigationViewItem.KeyboardAccelerators>
+                </NavigationViewItem>
                 <NavigationViewItem
                     x:Uid="MainPage_Notifications"
                     Tag="NotificationsPage"
-                    Icon="{ui:FontIcon Glyph=&#xEA8F;}" />
+                    Icon="{ui:FontIcon Glyph=&#xEA8F;}">
+                    <NavigationViewItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number2" Modifiers="Control" />
+                    </NavigationViewItem.KeyboardAccelerators>
+                </NavigationViewItem>
                 <NavigationViewItem
                     x:Uid="MainPage_Archive"
                     Tag="ArchivePage"
-                    Icon="{ui:FontIcon Glyph=&#xE81C;}" />
+                    Icon="{ui:FontIcon Glyph=&#xE81C;}">
+                    <NavigationViewItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number3" Modifiers="Control" />
+                    </NavigationViewItem.KeyboardAccelerators>
+                </NavigationViewItem>
                 <NavigationViewItem
                     x:Uid="MainPage_Drafts"
                     Tag="DraftsPage"
-                    Icon="{ui:FontIcon Glyph=&#xE8A5;}" />
+                    Icon="{ui:FontIcon Glyph=&#xE8A5;}">
+                    <NavigationViewItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number4" Modifiers="Control" />
+                    </NavigationViewItem.KeyboardAccelerators>
+                </NavigationViewItem>
                 <NavigationViewItem
                     x:Uid="MainPage_Published"
                     Tag="PublishedPage"
-                    Icon="{ui:FontIcon Glyph=&#xE8B7;}" />
+                    Icon="{ui:FontIcon Glyph=&#xE8B7;}">
+                    <NavigationViewItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number5" Modifiers="Control" />
+                    </NavigationViewItem.KeyboardAccelerators>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <Frame x:Name="Host" Navigated="Host_Navigated" NavigationFailed="Host_NavigationFailed" />
         </NavigationView>
