@@ -23,7 +23,7 @@
         <TextBox
             x:Name="Identifier"
             x:Uid="LoginPage_Identifier"
-            Text="{x:Bind viewModel.Identifier, Mode=TwoWay}"/>
+            Text="{x:Bind viewModel.Identifier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Button
             x:Name="Submit"
             x:Uid="LoginPage_Submit"

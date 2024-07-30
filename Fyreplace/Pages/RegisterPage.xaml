@@ -22,11 +22,11 @@
         <TextBox
             x:Name="Username"
             x:Uid="RegisterPage_Username"
-            Text="{x:Bind viewModel.Username, Mode=TwoWay}" />
+            Text="{x:Bind viewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox
             x:Name="Email"
             x:Uid="RegisterPage_Email"
-            Text="{x:Bind viewModel.Email, Mode=TwoWay}" />
+            Text="{x:Bind viewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Button
             x:Name="Submit"
             x:Uid="RegisterPage_Submit"

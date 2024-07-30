@@ -5,9 +5,11 @@ namespace Fyreplace.ViewModels
     public sealed partial class RegisterViewModel : AccountViewModelBase
     {
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CanSubmit))]
         public string username = "";
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CanSubmit))]
         public string email = "";
 
         public bool IsUsernameValid => !string.IsNullOrWhiteSpace(Username)
