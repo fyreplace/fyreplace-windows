@@ -8,7 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Vertical" Spacing="12">
+    <StackPanel
+        x:Name="Form"
+        Orientation="Vertical"
+        Spacing="12"
+        Loaded="Form_Loaded">
         <TextBlock
             x:Name="Title"
             x:Uid="RegisterPage_Title"

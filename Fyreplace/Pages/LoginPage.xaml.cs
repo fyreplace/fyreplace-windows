@@ -16,5 +16,13 @@ namespace Fyreplace.Pages
         };
 
         public LoginPage() => InitializeComponent();
+
+        private void Form_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!viewModel.CanSubmit)
+            {
+                Identifier.Focus(FocusState.Programmatic);
+            }
+        }
     }
 }

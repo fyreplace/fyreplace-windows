@@ -16,5 +16,17 @@ namespace Fyreplace.Pages
         private readonly RegisterViewModel viewModel = AppBase.GetService<RegisterViewModel>();
 
         public RegisterPage() => InitializeComponent();
+
+        private void Form_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!viewModel.IsUsernameValid)
+            {
+                Username.Focus(FocusState.Programmatic);
+            }
+            else if (!viewModel.IsEmailValid)
+            {
+                Email.Focus(FocusState.Programmatic);
+            }
+        }
     }
 }
