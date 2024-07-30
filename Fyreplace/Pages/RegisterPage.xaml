@@ -17,21 +17,23 @@
         <ComboBox
             x:Uid="AccountPageBase_Environment"
             HorizontalAlignment="Stretch"
-            ItemsSource="{x:Bind EnvironmentNames}"
-            SelectedIndex="{x:Bind SelectedEnvironmentIndex, Mode=TwoWay}" />
+            ItemsSource="{x:Bind viewModel.EnvironmentNames}"
+            SelectedIndex="{x:Bind viewModel.SelectedEnvironmentIndex, Mode=TwoWay}" />
         <TextBox
             x:Name="Username"
-            x:Uid="RegisterPage_Username" />
+            x:Uid="RegisterPage_Username"
+            Text="{x:Bind viewModel.Username, Mode=TwoWay}" />
         <TextBox
             x:Name="Email"
-            x:Uid="RegisterPage_Email" />
+            x:Uid="RegisterPage_Email"
+            Text="{x:Bind viewModel.Email, Mode=TwoWay}" />
         <Button
             x:Name="Submit"
             x:Uid="RegisterPage_Submit"
             Margin="0,8,0,0"
             HorizontalAlignment="Stretch"
             Style="{ThemeResource AccentButtonStyle}"
-            IsEnabled="{x:Bind AreInputsValid(Username.Text, Email.Text), Mode=OneWay}">
+            IsEnabled="{x:Bind viewModel.CanSubmit, Mode=OneWay}">
         </Button>
     </StackPanel>
 </local:AccountPageBase>

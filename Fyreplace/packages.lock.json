@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     "net8.0-windows10.0.22621": {
+      "CommunityToolkit.Mvvm": {
+        "type": "Direct",
+        "requested": "[8.2.2, )",
+        "resolved": "8.2.2",
+        "contentHash": "r0g0k9tGYdrnz8R7T3x5UiokDffeevzK/2P/9SBL6fqLgN8B157MIi/bVUWI1KAz6ZorZrK9AdABCWUeXZZsvA=="
+      },
       "CommunityToolkit.WinUI.Controls.SettingsControls": {
         "type": "Direct",
         "requested": "[8.0.240109, )",

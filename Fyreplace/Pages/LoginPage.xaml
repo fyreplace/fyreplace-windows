@@ -18,18 +18,19 @@
         <ComboBox
             x:Uid="AccountPageBase_Environment"
             HorizontalAlignment="Stretch"
-            ItemsSource="{x:Bind EnvironmentNames}"
-            SelectedIndex="{x:Bind SelectedEnvironmentIndex, Mode=TwoWay}" />
+            ItemsSource="{x:Bind viewModel.EnvironmentNames}"
+            SelectedIndex="{x:Bind viewModel.SelectedEnvironmentIndex, Mode=TwoWay}" />
         <TextBox
             x:Name="Identifier"
-            x:Uid="LoginPage_Identifier" />
+            x:Uid="LoginPage_Identifier"
+            Text="{x:Bind viewModel.Identifier, Mode=TwoWay}"/>
         <Button
             x:Name="Submit"
             x:Uid="LoginPage_Submit"
             Margin="0,8,0,0"
             HorizontalAlignment="Stretch"
             Style="{ThemeResource AccentButtonStyle}"
-            IsEnabled="{x:Bind helpers:Users.IsUsernameValid(Identifier.Text), Mode=OneWay}">
+            IsEnabled="{x:Bind viewModel.CanSubmit, Mode=OneWay}">
         </Button>
     </StackPanel>
 </local:AccountPageBase>

@@ -1,5 +1,6 @@
 ﻿using Fyreplace.Config;
 using Fyreplace.Data;
+using Fyreplace.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -31,8 +32,12 @@ namespace Fyreplace
             }
 
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<LoginViewModel>();
+            services.AddSingleton<RegisterViewModel>();
         }
 
         public static T GetService<T>() where T : notnull => ((AppBase)Current).host.Services.GetRequiredService<T>();
+
+        public static IServiceScope CreateServiceScope() => ((AppBase)Current).host.Services.CreateScope();
     }
 }

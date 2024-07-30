@@ -17,6 +17,7 @@ namespace Fyreplace.Pages
     public sealed partial class MainPage : Page
     {
         public AppWindow? AppWindow { get; set; }
+
         private NavigationViewItemBase currentInvokedItem;
 
         public MainPage()
@@ -151,7 +152,7 @@ namespace Fyreplace.Pages
 
         private void Avatar_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout(Avatar);
 
-        private void AccountPageSelector_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) => AccountHost.Navigate(
+        private void AccountSelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) => AccountHost.Navigate(
                 sender.SelectedItem == Login ? typeof(LoginPage) : typeof(RegisterPage),
                 null,
                 new SuppressNavigationTransitionInfo()

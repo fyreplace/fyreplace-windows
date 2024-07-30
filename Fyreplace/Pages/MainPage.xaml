@@ -95,9 +95,8 @@
                                 Orientation="Vertical"
                                 Spacing="12">
                                 <SelectorBar
-                                    x:Name="AccountPageSelector"
                                     HorizontalAlignment="Center"
-                                    SelectionChanged="AccountPageSelector_SelectionChanged">
+                                    SelectionChanged="AccountSelectorBar_SelectionChanged">
                                     <SelectorBarItem
                                         x:Name="Login"
                                         x:Uid="MainPage_Login"

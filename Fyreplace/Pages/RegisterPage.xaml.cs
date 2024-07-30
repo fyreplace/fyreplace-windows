@@ -1,6 +1,6 @@
+using Fyreplace.ViewModels;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
-using static Fyreplace.Helpers.Users;
 
 namespace Fyreplace.Pages
 {
@@ -13,8 +13,8 @@ namespace Fyreplace.Pages
             ["submit"] = Submit
         };
 
-        public RegisterPage() => InitializeComponent();
+        private readonly RegisterViewModel viewModel = AppBase.GetService<RegisterViewModel>();
 
-        private bool AreInputsValid(string username, string email) => IsUsernameValid(username) && IsEmailValid(email);
+        public RegisterPage() => InitializeComponent();
     }
 }
