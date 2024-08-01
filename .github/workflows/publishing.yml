@@ -52,7 +52,10 @@ jobs:
         run: .\prepare.bat
 
       - name: Restore Nuget packages
-        run: msbuild Fyreplace /t:Restore /p:Platform=${{ matrix.architecture }}
+        run: |
+          msbuild Fyreplace `
+            /t:Restore `
+            /p:Platform=${{ matrix.architecture }}
 
       - name: Build app
         if: ${{ matrix.distribution == 'app-store' }}
@@ -70,7 +73,6 @@ jobs:
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release `
             /p:GenerateAppxPackageOnBuild=True `
-            /p:UapAppxPackageBuildMode=StoreUpload `
             /p:AppxPackageDir=AppPackages\ `
             /p:PublishReadyToRun=false
 
@@ -86,7 +88,6 @@ jobs:
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release `
             /p:GenerateAppxPackageOnBuild=True `
-            /p:UapAppxPackageBuildMode=StoreUpload `
             /p:AppxPackageDir=AppPackages\ `
             /p:PublishReadyToRun=false
 
@@ -129,3 +130,50 @@ jobs:
           name: Fyreplace.${{ matrix.architecture }}.standalone.${{ matrix.format }}
           path: Deploy\Fyreplace.${{ matrix.format }}
           if-no-files-found: error
+
+  test:
+    name: Test
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        architecture:
+          - x64
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-${{ matrix.architecture }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.architecture }}-nuget-
+
+      - name: Set Up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Prepare files
+        run: .\prepare.bat
+
+      - name: Restore Nuget packages
+        run: |
+          msbuild Fyreplace `
+            /t:Restore `
+            /p:Platform=${{ matrix.architecture }}
+
+      - name: Build app
+        run: |
+          msbuild Fyreplace `
+            /t:Build `
+            /p:Platform=${{ matrix.architecture }} `
+            /p:Configuration=Debug `
+            /p:PublishReadyToRun=false
+
+      - name: Run tests
+        run: |
+          .\vs vstest.console `
+            /p:Platform=${{ matrix.architecture }} `
+            Fyreplace.Tests\bin\${{ matrix.architecture }}\Debug\*\win-${{ matrix.architecture }}\Fyreplace.Tests.build.appxrecipe
