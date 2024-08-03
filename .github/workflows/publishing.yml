@@ -49,7 +49,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Prepare files
-        run: .\prepare.bat
+        run: .\prepare
 
       - name: Restore Nuget packages
         run: |
@@ -156,7 +156,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Prepare files
-        run: .\prepare.bat
+        run: .\prepare
 
       - name: Restore Nuget packages
         run: |

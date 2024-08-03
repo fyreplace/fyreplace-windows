@@ -163,7 +163,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <OpenApiReference Include="Services\openapi.yaml" OutputPath="$(MSBuildProjectDirectory)\Services\APIClient.g.cs" CodeGenerator="NSwagCSharp" Namespace="Fyreplace.Services" ClassName="APIClient">
+    <OpenApiReference Include="Services\openapi.yaml" OutputPath="$(MSBuildProjectDirectory)\Services\ApiClient.g.cs" CodeGenerator="NSwagCSharp" Namespace="Fyreplace.Services" ClassName="ApiClient">
       <Options>/GenerateClientInterfaces:true</Options>
     </OpenApiReference>
   </ItemGroup>
