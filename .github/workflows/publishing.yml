@@ -55,7 +55,8 @@ jobs:
         run: |
           msbuild Fyreplace `
             /t:Restore `
-            /p:Platform=${{ matrix.architecture }}
+            /p:Platform=${{ matrix.architecture }} `
+            /p:PublishReadyToRun=true
 
       - name: Build app
         if: ${{ matrix.distribution == 'app-store' }}
@@ -73,8 +74,7 @@ jobs:
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release `
             /p:GenerateAppxPackageOnBuild=True `
-            /p:AppxPackageDir=AppPackages\ `
-            /p:PublishReadyToRun=false
+            /p:AppxPackageDir=AppPackages\
 
       - name: Build app
         if: ${{ matrix.distribution == 'standalone' && matrix.format == 'msix' }}
@@ -88,8 +88,7 @@ jobs:
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release `
             /p:GenerateAppxPackageOnBuild=True `
-            /p:AppxPackageDir=AppPackages\ `
-            /p:PublishReadyToRun=false
+            /p:AppxPackageDir=AppPackages\
 
       - name: Build app
         if: ${{ matrix.format == 'msi' }}
@@ -100,7 +99,6 @@ jobs:
             /t:Build `
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release `
-            /p:PublishReadyToRun=false `
             /p:SDKSelfContained=true
 
       - name: Simplify MSIX path
@@ -169,8 +167,7 @@ jobs:
           msbuild Fyreplace `
             /t:Build `
             /p:Platform=${{ matrix.architecture }} `
-            /p:Configuration=Debug `
-            /p:PublishReadyToRun=false
+            /p:Configuration=Debug
 
       - name: Run tests
         run: |
