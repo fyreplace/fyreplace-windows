@@ -1,16 +1,14 @@
 ﻿using Microsoft.Windows.ApplicationModel.Resources;
 
-#if !DEBUG
-using Fyreplace.Config;
-#endif
-
 namespace Fyreplace.Data
 {
     public enum Environment
     {
         Main,
         Dev,
+#if DEBUG
         Local
+#endif
     }
 
     public static class EnvironmentExtensions
@@ -19,16 +17,15 @@ namespace Fyreplace.Data
 #if DEBUG
                 Environment.Local;
 #else
-                AppBase.GetService<BuildInfo>().Sentry.Environment == "dev" ? Environment.Dev : Environment.Main;
+                AppBase.GetService<Fyreplace.Config.BuildInfo>().Sentry.Environment == "dev" ? Environment.Dev : Environment.Main;
 #endif
-
 
         public static string Description(this Environment environment)
         {
             var resourceLoader = new ResourceLoader();
             var description = resourceLoader.GetString($"Environment_{environment}");
 
-            if (environment == EnvironmentExtensions.Default)
+            if (environment == Default)
             {
                 description += " " + resourceLoader.GetString("Environment_DefaultSuffix");
             }

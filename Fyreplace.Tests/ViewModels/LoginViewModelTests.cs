@@ -1,11 +1,18 @@
-﻿using Fyreplace.ViewModels;
+﻿using Fyreplace.Events;
+using Fyreplace.Tests.Events;
+using Fyreplace.Tests.Services;
+using Fyreplace.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
 namespace Fyreplace.Tests.ViewModels
 {
     [TestClass]
     public sealed class LoginViewModelTests
     {
+        [TestInitialize]
+        public void TestInitialize() => GetEventBus().Clear();
+
         [TestMethod]
         public void IdentifierMustHaveCorrectLength()
         {
@@ -26,5 +33,34 @@ namespace Fyreplace.Tests.ViewModels
             viewModel.Identifier = new string('a', 255);
             Assert.IsFalse(viewModel.CanSubmit);
         }
+
+        [TestMethod]
+        public async Task InvalidIdentifierProducesFailure()
+        {
+            var eventBus = GetEventBus();
+            var viewModel = new LoginViewModel
+            {
+                Identifier = FakeApiClient.BadIdentifier
+            };
+
+            await viewModel.Submit();
+            Assert.AreEqual(1, eventBus.Events.Count);
+            Assert.IsInstanceOfType<FailureEvent>(eventBus?.Events[0]);
+        }
+
+        [TestMethod]
+        public async Task ValidIdentifierProducesNoFailures()
+        {
+            var eventBus = GetEventBus();
+            var viewModel = new LoginViewModel
+            {
+                Identifier = FakeApiClient.GoodIdentifier
+            };
+
+            await viewModel.Submit();
+            Assert.AreEqual(0, eventBus.Events.Count);
+        }
+
+        private static StoringEventBus GetEventBus() => (StoringEventBus)AppBase.GetService<IEventBus>();
     }
 }

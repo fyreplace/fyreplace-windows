@@ -10,7 +10,10 @@ namespace Fyreplace.Data
             {
                 try
                 {
-                    return (Environment)Enum.Parse(typeof(Environment), Read("Environment", EnvironmentExtensions.Default.ToString()));
+                    return (Environment)Enum.Parse(
+                        typeof(Environment),
+                        Read("Environment", EnvironmentExtensions.Default.ToString())
+                    );
                 }
                 catch
                 {

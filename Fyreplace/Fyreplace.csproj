@@ -34,16 +34,13 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.0.240109" />
+    <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.0.240109" />
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.0.240109" />
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="8.0.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NSwag.ApiDescription.Client" Version="14.1.0">
+    <PackageReference Include="NSwag.MSBuild" Version="14.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -75,18 +72,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Controls\KeyboardShortcut.xaml" />
-    <None Remove="Pages\ArchivePage.xaml" />
-    <None Remove="Pages\DraftsPage.xaml" />
-    <None Remove="Pages\ErrorPage.xaml" />
-    <None Remove="Pages\FeedPage.xaml" />
-    <None Remove="Pages\LoginPage.xaml" />
-    <None Remove="Pages\MainPage.xaml" />
-    <None Remove="Pages\NotificationsPage.xaml" />
-    <None Remove="Pages\PublishedPage.xaml" />
-    <None Remove="Pages\RegisterPage.xaml" />
-    <None Remove="Pages\SettingsPage.xaml" />
-    <None Remove="Services\openapi.yaml" />
+    <None Remove="Views\Controls\KeyboardShortcut.xaml" />
+    <None Remove="Views\Pages\ArchivePage.xaml" />
+    <None Remove="Views\Pages\DraftsPage.xaml" />
+    <None Remove="Views\Pages\ErrorPage.xaml" />
+    <None Remove="Views\Pages\FeedPage.xaml" />
+    <None Remove="Views\Pages\LoginPage.xaml" />
+    <None Remove="Views\Pages\MainPage.xaml" />
+    <None Remove="Views\Pages\NotificationsPage.xaml" />
+    <None Remove="Views\Pages\PublishedPage.xaml" />
+    <None Remove="Views\Pages\RegisterPage.xaml" />
+    <None Remove="Views\Pages\SettingsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -108,9 +104,6 @@
     <Page Update="Controls\KeyboardShortcut.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\ArchivePage.xaml">
@@ -161,11 +154,6 @@
     <Page Update="Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <OpenApiReference Include="Services\openapi.yaml" OutputPath="$(MSBuildProjectDirectory)\Services\ApiClient.g.cs" CodeGenerator="NSwagCSharp" Namespace="Fyreplace.Services" ClassName="ApiClient">
-      <Options>/GenerateClientInterfaces:true</Options>
-    </OpenApiReference>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -218,5 +206,9 @@
     <XmlPoke Condition="$(PackagePublisher) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Publisher" Value="$(PackagePublisher)" />
     <XmlPoke Condition="$(PackagePublisherName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Properties/ns:PublisherDisplayName" Value="$(PackagePublisherName)" />
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Version" Value="1.$(VersionNumber).$(BranchNumber).0" />
+  </Target>
+
+  <Target Name="NSwag" BeforeTargets="PrepareForBuild">
+    <Exec Command="$(NSwagExe) openapi2csclient /Input:Services\openapi.yaml /Output:Services\ApiClient.g.cs /GenerateClientInterfaces:true /Namespace:Fyreplace.Services /ClassName:ApiClient" />
   </Target>
 </Project>

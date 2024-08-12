@@ -141,6 +141,24 @@
   <data name="ErrorPage_Title.Text" xml:space="preserve">
     <value>Something went wrong. This page does not exist!</value>
   </data>
+  <data name="Error_Connection_Message" xml:space="preserve">
+    <value>The server seems to be unreachable.</value>
+  </data>
+  <data name="Error_Connection_Title" xml:space="preserve">
+    <value>Connection error</value>
+  </data>
+  <data name="Error_Unknown_Message" xml:space="preserve">
+    <value>Unknown error. This should never happen…</value>
+  </data>
+  <data name="Error_Unknown_Title" xml:space="preserve">
+    <value>An error just occurred</value>
+  </data>
+  <data name="LoginPage_Error_NotFound_Message" xml:space="preserve">
+    <value>No user account was found with this username or email.</value>
+  </data>
+  <data name="LoginPage_Error_NotFound_Title" xml:space="preserve">
+    <value>User not found</value>
+  </data>
   <data name="LoginPage_Identifier.Header" xml:space="preserve">
     <value>Identifier:</value>
   </data>
@@ -176,6 +194,9 @@
   </data>
   <data name="MainPage_Title.Text" xml:space="preserve">
     <value>Fyreplace</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
   </data>
   <data name="RegisterPage_Email.Header" xml:space="preserve">
     <value>Email:</value>

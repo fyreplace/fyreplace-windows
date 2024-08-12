@@ -19,6 +19,17 @@
           "Microsoft.WindowsAppSDK": "1.3.230331000"
         }
       },
+      "CommunityToolkit.WinUI.Converters": {
+        "type": "Direct",
+        "requested": "[8.0.240109, )",
+        "resolved": "8.0.240109",
+        "contentHash": "WYY2zP9WiByHzyW0OVLQFU4tFnCFpWsa7uz/NRIOgYD5RQn5cK6KbRlaN+D6G2fgFdqAJP453fKemojPcBsvoQ==",
+        "dependencies": {
+          "CommunityToolkit.Common": "8.2.1",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
+          "Microsoft.WindowsAppSDK": "1.3.230331000"
+        }
+      },
       "CommunityToolkit.WinUI.Extensions": {
         "type": "Direct",
         "requested": "[8.0.240109, )",
@@ -29,12 +40,6 @@
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
           "Microsoft.WindowsAppSDK": "1.3.230331000"
         }
-      },
-      "Microsoft.Extensions.ApiDescription.Client": {
-        "type": "Direct",
-        "requested": "[8.0.7, )",
-        "resolved": "8.0.7",
-        "contentHash": "H0UfAHSpsl5gnlmWiKsiPSe6iQYr2S3AVoivizxwrEQLI9xCKO0CG1tFDVfj1nVscIpZcdDipyQTDhXPUxx3tQ=="
       },
       "Microsoft.Extensions.Hosting": {
         "type": "Direct",
@@ -88,15 +93,11 @@
         "resolved": "13.0.3",
         "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
-      "NSwag.ApiDescription.Client": {
+      "NSwag.MSBuild": {
         "type": "Direct",
         "requested": "[14.1.0, )",
         "resolved": "14.1.0",
-        "contentHash": "DnqjXwi+f3FdZVFhh2RZVCS+ZwmsD2pVBcEFdFiSQGddRw/f5p2y7GXlrPhU66pFk4NuJyViV8TeUmwiD+jEEg==",
-        "dependencies": {
-          "Microsoft.Extensions.ApiDescription.Client": "6.0.3",
-          "NSwag.MSBuild": "14.1.0"
-        }
+        "contentHash": "Y7ydRTUCUi1DaVml6r3W7NMgvhkkJY1CTnFfc3jQIBPHwvvegVqRD3C5xdPwgZp+KZ5dUarH6bfK3J2Y2FjVhQ=="
       },
       "Sentry": {
         "type": "Direct",
@@ -386,11 +387,6 @@
         "type": "Transitive",
         "resolved": "1.0.2646-prerelease",
         "contentHash": "p7dSntKAk5egOtIVRP6ZDEUHy3/mqfubTrlLZm5UKvRSJJc39h4SHSorcw+UbxE9lsqt4A9U6NByrgpSZQ+xBw=="
-      },
-      "NSwag.MSBuild": {
-        "type": "Transitive",
-        "resolved": "14.1.0",
-        "contentHash": "Y7ydRTUCUi1DaVml6r3W7NMgvhkkJY1CTnFfc3jQIBPHwvvegVqRD3C5xdPwgZp+KZ5dUarH6bfK3J2Y2FjVhQ=="
       },
       "System.Diagnostics.DiagnosticSource": {
         "type": "Transitive",

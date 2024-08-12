@@ -1,4 +1,5 @@
 ﻿using Fyreplace.Config;
+using Fyreplace.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
 using Sentry;
@@ -31,7 +32,7 @@ namespace Fyreplace
                     options.DisableWinUiUnhandledExceptionIntegration();
                 });
 
-                base.UnhandledException += OnUnhandledException;
+                UnhandledException += OnUnhandledException;
             }
 
             InitializeComponent();

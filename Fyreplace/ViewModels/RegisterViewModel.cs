@@ -1,16 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Fyreplace.Events;
+using Fyreplace.Services;
+using System.Threading.Tasks;
 
 namespace Fyreplace.ViewModels
 {
     public sealed partial class RegisterViewModel : AccountViewModelBase
     {
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(CanSubmit))]
-        public string username = "";
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(CanSubmit))]
-        public string email = "";
+        public override bool CanSubmit => IsUsernameValid && IsEmailValid;
 
         public bool IsUsernameValid => !string.IsNullOrWhiteSpace(Username)
             && Username.Length >= 3
@@ -20,6 +17,16 @@ namespace Fyreplace.ViewModels
             && Email.Length >= 3
             && Email.Length <= 254;
 
-        public bool CanSubmit => IsUsernameValid && IsEmailValid;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+        public string username = "";
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+        public string email = "";
+
+        protected override IEvent? Handle(ApiException exception) => new FailureEvent();
+
+        public override Task Submit() => Task.CompletedTask;
     }
 }
