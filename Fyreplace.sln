@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.10.35004.147
-MinimumVisualStudioVersion = 10.0.40219.1
+VisualStudioVersion = 17
+MinimumVisualStudioVersion = 17
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fyreplace", "Fyreplace\Fyreplace.csproj", "{E7B50EC2-EC1A-4F1D-B327-A6CBECE3CAF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{423516FF-06C7-46CC-BAD5-7611EE434A2D}"
