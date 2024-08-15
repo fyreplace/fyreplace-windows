@@ -1,10 +1,15 @@
+using Fyreplace.Data;
 using Fyreplace.ViewModels;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
 
 namespace Fyreplace.Views.Pages
 {
-    public sealed partial class RegisterPage : AccountPageBase
+    public abstract class RegisterPageBase : AccountEntryPageBase<RegisterViewModel>
+    {
+    }
+
+    public sealed partial class RegisterPage : RegisterPageBase
     {
         protected override IDictionary<string, UIElement> ConnectedElements => new Dictionary<string, UIElement>
         {
@@ -13,12 +18,11 @@ namespace Fyreplace.Views.Pages
             ["submit"] = Submit,
             ["submit-wrapper"] = SubmitWrapper
         };
+        protected override RegisterViewModel viewModel => AppBase.GetService<RegisterViewModel>();
 
-        private readonly RegisterViewModel viewModel = AppBase.GetService<RegisterViewModel>();
+        private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
 
         public RegisterPage() => InitializeComponent();
-
-        #region Event Handlers
 
         private void Form_Loaded(object sender, RoutedEventArgs e)
         {
@@ -31,7 +35,5 @@ namespace Fyreplace.Views.Pages
                 Email.Focus(FocusState.Programmatic);
             }
         }
-
-        #endregion
     }
 }

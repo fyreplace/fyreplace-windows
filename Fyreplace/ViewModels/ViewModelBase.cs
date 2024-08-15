@@ -12,9 +12,7 @@ namespace Fyreplace.ViewModels
     {
         protected IEventBus EventBus = AppBase.GetService<IEventBus>();
 
-        protected abstract IEvent? Handle(ApiException exception);
-
-        protected async Task<T?> Call<T>(Func<Task<T>> action)
+        protected async Task<T?> Call<T>(Func<Task<T>> action, Func<ApiException, FailureEvent?> onFailure)
         {
             try
             {
@@ -22,15 +20,15 @@ namespace Fyreplace.ViewModels
             }
             catch (HttpRequestException)
             {
-                await EventBus.Publish(new FailureEvent("Error_Connection_Title", "Error_Connection_Message"));
+                await EventBus.Publish(new FailureEvent("Error_Connection"));
             }
             catch (ApiException exception)
             {
-                var e = Handle(exception);
+                var failureEvent = onFailure(exception);
 
-                if (e != null)
+                if (failureEvent != null)
                 {
-                    await EventBus.Publish(e);
+                    await EventBus.Publish(failureEvent);
                 }
             }
             catch (Exception exception)
@@ -42,10 +40,12 @@ namespace Fyreplace.ViewModels
             return default;
         }
 
-        protected Task Call(Func<Task> action) => Call(async () =>
-        {
-            await action();
-            return true;
-        });
+        protected Task Call(Func<Task> action, Func<ApiException, FailureEvent?> onFailure) => Call(async () =>
+            {
+                await action();
+                return true;
+            },
+            onFailure
+        );
     }
 }

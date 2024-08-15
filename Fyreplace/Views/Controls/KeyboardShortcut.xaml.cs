@@ -7,7 +7,7 @@ namespace Fyreplace.Views.Controls
 {
     public sealed partial class KeyboardShortcut : UserControl
     {
-        public string Key { get; set; } = "";
+        public string Key { get; set; } = string.Empty;
 
         public bool Ctrl { get; set; } = false;
 

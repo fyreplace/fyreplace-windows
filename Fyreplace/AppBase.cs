@@ -1,5 +1,7 @@
 ﻿using Fyreplace.Config;
 using Fyreplace.Data;
+using Fyreplace.Data.Preferences;
+using Fyreplace.Data.Secrets;
 using Fyreplace.Events;
 using Fyreplace.Services;
 using Fyreplace.ViewModels;
@@ -26,20 +28,22 @@ namespace Fyreplace
         protected virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<BuildInfo>();
+            services.AddSingleton<ISecrets, PasswordVaultSecrets>();
             services.AddSingleton<IEventBus, EventBus>();
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<RegisterViewModel>();
+            services.AddSingleton<AccountViewModel>();
             services.AddSingleton<MainWindow>();
 
             var info = services.BuildServiceProvider().GetRequiredService<BuildInfo>();
 
             if (info.App.SelfContained)
             {
-                services.AddSingleton<ISettings, RegistrySettings>();
+                services.AddSingleton<IPreferences, RegistryPreferences>();
             }
             else
             {
-                services.AddSingleton<ISettings, LocalSettings>();
+                services.AddSingleton<IPreferences, LocalSettingsPreferences>();
             }
 
             foreach (var environment in Enum.GetValues<Environment>())

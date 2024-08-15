@@ -1,7 +1,8 @@
 ﻿using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.Services;
-using Fyreplace.Tests.Data;
+using Fyreplace.Tests.Data.Preferences;
+using Fyreplace.Tests.Data.Secrets;
 using Fyreplace.Tests.Events;
 using Fyreplace.Tests.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,11 +23,16 @@ namespace Fyreplace.Tests
         protected override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            services.RemoveAll<ISettings>();
+            services.RemoveAll<IPreferences>();
+            services.AddSingleton<IPreferences, MemoryPreferences>();
+
+            services.RemoveAll<ISecrets>();
+            services.AddSingleton<ISecrets, MemorySecrets>();
+
             services.RemoveAll<IEventBus>();
-            services.RemoveAll<IApiClient>();
-            services.AddSingleton<ISettings, MemorySettings>();
             services.AddSingleton<IEventBus, StoringEventBus>();
+
+            services.RemoveAll<IApiClient>();
 
             foreach (var environment in Enum.GetValues<Environment>())
             {

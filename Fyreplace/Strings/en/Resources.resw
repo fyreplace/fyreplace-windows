@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountPageBase_Environment.Header" xml:space="preserve">
+  <data name="AccountEntryPageBase_Environment.Header" xml:space="preserve">
     <value>Environment:</value>
   </data>
-  <data name="AccountPageBase_Environment.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="AccountEntryPageBase_Environment.ToolTipService.ToolTip" xml:space="preserve">
     <value>If you don't know what this is, pick the default one.</value>
   </data>
   <data name="AppName" xml:space="preserve">
@@ -141,22 +141,22 @@
   <data name="ErrorPage_Title.Text" xml:space="preserve">
     <value>Something went wrong. This page does not exist!</value>
   </data>
-  <data name="Error_Connection_Message" xml:space="preserve">
+  <data name="Error_Connection.Message" xml:space="preserve">
     <value>The server seems to be unreachable.</value>
   </data>
-  <data name="Error_Connection_Title" xml:space="preserve">
+  <data name="Error_Connection.Title" xml:space="preserve">
     <value>Connection error</value>
   </data>
-  <data name="Error_Unknown_Message" xml:space="preserve">
+  <data name="Error_Unknown.Message" xml:space="preserve">
     <value>Unknown error. This should never happen…</value>
   </data>
-  <data name="Error_Unknown_Title" xml:space="preserve">
+  <data name="Error_Unknown.Title" xml:space="preserve">
     <value>An error just occurred</value>
   </data>
-  <data name="LoginPage_Error_NotFound_Message" xml:space="preserve">
+  <data name="LoginPage_Error_NotFound.Message" xml:space="preserve">
     <value>No user account was found with this username or email.</value>
   </data>
-  <data name="LoginPage_Error_NotFound_Title" xml:space="preserve">
+  <data name="LoginPage_Error_NotFound.Title" xml:space="preserve">
     <value>User not found</value>
   </data>
   <data name="LoginPage_Identifier.Header" xml:space="preserve">
@@ -180,7 +180,7 @@
   <data name="MainPage_Feed.Content" xml:space="preserve">
     <value>Feed</value>
   </data>
-  <data name="MainPage_Login.Text" xml:space="preserve">
+  <data name="AccountEntriesPage_Login.Text" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="MainPage_Notifications.Content" xml:space="preserve">
@@ -189,7 +189,7 @@
   <data name="MainPage_Published.Content" xml:space="preserve">
     <value>Published</value>
   </data>
-  <data name="MainPage_Register.Text" xml:space="preserve">
+  <data name="AccountEntriesPage_Register.Text" xml:space="preserve">
     <value>Sign up</value>
   </data>
   <data name="MainPage_Title.Text" xml:space="preserve">
@@ -287,5 +287,35 @@
   </data>
   <data name="Settings_KeyboardShortcut_Shift" xml:space="preserve">
     <value>Shift</value>
+  </data>
+  <data name="AccountEntryPageBase_RandomCode.Header" xml:space="preserve">
+    <value>One-time code:</value>
+  </data>
+  <data name="AccountEntryPageBase_RandomCode.PlaceholderText" xml:space="preserve">
+    <value>123456</value>
+  </data>
+  <data name="AccountEntryPageBase_Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AccountPage_Logout.Content" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="LoginPage_Error_CreateToken_BadRequest.Title" xml:space="preserve">
+    <value>Invalid code</value>
+  </data>
+  <data name="LoginPage_Error_CreateToken_BadRequest.Message" xml:space="preserve">
+    <value>Check if the code you provided is correct.</value>
+  </data>
+  <data name="AccountEntryPageBase_RandomCodeTip.Title" xml:space="preserve">
+    <value>Check your email</value>
+  </data>
+  <data name="AccountEntryPageBase_RandomCodeTip.Subtitle" xml:space="preserve">
+    <value>A one-time use code has been sent to your email address.</value>
+  </data>
+  <data name="Error_BadRequest.Title" xml:space="preserve">
+    <value>Bad request</value>
+  </data>
+  <data name="Error_BadRequest.Message" xml:space="preserve">
+    <value>An incorrect request was sent to the server.</value>
   </data>
 </root>

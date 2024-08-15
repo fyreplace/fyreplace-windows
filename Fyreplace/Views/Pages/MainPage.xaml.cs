@@ -1,3 +1,5 @@
+using Fyreplace.Data;
+using Fyreplace.Events;
 using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -9,6 +11,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics;
 
@@ -19,13 +22,18 @@ namespace Fyreplace.Views.Pages
         public AppWindow? AppWindow { get; set; }
 
         private NavigationViewItemBase currentInvokedItem;
+        private readonly ISecrets secrets = AppBase.GetService<ISecrets>();
+        private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
         public MainPage()
         {
             InitializeComponent();
             currentInvokedItem = Feed;
-            Host.Navigate(typeof(FeedPage));
+            Host.Navigate(typeof(FeedPage), null, new SuppressNavigationTransitionInfo());
+            eventBus.Subscribe<SecretChangedEvent>(OnSecretChanged);
         }
+
+        #region Title Bar
 
         public UIElement GetTitleBar() => TitleBar;
 
@@ -54,6 +62,10 @@ namespace Fyreplace.Views.Pages
             nonClientInput.SetRegionRects(NonClientRegionKind.Passthrough, [avatarRect]);
         }
 
+        #endregion
+
+        #region navigation
+
         private void GoBack()
         {
             if (Host.CanGoBack)
@@ -70,13 +82,18 @@ namespace Fyreplace.Views.Pages
             }
         }
 
-        private void UpdateNavigationSelection()
+        private void NavigatePoppingBackStack(Type pageType)
         {
-            Navigation.SelectedItem = Navigation.MenuItems
-                .OfType<NavigationViewItem>()
-                .Where(item => item.Tag.ToString() == Host.CurrentSourcePageType.Name)
-                .SingleOrDefault(Navigation.SettingsItem);
+            Host.Navigate(pageType, null, new ContinuumNavigationTransitionInfo());
+            Host.BackStack.Clear();
         }
+
+        private void UpdateNavigationSelection() => Navigation.SelectedItem = Navigation.MenuItems
+            .OfType<NavigationViewItem>()
+            .Where(item => item.Tag.ToString() == Host.CurrentSourcePageType.Name)
+            .SingleOrDefault(Navigation.SettingsItem);
+
+        #endregion
 
         #region Event Handlers
 
@@ -100,13 +117,13 @@ namespace Fyreplace.Views.Pages
             e.Handled = true;
         }
 
-        private void MainPage_Accelerators_GoBack(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        private void Accelerators_GoBack(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             GoBack();
             args.Handled = true;
         }
 
-        private void MainPage_Accelerators_GoForward(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        private void Accelerators_GoForward(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             GoForward();
             args.Handled = true;
@@ -130,18 +147,15 @@ namespace Fyreplace.Views.Pages
             }
 
             currentInvokedItem = args.InvokedItemContainer;
-            Host.Navigate(
+            NavigatePoppingBackStack(
                 args.IsSettingsInvoked
                     ? typeof(SettingsPage)
                     : Assembly.GetExecutingAssembly()
                         .GetTypes()
                         .Where(page => page.Namespace == "Fyreplace.Views.Pages")
                         .Where(page => page.Name == (string)args.InvokedItemContainer.Tag)
-                        .SingleOrDefault(typeof(ErrorPage)),
-                null,
-                new ContinuumNavigationTransitionInfo()
+                        .SingleOrDefault(typeof(ErrorPage))
             );
-            Host.BackStack.Clear();
         }
 
         private void Navigation_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) => GoBack();
@@ -152,11 +166,21 @@ namespace Fyreplace.Views.Pages
 
         private void Avatar_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout(Avatar);
 
-        private void AccountSelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) => AccountHost.Navigate(
-                sender.SelectedItem == Login ? typeof(LoginPage) : typeof(RegisterPage),
-                null,
-                new SuppressNavigationTransitionInfo()
-            );
+        private Task OnSecretChanged(SecretChangedEvent e)
+        {
+            switch (e.Name)
+            {
+                case nameof(ISecrets.Token):
+                    if (string.IsNullOrEmpty(secrets.Token))
+                    {
+                        NavigatePoppingBackStack(typeof(FeedPage));
+                    }
+
+                    break;
+            }
+
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

@@ -73,6 +73,9 @@
 
   <ItemGroup>
     <None Remove="Views\Controls\KeyboardShortcut.xaml" />
+    <None Remove="Views\Pages\AccountEntriesPage.xaml" />
+    <None Remove="Views\Pages\AccountPage.xaml" />
+    <None Remove="Views\Pages\AccountRootPage.xaml" />
     <None Remove="Views\Pages\ArchivePage.xaml" />
     <None Remove="Views\Pages\DraftsPage.xaml" />
     <None Remove="Views\Pages\ErrorPage.xaml" />
@@ -101,57 +104,72 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\KeyboardShortcut.xaml">
+    <Page Update="Views\Controls\KeyboardShortcut.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\ArchivePage.xaml">
+    <Page Update="Views\Pages\AccountEntriesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\DraftsPage.xaml">
+    <Page Update="Views\Pages\AccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\ErrorPage.xaml">
+    <Page Update="Views\Pages\AccountRootPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\FeedPage.xaml">
+    <Page Update="Views\Pages\ArchivePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\LoginPage.xaml">
+    <Page Update="Views\Pages\DraftsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\MainPage.xaml">
+    <Page Update="Views\Pages\ErrorPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\NotificationsPage.xaml">
+    <Page Update="Views\Pages\FeedPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\PublishedPage.xaml">
+    <Page Update="Views\Pages\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\RegisterPage.xaml">
+    <Page Update="Views\Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\SettingsPage.xaml">
+    <Page Update="Views\Pages\NotificationsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Pages\PublishedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Pages\RegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

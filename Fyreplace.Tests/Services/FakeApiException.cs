@@ -9,7 +9,7 @@ namespace Fyreplace.Tests.Services
     public sealed class FakeApiException(HttpStatusCode status, JsonObject? body = null) : ApiException(
         status.ToString(),
         (int)status,
-        body?.ToString() ?? "",
+        body?.ToString() ?? string.Empty,
         new ReadOnlyDictionary<string, IEnumerable<string>>(
             new Dictionary<string, IEnumerable<string>>()
             {

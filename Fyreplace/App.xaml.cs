@@ -20,7 +20,7 @@ namespace Fyreplace
                 DeploymentManager.Initialize();
             }
 
-            if (info.Sentry.Dsn != "")
+            if (info.Sentry.Dsn != string.Empty)
             {
                 SentrySdk.Init(options =>
                 {

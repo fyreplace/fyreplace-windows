@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Fyreplace.Data;
+﻿using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.Services;
 using System.Net;
@@ -7,26 +6,81 @@ using System.Threading.Tasks;
 
 namespace Fyreplace.ViewModels
 {
-    public sealed partial class LoginViewModel : AccountViewModelBase
+    public sealed partial class LoginViewModel : AccountEntryViewModelBase
     {
-        public override bool CanSubmit => !string.IsNullOrWhiteSpace(Identifier)
-            && Identifier.Length >= 3
-            && Identifier.Length <= 254
-            && !IsLoading;
+        public override bool CanSubmitFirstStep => !string.IsNullOrWhiteSpace(preferences.Account_Identifier)
+            && preferences.Account_Identifier.Length >= 3
+            && preferences.Account_Identifier.Length <= 254;
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
-        public string identifier = "";
+        private IApiClient Api => AppBase.GetService<IApiClient>(preferences.Connection_Environment);
 
-        private readonly ISettings settings = AppBase.GetService<ISettings>();
-        private IApiClient Api => AppBase.GetService<IApiClient>(settings.Environment);
-
-        protected override IEvent? Handle(ApiException exception) => exception.StatusCode switch
+        public override Task Submit() => CallWhileLoading(async () =>
         {
-            (int)HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound_Title", "LoginPage_Error_NotFound_Message"),
-            _ => new FailureEvent()
-        };
+            if (preferences.Account_IsWaitingForRandomCode)
+            {
+                await CreateToken();
+            }
+            else
+            {
+                await SendEmail();
+            }
+        }, onFailure: (ApiException exception) =>
+        {
+            return exception.StatusCode switch
+            {
+                (int)HttpStatusCode.BadRequest => new FailureEvent("LoginPage_Error_BadRequest"),
+                (int)HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
+                _ => new FailureEvent()
+            };
+        });
 
-        public override Task Submit() => CallWhileLoading(() => Api.CreateNewTokenAsync(new() { Identifier = Identifier }));
+        public override void Cancel()
+        {
+            base.Cancel();
+            IsRandomCodeTipShown = false;
+        }
+
+        protected override async Task OnPreferenceChanged(PreferenceChangedEvent e)
+        {
+            await base.OnPreferenceChanged(e);
+
+            switch (e.Name)
+            {
+                case nameof(IPreferences.Account_Identifier):
+                    SubmitCommand.NotifyCanExecuteChanged();
+                    break;
+            }
+        }
+
+        private Task SendEmail() => CallWhileLoading(async () =>
+            {
+                await Api.CreateNewTokenAsync(new() { Identifier = preferences.Account_Identifier });
+                preferences.Account_IsWaitingForRandomCode = true;
+                IsRandomCodeTipShown = true;
+            },
+            onFailure: (ApiException exception) => exception.StatusCode switch
+            {
+                (int)HttpStatusCode.BadRequest => new FailureEvent("Error_BadRequest"),
+                (int)HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
+                _ => new FailureEvent()
+            }
+        );
+
+        private Task CreateToken() => CallWhileLoading(async () =>
+            {
+                secrets.Token = await Api.CreateTokenAsync(new()
+                {
+                    Identifier = preferences.Account_Identifier,
+                    Secret = RandomCode
+                });
+                preferences.Account_IsWaitingForRandomCode = false;
+            },
+            onFailure: (ApiException exception) => exception.StatusCode switch
+            {
+                (int)HttpStatusCode.BadRequest => new FailureEvent("LoginPage_Error_CreateToken_BadRequest"),
+                (int)HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
+                _ => new FailureEvent()
+            }
+        );
     }
 }

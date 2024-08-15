@@ -7,23 +7,31 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     mc:Ignorable="d"
     KeyboardAcceleratorPlacementMode="Hidden"
     PointerPressed="MainPage_PointerPressed">
+
+    <Page.Resources>
+        <converters:EmptyStringToObjectConverter
+            x:Key="EmptyStringToBoolConverter"
+            EmptyValue="False"
+            NotEmptyValue="True" />
+    </Page.Resources>
 
     <Page.KeyboardAccelerators>
         <KeyboardAccelerator
             Key="Left"
             Modifiers="Menu"
-            Invoked="MainPage_Accelerators_GoBack" />
+            Invoked="Accelerators_GoBack" />
         <KeyboardAccelerator
             Key="Right"
             Modifiers="Menu"
-            Invoked="MainPage_Accelerators_GoForward" />
+            Invoked="Accelerators_GoForward" />
         <KeyboardAccelerator
             Key="Back"
             Modifiers="Windows"
-            Invoked="MainPage_Accelerators_GoBack" />
+            Invoked="Accelerators_GoBack" />
     </Page.KeyboardAccelerators>
 
     <Grid>
@@ -90,29 +98,13 @@
                     VerticalAlignment="Center">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout>
-                            <StackPanel
-                                MinWidth="240"
-                                Orientation="Vertical"
-                                Spacing="12">
-                                <SelectorBar
-                                    HorizontalAlignment="Center"
-                                    SelectionChanged="AccountSelectorBar_SelectionChanged">
-                                    <SelectorBarItem
-                                        x:Name="Login"
-                                        x:Uid="MainPage_Login"
-                                        IsSelected="True" />
-                                    <SelectorBarItem
-                                        x:Name="Register"
-                                        x:Uid="MainPage_Register" />
-                                </SelectorBar>
-                                <Frame x:Name="AccountHost" />
-                            </StackPanel>
+                            <local:AccountRootPage />
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                 </PersonPicture>
             </Button>
         </Grid>
-        
+
         <NavigationView
             x:Name="Navigation"
             PaneDisplayMode="Auto"
@@ -139,7 +131,8 @@
                 <NavigationViewItem
                     x:Uid="MainPage_Notifications"
                     Tag="NotificationsPage"
-                    Icon="{ui:FontIcon Glyph=&#xEA8F;}">
+                    Icon="{ui:FontIcon Glyph=&#xEA8F;}"
+                    IsEnabled="{x:Bind secrets.Token, Mode=OneWay, Converter={StaticResource EmptyStringToBoolConverter}}">
                     <NavigationViewItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Number2" Modifiers="Control" />
                     </NavigationViewItem.KeyboardAccelerators>
@@ -147,7 +140,8 @@
                 <NavigationViewItem
                     x:Uid="MainPage_Archive"
                     Tag="ArchivePage"
-                    Icon="{ui:FontIcon Glyph=&#xE81C;}">
+                    Icon="{ui:FontIcon Glyph=&#xE81C;}"
+                    IsEnabled="{x:Bind secrets.Token, Mode=OneWay, Converter={StaticResource EmptyStringToBoolConverter}}">
                     <NavigationViewItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Number3" Modifiers="Control" />
                     </NavigationViewItem.KeyboardAccelerators>
@@ -155,7 +149,8 @@
                 <NavigationViewItem
                     x:Uid="MainPage_Drafts"
                     Tag="DraftsPage"
-                    Icon="{ui:FontIcon Glyph=&#xE8A5;}">
+                    Icon="{ui:FontIcon Glyph=&#xE8A5;}"
+                    IsEnabled="{x:Bind secrets.Token, Mode=OneWay, Converter={StaticResource EmptyStringToBoolConverter}}">
                     <NavigationViewItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Number4" Modifiers="Control" />
                     </NavigationViewItem.KeyboardAccelerators>
@@ -163,7 +158,8 @@
                 <NavigationViewItem
                     x:Uid="MainPage_Published"
                     Tag="PublishedPage"
-                    Icon="{ui:FontIcon Glyph=&#xE8B7;}">
+                    Icon="{ui:FontIcon Glyph=&#xE8B7;}"
+                    IsEnabled="{x:Bind secrets.Token, Mode=OneWay, Converter={StaticResource EmptyStringToBoolConverter}}">
                     <NavigationViewItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Number5" Modifiers="Control" />
                     </NavigationViewItem.KeyboardAccelerators>

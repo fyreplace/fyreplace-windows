@@ -349,8 +349,8 @@ namespace Fyreplace.Tests.Services
 
         public static readonly string BadIdentifier = "bad-identifier";
         public static readonly string GoodIdentifier = "good-identifier";
-        public static readonly string BadSecret = "bad-secret";
-        public static readonly string GoodSecret = "good-secret";
+        public static readonly string BadSecret = "000000";
+        public static readonly string GoodSecret = "123456";
         public static readonly string BadToken = "bad-token";
         public static readonly string GoodToken = "good-token";
     }
