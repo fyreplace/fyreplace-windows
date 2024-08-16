@@ -86,12 +86,6 @@ namespace Fyreplace.Tests.Services
 
         #endregion
 
-        #region Stored files
-
-        public Task GetStoredFileAsync(string path, CancellationToken cancellationToken) => GetStoredFileAsync(path);
-
-        #endregion
-
         #region Subscriptions
 
         public Task ClearUnreadSubscriptionsAsync(CancellationToken cancellationToken) => ClearUnreadSubscriptionsAsync();
@@ -310,18 +304,6 @@ namespace Fyreplace.Tests.Services
     public sealed partial class FakeApiClient
     {
         public Task<ICollection<Report>> ListReportsAsync(int? page)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    #endregion
-
-    #region Stored files
-
-    public sealed partial class FakeApiClient
-    {
-        public Task GetStoredFileAsync(string path)
         {
             throw new NotImplementedException();
         }
