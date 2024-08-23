@@ -318,4 +318,10 @@
   <data name="Error_BadRequest.Message" xml:space="preserve">
     <value>An incorrect request was sent to the server.</value>
   </data>
+  <data name="Error_Unauthorized.Title" xml:space="preserve">
+    <value>You have been disconnected</value>
+  </data>
+  <data name="Error_Unauthorized.Message" xml:space="preserve">
+    <value>It looks like your session has expired.</value>
+  </data>
 </root>

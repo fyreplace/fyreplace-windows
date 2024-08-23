@@ -46,8 +46,6 @@ namespace Fyreplace.ViewModels
         private string randomCode = string.Empty;
 
         protected readonly IPreferences preferences = AppBase.GetService<IPreferences>();
-        protected readonly ISecrets secrets = AppBase.GetService<ISecrets>();
-        protected readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
         private static readonly Environment[] Environments = Enum.GetValues<Environment>();
 

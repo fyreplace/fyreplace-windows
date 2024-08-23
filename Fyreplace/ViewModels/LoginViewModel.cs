@@ -12,7 +12,7 @@ namespace Fyreplace.ViewModels
             && preferences.Account_Identifier.Length >= 3
             && preferences.Account_Identifier.Length <= 254;
 
-        private IApiClient Api => AppBase.GetService<IApiClient>(preferences.Connection_Environment);
+        private static IApiClient Api => AppBase.GetService<IApiClient>();
 
         public override Task Submit() => CallWhileLoading(async () =>
         {
@@ -73,6 +73,7 @@ namespace Fyreplace.ViewModels
                     Identifier = preferences.Account_Identifier,
                     Secret = RandomCode
                 });
+                preferences.Account_Identifier = string.Empty;
                 preferences.Account_IsWaitingForRandomCode = false;
             },
             onFailure: (ApiException exception) => exception.StatusCode switch
