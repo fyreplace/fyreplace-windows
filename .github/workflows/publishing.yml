@@ -158,13 +158,13 @@ jobs:
 
       - name: Restore Nuget packages
         run: |
-          msbuild Fyreplace `
+          msbuild Fyreplace.Tests `
             /t:Restore `
             /p:Platform=${{ matrix.architecture }}
 
       - name: Build app
         run: |
-          msbuild Fyreplace `
+          msbuild Fyreplace.Tests `
             /t:Build `
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Debug

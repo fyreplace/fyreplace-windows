@@ -21,8 +21,16 @@ namespace Fyreplace.Tests.Data.Secrets
             }
         }
 
-        public override void Write(string key, string value) => secrets[key] = value;
-
-        public override void Delete(string key) => secrets.Remove(key);
+        public override void Write(string key, string value)
+        {
+            if (value == string.Empty)
+            {
+                secrets.Remove(key);
+            }
+            else
+            {
+                secrets[key] = value;
+            }
+        }
     }
 }
