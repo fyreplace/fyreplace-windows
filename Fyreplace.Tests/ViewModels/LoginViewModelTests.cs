@@ -65,12 +65,10 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new LoginViewModel();
             preferences.Account_Identifier = FakeApiClient.GoodIdentifier;
             preferences.Account_IsWaitingForRandomCode = true;
-            viewModel.RandomCode = "12345";
+            viewModel.RandomCode = "abcd123";
             Assert.IsFalse(viewModel.CanSubmit);
-            viewModel.RandomCode = "123456";
+            viewModel.RandomCode = "abcd1234";
             Assert.IsTrue(viewModel.CanSubmit);
-            viewModel.RandomCode = "1234567";
-            Assert.IsFalse(viewModel.CanSubmit);
         }
 
         [TestMethod]

@@ -292,7 +292,7 @@
     <value>One-time code:</value>
   </data>
   <data name="AccountEntryPageBase_RandomCode.PlaceholderText" xml:space="preserve">
-    <value>123456</value>
+    <value>abcd1234</value>
   </data>
   <data name="AccountEntryPageBase_Cancel.Content" xml:space="preserve">
     <value>Cancel</value>

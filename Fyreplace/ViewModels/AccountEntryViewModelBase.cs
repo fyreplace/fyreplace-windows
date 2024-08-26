@@ -15,7 +15,7 @@ namespace Fyreplace.ViewModels
     {
         public abstract bool CanSubmitFirstStep { get; }
 
-        public bool CanSubmitLastStep => RandomCode.Length == 6;
+        public bool CanSubmitLastStep => RandomCode.Length >= 8;
 
         public bool CanSubmit => !IsLoading && (preferences.Account_IsWaitingForRandomCode ? CanSubmitLastStep : CanSubmitFirstStep);
 
