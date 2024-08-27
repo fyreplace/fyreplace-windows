@@ -22,23 +22,18 @@ namespace Fyreplace.Views.Pages
         protected override LoginViewModel viewModel => AppBase.GetService<LoginViewModel>();
 
         private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
-        private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
         public LoginPage() => InitializeComponent();
 
         private void Form_Loaded(object sender, RoutedEventArgs e)
         {
-            if (viewModel.CanSubmit)
+            if (!viewModel.CanSubmitFirstStep)
             {
-                return;
+                Identifier.Focus(FocusState.Programmatic);
             }
             else if (preferences.Account_IsWaitingForRandomCode)
             {
                 RandomCode.Focus(FocusState.Programmatic);
-            }
-            else
-            {
-                Identifier.Focus(FocusState.Programmatic);
             }
         }
     }

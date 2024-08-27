@@ -55,7 +55,11 @@ namespace Fyreplace.ViewModels
         public abstract Task Submit();
 
         [RelayCommand(CanExecute = nameof(CanCancel))]
-        public virtual void Cancel() => preferences.Account_IsWaitingForRandomCode = false;
+        public void Cancel()
+        {
+            preferences.Account_IsWaitingForRandomCode = false;
+            IsRandomCodeTipShown = false;
+        }
 
         protected Task CallWhileLoading(Func<Task> action, Func<ApiException, FailureEvent?> onFailure) => Call(async () =>
             {

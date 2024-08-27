@@ -14,7 +14,7 @@ namespace Fyreplace.ViewModels
 
         private static IApiClient Api => AppBase.GetService<IApiClient>();
 
-        public override Task Submit() => CallWhileLoading(async () =>
+        public override async Task Submit()
         {
             if (preferences.Account_IsWaitingForRandomCode)
             {
@@ -24,20 +24,6 @@ namespace Fyreplace.ViewModels
             {
                 await SendEmail();
             }
-        }, onFailure: (ApiException exception) =>
-        {
-            return exception.StatusCode switch
-            {
-                (int)HttpStatusCode.BadRequest => new FailureEvent("LoginPage_Error_BadRequest"),
-                (int)HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
-                _ => new FailureEvent()
-            };
-        });
-
-        public override void Cancel()
-        {
-            base.Cancel();
-            IsRandomCodeTipShown = false;
         }
 
         protected override async Task OnPreferenceChanged(PreferenceChangedEvent e)
