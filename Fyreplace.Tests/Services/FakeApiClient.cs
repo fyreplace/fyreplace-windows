@@ -337,22 +337,23 @@ namespace Fyreplace.Tests.Services
 
     public sealed partial class FakeApiClient
     {
-        public Task CreateNewTokenAsync(NewTokenCreation body) => body.Identifier == GoodIdentifier
-            ? (Task)Task.FromResult(GoodToken)
+        public static readonly string badIdentifier = "bad-identifier";
+        public static readonly string goodIdentifier = "good-identifier";
+        public static readonly string badSecret = "nopenope";
+        public static readonly string goodSecret = "abcd1234";
+        public static readonly string token = "token";
+
+        public Task CreateNewTokenAsync(NewTokenCreation body) => body.Identifier == goodIdentifier
+            ? Task.FromResult(token)
             : throw new FakeApiException(HttpStatusCode.NotFound);
 
-        public Task<string> CreateTokenAsync(TokenCreation body) => body.Identifier == GoodIdentifier && body.Secret == GoodSecret
-            ? Task.FromResult(GoodToken)
-            : throw new FakeApiException(HttpStatusCode.NotFound);
+        public Task<string> CreateTokenAsync(TokenCreation body) => body.Identifier != goodIdentifier
+            ? throw new FakeApiException(HttpStatusCode.NotFound)
+            : body.Secret != goodSecret
+            ? throw new FakeApiException(HttpStatusCode.NotFound)
+            : Task.FromResult(token);
 
-        public Task<string> GetNewTokenAsync() => Task.FromResult(GoodToken);
-
-        public static readonly string BadIdentifier = "bad-identifier";
-        public static readonly string GoodIdentifier = "good-identifier";
-        public static readonly string BadSecret = "nopenope";
-        public static readonly string GoodSecret = "abcd1234";
-        public static readonly string BadToken = "bad-token";
-        public static readonly string GoodToken = "good-token";
+        public Task<string> GetNewTokenAsync() => Task.FromResult(token);
     }
 
     #endregion

@@ -55,6 +55,7 @@ namespace Fyreplace
         {
             base.ConfigureServices(services);
             services.AddHostedService<TokenRefreshService>();
+            services.AddSingleton<MainWindow>();
             services.AddSingleton<ISecrets, PasswordVaultSecrets>();
             services.AddSingleton<IEventBus, EventBus>();
             services.AddTransient(MakeApiClient);

@@ -39,10 +39,10 @@ namespace Fyreplace.Tests.ViewModels
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
 
-            preferences.Account_Identifier = FakeApiClient.BadIdentifier;
+            preferences.Account_Identifier = FakeApiClient.badIdentifier;
             await viewModel.Submit();
             Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
-            Assert.AreEqual(1, eventBus.Events.Where(e => e is FailureEvent).Count());
+            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
         }
 
         [TestMethod]
@@ -52,10 +52,10 @@ namespace Fyreplace.Tests.ViewModels
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
 
-            preferences.Account_Identifier = FakeApiClient.GoodIdentifier;
+            preferences.Account_Identifier = FakeApiClient.goodIdentifier;
             await viewModel.Submit();
             Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
-            Assert.AreEqual(0, eventBus.Events.Where(e => e is FailureEvent).Count());
+            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
-            preferences.Account_Identifier = FakeApiClient.GoodIdentifier;
+            preferences.Account_Identifier = FakeApiClient.goodIdentifier;
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = "abcd123";
             Assert.IsFalse(viewModel.CanSubmit);
@@ -78,11 +78,11 @@ namespace Fyreplace.Tests.ViewModels
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
 
-            preferences.Account_Identifier = FakeApiClient.GoodIdentifier;
+            preferences.Account_Identifier = FakeApiClient.goodIdentifier;
             preferences.Account_IsWaitingForRandomCode = true;
-            viewModel.RandomCode = FakeApiClient.BadSecret;
+            viewModel.RandomCode = FakeApiClient.badSecret;
             await viewModel.Submit();
-            Assert.AreEqual(1, eventBus.Events.Where(e => e is FailureEvent).Count());
+            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
         }
 
         [TestMethod]
@@ -92,11 +92,11 @@ namespace Fyreplace.Tests.ViewModels
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
 
-            preferences.Account_Identifier = FakeApiClient.GoodIdentifier;
+            preferences.Account_Identifier = FakeApiClient.goodIdentifier;
             preferences.Account_IsWaitingForRandomCode = true;
-            viewModel.RandomCode = FakeApiClient.GoodSecret;
+            viewModel.RandomCode = FakeApiClient.goodSecret;
             await viewModel.Submit();
-            Assert.AreEqual(0, eventBus.Events.Where(e => e is FailureEvent).Count());
+            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
         }
     }
 }

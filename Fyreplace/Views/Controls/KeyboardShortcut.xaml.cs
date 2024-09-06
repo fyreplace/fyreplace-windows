@@ -15,7 +15,7 @@ namespace Fyreplace.Views.Controls
 
         public bool Alt { get; set; } = false;
 
-        private IEnumerable<KeyboardKey> keyboardKeys
+        private IEnumerable<KeyboardKey> KeyboardKeys
         {
             get
             {

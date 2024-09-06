@@ -26,5 +26,5 @@
     <ItemsRepeater
         Layout="{StaticResource StackLayout}"
         ItemTemplate="{StaticResource Key}"
-        ItemsSource="{x:Bind keyboardKeys}" />
+        ItemsSource="{x:Bind KeyboardKeys}" />
 </UserControl>
