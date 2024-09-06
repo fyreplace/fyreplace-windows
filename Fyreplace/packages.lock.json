@@ -99,6 +99,26 @@
         "resolved": "14.1.0",
         "contentHash": "Y7ydRTUCUi1DaVml6r3W7NMgvhkkJY1CTnFfc3jQIBPHwvvegVqRD3C5xdPwgZp+KZ5dUarH6bfK3J2Y2FjVhQ=="
       },
+      "Polly": {
+        "type": "Direct",
+        "requested": "[8.4.1, )",
+        "resolved": "8.4.1",
+        "contentHash": "kBxql53peR0bjxeEuuY114GD2rmC0tkUwE1xuKUlnd74ULEsGu3OwcLH56KkwxBPUbOysPa7stT9SJ6pKGTzlg==",
+        "dependencies": {
+          "Polly.Core": "8.4.1"
+        }
+      },
+      "Polly.Extensions": {
+        "type": "Direct",
+        "requested": "[8.4.1, )",
+        "resolved": "8.4.1",
+        "contentHash": "NaRu+mopzJLoDm3qhklrUENIwkhmJbtzLRXK+oMb0c4bGwT84co+BM+TIwqApUfZrcz+BvA/vpB1vk6hB4XtAA==",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Options": "8.0.0",
+          "Polly.Core": "8.4.1"
+        }
+      },
       "Sentry": {
         "type": "Direct",
         "requested": "[4.10.2, )",
@@ -387,6 +407,11 @@
         "type": "Transitive",
         "resolved": "1.0.2651.64",
         "contentHash": "f5sc/vcAoTCTEW7Nqzp4galAuTRguZViw8ksn+Nx2uskEBPm0/ubzy6gVjvXS/P96jLS89C8T9I0hPc417xpNg=="
+      },
+      "Polly.Core": {
+        "type": "Transitive",
+        "resolved": "8.4.1",
+        "contentHash": "bg4kE7mFwXc6FJ8NLknTgVgLAMlbToWC7vpdqAITv8lPzKpp9v7aWJPc04GRoZQaJhVY/tdr8K2/VW2aTmaA1Q=="
       },
       "System.Diagnostics.DiagnosticSource": {
         "type": "Transitive",

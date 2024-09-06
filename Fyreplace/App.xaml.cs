@@ -8,11 +8,15 @@ using Fyreplace.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
+using Polly;
+using Polly.Retry;
 using Sentry;
 using Sentry.Protocol;
 using System;
 using System.Net.Http;
 using System.Security;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fyreplace
 {
@@ -58,6 +62,7 @@ namespace Fyreplace
             services.AddSingleton<MainWindow>();
             services.AddSingleton<ISecrets, PasswordVaultSecrets>();
             services.AddSingleton<IEventBus, EventBus>();
+            services.AddResiliencePipeline(typeof(RequestIdHandler), MakeResiliencePipeline);
             services.AddTransient(MakeApiClient);
 
             var info = services.BuildServiceProvider().GetRequiredService<BuildInfo>();
@@ -88,13 +93,21 @@ namespace Fyreplace
             SentrySdk.FlushAsync(TimeSpan.FromSeconds(3)).GetAwaiter().GetResult();
         }
 
+        private void MakeResiliencePipeline(ResiliencePipelineBuilder builder) => builder
+            .AddRetry(new RetryStrategyOptions()
+            {
+                ShouldHandle = new PredicateBuilder().Handle<HttpRequestException>(),
+                BackoffType = DelayBackoffType.Exponential,
+            });
+
         private IApiClient MakeApiClient(IServiceProvider provider)
         {
+            var resilience = provider.GetRequiredKeyedService<ResiliencePipeline>(typeof(RequestIdHandler));
             var preferences = provider.GetRequiredService<IPreferences>();
             var secrets = provider.GetRequiredService<ISecrets>();
             var api = provider.GetRequiredService<BuildInfo>().Api;
             var url = api.ForEnvironment(preferences.Connection_Environment);
-            var client = new HttpClient();
+            var client = new HttpClient(new RequestIdHandler(resilience));
 
             if (secrets.Token != string.Empty)
             {
@@ -102,6 +115,23 @@ namespace Fyreplace
             }
 
             return new ApiClient(url.ToString(), client);
+        }
+    }
+
+    class RequestIdHandler(ResiliencePipeline resilience) : DelegatingHandler(new HttpClientHandler())
+    {
+        public ResiliencePipeline resilience = resilience;
+
+        private static readonly string headerName = "X-Request-Id";
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            if (!request.Headers.Contains(headerName))
+            {
+                request.Headers.Add(headerName, Guid.NewGuid().ToString());
+            }
+
+            return await resilience.ExecuteAsync(async (token) => await base.SendAsync(request, token), cancellationToken);
         }
     }
 }

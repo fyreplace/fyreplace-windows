@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net8.0-windows10.0.22621": {
+    "net8.0-windows10.0.26100": {
       "Microsoft.TestPlatform.TestHost": {
         "type": "Direct",
         "requested": "[17.11.0, )",
@@ -453,6 +453,29 @@
         "resolved": "13.0.3",
         "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
+      "Polly": {
+        "type": "Transitive",
+        "resolved": "8.4.1",
+        "contentHash": "kBxql53peR0bjxeEuuY114GD2rmC0tkUwE1xuKUlnd74ULEsGu3OwcLH56KkwxBPUbOysPa7stT9SJ6pKGTzlg==",
+        "dependencies": {
+          "Polly.Core": "8.4.1"
+        }
+      },
+      "Polly.Core": {
+        "type": "Transitive",
+        "resolved": "8.4.1",
+        "contentHash": "bg4kE7mFwXc6FJ8NLknTgVgLAMlbToWC7vpdqAITv8lPzKpp9v7aWJPc04GRoZQaJhVY/tdr8K2/VW2aTmaA1Q=="
+      },
+      "Polly.Extensions": {
+        "type": "Transitive",
+        "resolved": "8.4.1",
+        "contentHash": "NaRu+mopzJLoDm3qhklrUENIwkhmJbtzLRXK+oMb0c4bGwT84co+BM+TIwqApUfZrcz+BvA/vpB1vk6hB4XtAA==",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Options": "8.0.0",
+          "Polly.Core": "8.4.1"
+        }
+      },
       "Sentry": {
         "type": "Transitive",
         "resolved": "4.10.2",
@@ -497,6 +520,8 @@
           "Microsoft.Windows.SDK.BuildTools": "[10.0.26100.1, )",
           "Microsoft.WindowsAppSDK": "[1.6.240829007, )",
           "Newtonsoft.Json": "[13.0.3, )",
+          "Polly": "[8.4.1, )",
+          "Polly.Extensions": "[8.4.1, )",
           "Sentry": "[4.10.2, )"
         }
       }
