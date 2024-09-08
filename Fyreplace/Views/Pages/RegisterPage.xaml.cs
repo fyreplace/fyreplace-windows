@@ -34,6 +34,10 @@ namespace Fyreplace.Views.Pages
             {
                 Email.Focus(FocusState.Programmatic);
             }
+            else if (preferences.Account_IsWaitingForRandomCode)
+            {
+                RandomCode.Focus(FocusState.Programmatic);
+            }
         }
     }
 }

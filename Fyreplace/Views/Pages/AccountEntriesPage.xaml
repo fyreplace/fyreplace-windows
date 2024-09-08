@@ -18,13 +18,13 @@
         Orientation="Vertical"
         Spacing="12">
         <SelectorBar
+            x:Name="SelectorBar"
             HorizontalAlignment="Center"
-            SelectionChanged="SelectorBar_SelectionChanged"
-            IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+            IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+            SelectionChanged="SelectorBar_SelectionChanged">
             <SelectorBarItem
                 x:Name="Login"
-                x:Uid="AccountEntriesPage_Login"
-                IsSelected="True" />
+                x:Uid="AccountEntriesPage_Login" />
             <SelectorBarItem
                 x:Name="Register"
                 x:Uid="AccountEntriesPage_Register" />

@@ -337,17 +337,17 @@ namespace Fyreplace.Tests.Services
 
     public sealed partial class FakeApiClient
     {
-        public static readonly string badIdentifier = "bad-identifier";
-        public static readonly string goodIdentifier = "good-identifier";
         public static readonly string badSecret = "nopenope";
         public static readonly string goodSecret = "abcd1234";
         public static readonly string token = "token";
 
-        public Task CreateNewTokenAsync(NewTokenCreation body) => body.Identifier == goodIdentifier
+        public Task CreateNewTokenAsync(NewTokenCreation body) =>
+            body.Identifier == goodEmail
             ? Task.FromResult(token)
             : throw new FakeApiException(HttpStatusCode.NotFound);
 
-        public Task<string> CreateTokenAsync(TokenCreation body) => body.Identifier != goodIdentifier
+        public Task<string> CreateTokenAsync(TokenCreation body) =>
+            body.Identifier != goodEmail
             ? throw new FakeApiException(HttpStatusCode.NotFound)
             : body.Secret != goodSecret
             ? throw new FakeApiException(HttpStatusCode.NotFound)
@@ -362,15 +362,42 @@ namespace Fyreplace.Tests.Services
 
     public sealed partial class FakeApiClient
     {
+        public static readonly string badUsername = "bad-username";
+        public static readonly string reservedUsername = "reserved-username";
+        public static readonly string usedUsername = "used-username";
+        public static readonly string goodUsername = "good-username";
+        public static readonly string badEmail = "bad-email";
+        public static readonly string usedEmail = "used-email";
+        public static readonly string goodEmail = "good-email";
+
         public Task<long> CountBlockedUsersAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> CreateUserAsync(UserCreation body)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<User> CreateUserAsync(UserCreation body) =>
+            body.Username == badUsername
+            ? throw new FakeApiException(HttpStatusCode.BadRequest)
+            : body.Username == reservedUsername
+            ? throw new FakeApiException(HttpStatusCode.Forbidden)
+            : body.Username == usedUsername
+            ? throw new FakeApiException(HttpStatusCode.Conflict)
+            : body.Email == badEmail
+            ? throw new FakeApiException(HttpStatusCode.BadRequest)
+            : body.Email == usedEmail
+            ? throw new FakeApiException(HttpStatusCode.Conflict)
+            : Task.FromResult(new User()
+            {
+                Id = new Guid(),
+                DateCreated = DateTime.UtcNow,
+                Username = body.Username,
+                Rank = Rank.CITIZEN,
+                Avatar = string.Empty,
+                Bio = string.Empty,
+                Banned = false,
+                Blocked = false,
+                Tint = "#7F7F7F"
+            });
 
         public Task DeleteCurrentUserAsync()
         {

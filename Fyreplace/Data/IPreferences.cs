@@ -13,5 +13,7 @@ namespace Fyreplace.Data
         public string Account_Email { get; set; }
 
         public bool Account_IsWaitingForRandomCode { get; set; }
+
+        public bool Account_IsRegistering { get; set; }
     }
 }

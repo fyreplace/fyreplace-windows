@@ -11,6 +11,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Page.Resources>
 
@@ -28,11 +29,13 @@
             x:Uid="AccountEntryPageBase_Environment"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind viewModel.EnvironmentNames}"
-            SelectedIndex="{x:Bind viewModel.SelectedEnvironmentIndex, Mode=TwoWay}" />
+            SelectedIndex="{x:Bind viewModel.SelectedEnvironmentIndex, Mode=TwoWay}"
+            IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
         <TextBox
             x:Name="Username"
             x:Uid="RegisterPage_Username"
-            Text="{x:Bind preferences.Account_Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            Text="{x:Bind preferences.Account_Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
             <TextBox.KeyboardAccelerators>
                 <KeyboardAccelerator Key="Enter" Invoked="Accelerators_Submit" />
             </TextBox.KeyboardAccelerators>
@@ -40,7 +43,17 @@
         <TextBox
             x:Name="Email"
             x:Uid="RegisterPage_Email"
-            Text="{x:Bind preferences.Account_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            Text="{x:Bind preferences.Account_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+            <TextBox.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Enter" Invoked="Accelerators_Submit" />
+            </TextBox.KeyboardAccelerators>
+        </TextBox>
+        <TextBox
+            x:Name="RandomCode"
+            x:Uid="AccountEntryPageBase_RandomCode"
+            Text="{x:Bind viewModel.RandomCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Visibility="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <TextBox.KeyboardAccelerators>
                 <KeyboardAccelerator Key="Enter" Invoked="Accelerators_Submit" />
             </TextBox.KeyboardAccelerators>
@@ -60,6 +73,16 @@
                 VerticalAlignment="Top"
                 IsIndeterminate="True"
                 Visibility="{x:Bind viewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TeachingTip
+                x:Uid="AccountEntryPageBase_RandomCodeTip"
+                PreferredPlacement="BottomRight"
+                IconSource="{ui:FontIconSource Glyph=&#xE715;}"
+                IsOpen="{x:Bind viewModel.IsRandomCodeTipShown, Mode=TwoWay}" />
         </Grid>
+        <Button
+            x:Uid="AccountEntryPageBase_Cancel"
+            HorizontalAlignment="Stretch"
+            Visibility="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+            Command="{x:Bind viewModel.CancelCommand}" />
     </StackPanel>
 </local:RegisterPageBase>

@@ -6,6 +6,7 @@ using Fyreplace.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Environment = Fyreplace.Data.Environment;
 
@@ -23,15 +24,15 @@ namespace Fyreplace.ViewModels
 
         public int SelectedEnvironmentIndex
         {
-            get => Array.IndexOf(Environments, preferences.Connection_Environment);
+            get => Array.IndexOf(environments, preferences.Connection_Environment);
             set
             {
-                preferences.Connection_Environment = Environments[value];
+                preferences.Connection_Environment = environments[value];
                 OnPropertyChanged();
             }
         }
 
-        public IEnumerable<string> EnvironmentNames => Environments.Select(e => e.Description());
+        public IEnumerable<string> EnvironmentNames => environments.Select(e => e.Description());
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
@@ -47,21 +48,37 @@ namespace Fyreplace.ViewModels
 
         protected readonly IPreferences preferences = AppBase.GetService<IPreferences>();
 
-        private static readonly Environment[] Environments = Enum.GetValues<Environment>();
+        protected static IApiClient Api => AppBase.GetService<IApiClient>();
+        private static readonly Environment[] environments = Enum.GetValues<Environment>();
 
         public AccountEntryViewModelBase() => eventBus.Subscribe<PreferenceChangedEvent>(OnPreferenceChanged);
 
+        protected abstract Task CreateToken();
+
+        protected abstract Task SendEmail();
+
         [RelayCommand(CanExecute = nameof(CanSubmit))]
-        public abstract Task Submit();
+        public Task Submit()
+        {
+            if (preferences.Account_IsWaitingForRandomCode)
+            {
+                return CreateToken();
+            }
+            else
+            {
+                return SendEmail();
+            }
+        }
 
         [RelayCommand(CanExecute = nameof(CanCancel))]
         public void Cancel()
         {
             preferences.Account_IsWaitingForRandomCode = false;
+            preferences.Account_IsRegistering = false;
             IsRandomCodeTipShown = false;
         }
 
-        protected Task CallWhileLoading(Func<Task> action, Func<ApiException, FailureEvent?> onFailure) => Call(async () =>
+        protected Task CallWhileLoading(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => Call(async () =>
             {
                 try
                 {

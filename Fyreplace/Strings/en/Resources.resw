@@ -300,10 +300,10 @@
   <data name="AccountPage_Logout.Content" xml:space="preserve">
     <value>Logout</value>
   </data>
-  <data name="LoginPage_Error_CreateToken_BadRequest.Title" xml:space="preserve">
+  <data name="AccountEntryPageBase_Error_CreateToken_BadRequest.Title" xml:space="preserve">
     <value>Invalid code</value>
   </data>
-  <data name="LoginPage_Error_CreateToken_BadRequest.Message" xml:space="preserve">
+  <data name="AccountEntryPageBase_Error_CreateToken_BadRequest.Message" xml:space="preserve">
     <value>Check if the code you provided is correct.</value>
   </data>
   <data name="AccountEntryPageBase_RandomCodeTip.Title" xml:space="preserve">
@@ -323,5 +323,41 @@
   </data>
   <data name="Error_Unauthorized.Message" xml:space="preserve">
     <value>It looks like your session has expired.</value>
+  </data>
+  <data name="RegisterPage_Error_CreateToken_NotFound.Title" xml:space="preserve">
+    <value>User not found</value>
+  </data>
+  <data name="RegisterPage_Error_CreateToken_NotFound.Message" xml:space="preserve">
+    <value>No user account was found with this email. It might have been deleted if you didn't activate it within one hour.</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_Forbidden.Title" xml:space="preserve">
+    <value>Username forbidden</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_Forbidden.Message" xml:space="preserve">
+    <value>This username is not allowed.</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_Conflict_Username.Title" xml:space="preserve">
+    <value>Username unavailable</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_Conflict_Username.Message" xml:space="preserve">
+    <value>This username is already used by someone else.</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_Conflict_Email.Title" xml:space="preserve">
+    <value>Email unavailable</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_Conflict_Email.Message" xml:space="preserve">
+    <value>This email is already used by someone else.</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_BadRequest_Email.Title" xml:space="preserve">
+    <value>Invalid email</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_BadRequest_Email.Message" xml:space="preserve">
+    <value>This email address is not valid.</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_BadRequest_Username.Title" xml:space="preserve">
+    <value>Invalid username</value>
+  </data>
+  <data name="RegisterPage_Error_CreateUser_BadRequest_Username.Message" xml:space="preserve">
+    <value>This username is not valid.</value>
   </data>
 </root>

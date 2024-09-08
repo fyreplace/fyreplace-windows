@@ -15,7 +15,7 @@ namespace Fyreplace.ViewModels
         protected readonly ISecrets secrets = AppBase.GetService<ISecrets>();
         protected readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
-        protected async Task<T?> Call<T>(Func<Task<T>> action, Func<ApiException, FailureEvent?> onFailure)
+        protected async Task<T?> Call<T>(Func<Task<T>> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure)
         {
             try
             {
@@ -27,14 +27,18 @@ namespace Fyreplace.ViewModels
             }
             catch (ApiException exception)
             {
-                if (exception.StatusCode == (int)HttpStatusCode.Unauthorized)
+                var statusCode = (HttpStatusCode)exception.StatusCode;
+
+                if (statusCode == HttpStatusCode.Unauthorized)
                 {
                     secrets.Token = "";
                     await eventBus.Publish(new FailureEvent("Error_Unauthorized"));
                 }
                 else
                 {
-                    var failureEvent = onFailure(exception);
+                    var violationReport = (exception as ApiException<ViolationReport>)?.Result;
+                    var explainedFailure = (exception as ApiException<ExplainedFailure>)?.Result;
+                    var failureEvent = onFailure(statusCode, violationReport, explainedFailure);
 
                     if (failureEvent != null)
                     {
@@ -51,7 +55,7 @@ namespace Fyreplace.ViewModels
             return default;
         }
 
-        protected Task Call(Func<Task> action, Func<ApiException, FailureEvent?> onFailure) => Call(async () =>
+        protected Task Call(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => Call(async () =>
             {
                 await action();
                 return true;

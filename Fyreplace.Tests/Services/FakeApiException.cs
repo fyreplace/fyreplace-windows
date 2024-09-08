@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
-using System.Text.Json.Nodes;
 
 namespace Fyreplace.Tests.Services
 {
-    public sealed class FakeApiException(HttpStatusCode status, JsonObject? body = null) : ApiException(
+    public sealed class FakeApiException(HttpStatusCode status) : ApiException(
         status.ToString(),
         (int)status,
-        body?.ToString() ?? string.Empty,
+        string.Empty,
         new ReadOnlyDictionary<string, IEnumerable<string>>(
             new Dictionary<string, IEnumerable<string>>()
             {
-                ["Content-Type"] = [body != null ? "application/json" : "text/plain"]
+                ["Content-Type"] = ["text/plain"]
             }
         ),
         null

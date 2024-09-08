@@ -91,6 +91,16 @@ namespace Fyreplace.Data.Preferences
             }
         }
 
+        public bool Account_IsRegistering
+        {
+            get => Read(MakeKey(), defaultValue: false);
+            set
+            {
+                Write(MakeKey(), value);
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
     }
 }

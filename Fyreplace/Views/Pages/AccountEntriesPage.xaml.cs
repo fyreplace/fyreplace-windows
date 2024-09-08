@@ -8,7 +8,11 @@ namespace Fyreplace.Views.Pages
     {
         private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
 
-        public AccountEntriesPage() => InitializeComponent();
+        public AccountEntriesPage()
+        {
+            InitializeComponent();
+            SelectorBar.SelectedItem = preferences.Account_IsRegistering ? Register : Login;
+        }
 
         private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {

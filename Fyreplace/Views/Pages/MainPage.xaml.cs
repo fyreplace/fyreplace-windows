@@ -152,7 +152,7 @@ namespace Fyreplace.Views.Pages
                     ? typeof(SettingsPage)
                     : Assembly.GetExecutingAssembly()
                         .GetTypes()
-                        .Where(page => page.Namespace == "Fyreplace.Views.Pages")
+                        .Where(page => page.Namespace == typeof(MainPage).Namespace)
                         .Where(page => page.Name == (string)args.InvokedItemContainer.Tag)
                         .SingleOrDefault(typeof(ErrorPage))
             );

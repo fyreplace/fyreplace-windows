@@ -1,6 +1,5 @@
 ﻿using Fyreplace.Data;
 using Fyreplace.Events;
-using Fyreplace.Services;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -11,20 +10,6 @@ namespace Fyreplace.ViewModels
         public override bool CanSubmitFirstStep => !string.IsNullOrWhiteSpace(preferences.Account_Identifier)
             && preferences.Account_Identifier.Length >= 3
             && preferences.Account_Identifier.Length <= 254;
-
-        private static IApiClient Api => AppBase.GetService<IApiClient>();
-
-        public override async Task Submit()
-        {
-            if (preferences.Account_IsWaitingForRandomCode)
-            {
-                await CreateToken();
-            }
-            else
-            {
-                await SendEmail();
-            }
-        }
 
         protected override async Task OnPreferenceChanged(PreferenceChangedEvent e)
         {
@@ -38,21 +23,21 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        private Task SendEmail() => CallWhileLoading(async () =>
+        protected override Task SendEmail() => CallWhileLoading(async () =>
             {
                 await Api.CreateNewTokenAsync(new() { Identifier = preferences.Account_Identifier });
                 preferences.Account_IsWaitingForRandomCode = true;
                 IsRandomCodeTipShown = true;
             },
-            onFailure: (ApiException exception) => exception.StatusCode switch
+            onFailure: (statusCode, _, _) => statusCode switch
             {
-                (int)HttpStatusCode.BadRequest => new FailureEvent("Error_BadRequest"),
-                (int)HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
+                HttpStatusCode.BadRequest => new FailureEvent("Error_BadRequest"),
+                HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
                 _ => new FailureEvent()
             }
         );
 
-        private Task CreateToken() => CallWhileLoading(async () =>
+        protected override Task CreateToken() => CallWhileLoading(async () =>
             {
                 secrets.Token = await Api.CreateTokenAsync(new()
                 {
@@ -62,10 +47,10 @@ namespace Fyreplace.ViewModels
                 preferences.Account_Identifier = string.Empty;
                 preferences.Account_IsWaitingForRandomCode = false;
             },
-            onFailure: (ApiException exception) => exception.StatusCode switch
+            onFailure: (statusCode, _, _) => statusCode switch
             {
-                (int)HttpStatusCode.BadRequest => new FailureEvent("LoginPage_Error_CreateToken_BadRequest"),
-                (int)HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
+                HttpStatusCode.BadRequest => new FailureEvent("AccountEntryPageBase_Error_CreateToken_BadRequest"),
+                HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
                 _ => new FailureEvent()
             }
         );
