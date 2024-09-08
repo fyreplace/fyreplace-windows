@@ -33,7 +33,7 @@ namespace Fyreplace.ViewModels
 
         protected override Task SendEmail() => CallWhileLoading(async () =>
             {
-                await Api.CreateUserAsync(new()
+                await Api.CreateUserAsync(true, new()
                 {
                     Username = preferences.Account_Username,
                     Email = preferences.Account_Email

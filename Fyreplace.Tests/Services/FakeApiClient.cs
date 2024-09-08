@@ -46,7 +46,7 @@ namespace Fyreplace.Tests.Services
 
         public Task<long> CountEmailsAsync(CancellationToken cancellationToken) => CountEmailsAsync();
 
-        public Task<Email> CreateEmailAsync(EmailCreation body, CancellationToken cancellationToken) => CreateEmailAsync(body);
+        public Task<Email> CreateEmailAsync(bool? customDeepLinks, EmailCreation body, CancellationToken cancellationToken) => CreateEmailAsync(customDeepLinks, body);
 
         public Task DeleteEmailAsync(Guid id, CancellationToken cancellationToken) => DeleteEmailAsync(id);
 
@@ -98,7 +98,7 @@ namespace Fyreplace.Tests.Services
 
         #region Tokens
 
-        public Task CreateNewTokenAsync(NewTokenCreation body, CancellationToken cancellationToken) => CreateNewTokenAsync(body);
+        public Task CreateNewTokenAsync(bool? customDeepLinks, NewTokenCreation body, CancellationToken cancellationToken) => CreateNewTokenAsync(customDeepLinks, body);
 
         public Task<string> CreateTokenAsync(TokenCreation body, CancellationToken cancellationToken) => CreateTokenAsync(body);
 
@@ -110,7 +110,7 @@ namespace Fyreplace.Tests.Services
 
         public Task<long> CountBlockedUsersAsync(CancellationToken cancellationToken) => CountBlockedUsersAsync();
 
-        public Task<User> CreateUserAsync(UserCreation body, CancellationToken cancellationToken) => CreateUserAsync(body);
+        public Task<User> CreateUserAsync(bool? customDeepLinks, UserCreation body, CancellationToken cancellationToken) => CreateUserAsync(customDeepLinks, body);
 
         public Task DeleteCurrentUserAsync(CancellationToken cancellationToken) => DeleteCurrentUserAsync();
 
@@ -219,7 +219,7 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        public Task<Email> CreateEmailAsync(EmailCreation body)
+        public Task<Email> CreateEmailAsync(bool? customDeepLinks, EmailCreation body)
         {
             throw new NotImplementedException();
         }
@@ -341,7 +341,7 @@ namespace Fyreplace.Tests.Services
         public static readonly string goodSecret = "abcd1234";
         public static readonly string token = "token";
 
-        public Task CreateNewTokenAsync(NewTokenCreation body) =>
+        public Task CreateNewTokenAsync(bool? customDeepLinks, NewTokenCreation body) =>
             body.Identifier == goodEmail
             ? Task.FromResult(token)
             : throw new FakeApiException(HttpStatusCode.NotFound);
@@ -375,7 +375,7 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        public Task<User> CreateUserAsync(UserCreation body) =>
+        public Task<User> CreateUserAsync(bool? customDeepLinks, UserCreation body) =>
             body.Username == badUsername
             ? throw new FakeApiException(HttpStatusCode.BadRequest)
             : body.Username == reservedUsername

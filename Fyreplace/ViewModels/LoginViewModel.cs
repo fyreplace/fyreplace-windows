@@ -25,7 +25,7 @@ namespace Fyreplace.ViewModels
 
         protected override Task SendEmail() => CallWhileLoading(async () =>
             {
-                await Api.CreateNewTokenAsync(new() { Identifier = preferences.Account_Identifier });
+                await Api.CreateNewTokenAsync(true, new() { Identifier = preferences.Account_Identifier });
                 preferences.Account_IsWaitingForRandomCode = true;
                 IsRandomCodeTipShown = true;
             },
