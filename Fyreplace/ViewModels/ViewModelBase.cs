@@ -12,6 +12,7 @@ namespace Fyreplace.ViewModels
 {
     public abstract partial class ViewModelBase : ObservableObject
     {
+        protected readonly IPreferences preferences = AppBase.GetService<IPreferences>();
         protected readonly ISecrets secrets = AppBase.GetService<ISecrets>();
         protected readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 

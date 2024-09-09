@@ -44,7 +44,6 @@ namespace Fyreplace.ViewModels
                     Identifier = preferences.Account_Identifier,
                     Secret = RandomCode
                 });
-                preferences.Account_Identifier = string.Empty;
                 preferences.Account_IsWaitingForRandomCode = false;
             },
             onFailure: (statusCode, _, _) => statusCode switch

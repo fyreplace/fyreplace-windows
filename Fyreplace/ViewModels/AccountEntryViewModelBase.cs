@@ -46,8 +46,6 @@ namespace Fyreplace.ViewModels
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
         private string randomCode = string.Empty;
 
-        protected readonly IPreferences preferences = AppBase.GetService<IPreferences>();
-
         protected static IApiClient Api => AppBase.GetService<IApiClient>();
         private static readonly Environment[] environments = Enum.GetValues<Environment>();
 
