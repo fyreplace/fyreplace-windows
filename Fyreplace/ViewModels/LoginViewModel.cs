@@ -39,12 +39,15 @@ namespace Fyreplace.ViewModels
 
         protected override Task CreateToken() => CallWhileLoading(async () =>
             {
-                secrets.Token = await Api.CreateTokenAsync(new()
+                var token = await Api.CreateTokenAsync(new()
                 {
                     Identifier = preferences.Account_Identifier,
                     Secret = RandomCode
                 });
+                preferences.Account_Username = "";
+                preferences.Account_Email = "";
                 preferences.Account_IsWaitingForRandomCode = false;
+                secrets.Token = token;
             },
             onFailure: (statusCode, _, _) => statusCode switch
             {
