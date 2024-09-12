@@ -50,7 +50,6 @@
             </TextBox.KeyboardAccelerators>
         </TextBox>
         <Grid
-            x:Name="SubmitWrapper"
             Margin="0,8,0,0"
             CornerRadius="{x:Bind Submit.CornerRadius}"
             ui:UIElementExtensions.ClipToBounds="True">

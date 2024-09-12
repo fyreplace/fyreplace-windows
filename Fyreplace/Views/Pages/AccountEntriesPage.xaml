@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -17,18 +18,19 @@
         MinWidth="240"
         Orientation="Vertical"
         Spacing="12">
-        <SelectorBar
-            x:Name="SelectorBar"
-            HorizontalAlignment="Center"
+        <controls:Segmented
+            x:Name="Segmented"
+            HorizontalAlignment="Stretch"
             IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-            SelectionChanged="SelectorBar_SelectionChanged">
-            <SelectorBarItem
+            SelectionMode="Single"
+            SelectionChanged="Segmented_SelectionChanged">
+            <controls:SegmentedItem
                 x:Name="Login"
                 x:Uid="AccountEntriesPage_Login" />
-            <SelectorBarItem
+            <controls:SegmentedItem
                 x:Name="Register"
                 x:Uid="AccountEntriesPage_Register" />
-        </SelectorBar>
+        </controls:Segmented>
         <Frame x:Name="Host" />
     </StackPanel>
 </Page>

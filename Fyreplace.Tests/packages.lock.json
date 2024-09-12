@@ -44,6 +44,16 @@
         "resolved": "8.2.2",
         "contentHash": "r0g0k9tGYdrnz8R7T3x5UiokDffeevzK/2P/9SBL6fqLgN8B157MIi/bVUWI1KAz6ZorZrK9AdABCWUeXZZsvA=="
       },
+      "CommunityToolkit.WinUI.Controls.Segmented": {
+        "type": "Transitive",
+        "resolved": "8.1.240821",
+        "contentHash": "ATbIo2toZoxmxuOnSfFekpRni8srKxIo5AiZQuA/tMiaMujuO6Z9MEUTvogm99mR/z1rTS0ZtVVK6FntHOQRNw==",
+        "dependencies": {
+          "CommunityToolkit.WinUI.Extensions": "8.1.240821",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
+          "Microsoft.WindowsAppSDK": "1.5.240311000"
+        }
+      },
       "CommunityToolkit.WinUI.Controls.SettingsControls": {
         "type": "Transitive",
         "resolved": "8.1.240821",
@@ -513,6 +523,7 @@
         "type": "Project",
         "dependencies": {
           "CommunityToolkit.Mvvm": "[8.2.2, )",
+          "CommunityToolkit.WinUI.Controls.Segmented": "[8.1.240821, )",
           "CommunityToolkit.WinUI.Controls.SettingsControls": "[8.1.240821, )",
           "CommunityToolkit.WinUI.Converters": "[8.1.240821, )",
           "CommunityToolkit.WinUI.Extensions": "[8.1.240821, )",

@@ -11,13 +11,13 @@ namespace Fyreplace.Views.Pages
         public AccountEntriesPage()
         {
             InitializeComponent();
-            SelectorBar.SelectedItem = preferences.Account_IsRegistering ? Register : Login;
+            Segmented.SelectedItem = preferences.Account_IsRegistering ? Register : Login;
         }
 
-        private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        private void Segmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Host.Navigate(
-                sender.SelectedItem == Login ? typeof(LoginPage) : typeof(RegisterPage),
+                Segmented.SelectedItem == (object)Login ? typeof(LoginPage) : typeof(RegisterPage),
                 null,
                 new SuppressNavigationTransitionInfo()
             );

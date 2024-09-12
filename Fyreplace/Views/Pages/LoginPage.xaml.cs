@@ -1,5 +1,4 @@
 using Fyreplace.Data;
-using Fyreplace.Events;
 using Fyreplace.ViewModels;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
@@ -15,9 +14,7 @@ namespace Fyreplace.Views.Pages
         protected override IDictionary<string, UIElement> ConnectedElements => new Dictionary<string, UIElement>
         {
             ["title"] = Title,
-            ["first-field"] = Identifier,
-            ["submit"] = Submit,
-            ["submit-wrapper"] = SubmitWrapper
+            ["first-field"] = Identifier
         };
         protected override LoginViewModel viewModel => AppBase.GetService<LoginViewModel>();
 

@@ -14,9 +14,7 @@ namespace Fyreplace.Views.Pages
         protected override IDictionary<string, UIElement> ConnectedElements => new Dictionary<string, UIElement>
         {
             ["title"] = Title,
-            ["first-field"] = Username,
-            ["submit"] = Submit,
-            ["submit-wrapper"] = SubmitWrapper
+            ["first-field"] = Username
         };
         protected override RegisterViewModel viewModel => AppBase.GetService<RegisterViewModel>();
 
