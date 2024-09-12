@@ -180,7 +180,7 @@
   <data name="MainPage_Feed.Content" xml:space="preserve">
     <value>Feed</value>
   </data>
-  <data name="AccountEntriesPage_Login.Text" xml:space="preserve">
+  <data name="AccountEntriesPage_Login.Content" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="MainPage_Notifications.Content" xml:space="preserve">
@@ -189,7 +189,7 @@
   <data name="MainPage_Published.Content" xml:space="preserve">
     <value>Published</value>
   </data>
-  <data name="AccountEntriesPage_Register.Text" xml:space="preserve">
+  <data name="AccountEntriesPage_Register.Content" xml:space="preserve">
     <value>Sign up</value>
   </data>
   <data name="MainPage_Title.Text" xml:space="preserve">
@@ -359,5 +359,8 @@
   </data>
   <data name="RegisterPage_Error_CreateUser_BadRequest_Username.Message" xml:space="preserve">
     <value>This username is not valid.</value>
+  </data>
+  <data name="MainWindow_ConnectionTip.Title" xml:space="preserve">
+    <value>Signing in...</value>
   </data>
 </root>

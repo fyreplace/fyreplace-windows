@@ -14,6 +14,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <UseWinUI>true</UseWinUI>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
     <DefaultLanguage>en</DefaultLanguage>

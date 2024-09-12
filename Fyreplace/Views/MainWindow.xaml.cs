@@ -1,16 +1,20 @@
 using Fyreplace.Events;
+using Fyreplace.ViewModels;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.ApplicationModel.Resources;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using WinRT.Interop;
 
 namespace Fyreplace.Views
 {
     public sealed partial class MainWindow : Window
     {
         private readonly IEventBus EventBus = AppBase.GetService<IEventBus>();
+        private readonly MainWindowViewModel viewModel = AppBase.GetService<MainWindowViewModel>();
 
         public MainWindow()
         {
@@ -23,6 +27,8 @@ namespace Fyreplace.Views
             SetTitleBar(MainPage.GetTitleBar());
             EventBus.Subscribe<FailureEvent>(OnFailureEvent);
         }
+
+        public void Show() => SwitchToThisWindow(WindowNative.GetWindowHandle(this), false);
 
         #region Event Handlers
 
@@ -44,5 +50,9 @@ namespace Fyreplace.Views
         }
 
         #endregion
+
+        [LibraryImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool SwitchToThisWindow(IntPtr hWnd, [MarshalAs(UnmanagedType.Bool)] bool fAltTab);
     }
 }

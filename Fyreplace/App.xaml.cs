@@ -1,13 +1,16 @@
-﻿using Fyreplace.Config;
+﻿using CommunityToolkit.WinUI;
+using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Data.Preferences;
 using Fyreplace.Data.Secrets;
 using Fyreplace.Events;
 using Fyreplace.Services;
+using Fyreplace.ViewModels;
 using Fyreplace.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.UI.Xaml;
+using Microsoft.UI.Dispatching;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
+using Microsoft.Windows.AppLifecycle;
 using Polly;
 using Polly.Retry;
 using Sentry;
@@ -17,6 +20,9 @@ using System.Net.Http;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
+using LaunchActivatedEventArgs = Microsoft.UI.Xaml.LaunchActivatedEventArgs;
+using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace Fyreplace
 {
@@ -52,7 +58,43 @@ namespace Fyreplace
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-            GetService<MainWindow>().Activate();
+            var instances = AppInstance.GetInstances();
+            var currentInstance = AppInstance.GetCurrent();
+            var isSingleInstance = instances.Count == 1;
+            var protocolActivatedArgs = currentInstance.GetActivatedEventArgs().Data as ProtocolActivatedEventArgs;
+            AppInstance.FindOrRegisterForKey(Guid.NewGuid().ToString());
+            var shouldExit = false;
+
+            switch (protocolActivatedArgs?.Uri.AbsolutePath)
+            {
+                case "/login":
+                case "/register":
+                    if (isSingleInstance)
+                    {
+                        _ = CompleteConnection(protocolActivatedArgs!);
+                    }
+                    else
+                    {
+                        foreach (var instance in instances)
+                        {
+                            _ = instance.RedirectActivationToAsync(currentInstance.GetActivatedEventArgs());
+                        }
+
+                        shouldExit = true;
+                    }
+
+                    break;
+            }
+
+            if (shouldExit)
+            {
+                Exit();
+            }
+            else
+            {
+                GetService<MainWindow>().Activate();
+                currentInstance.Activated += AppInstance_Activated;
+            }
         }
 
         protected override void ConfigureServices(IServiceCollection services)
@@ -78,7 +120,7 @@ namespace Fyreplace
         }
 
         [SecurityCritical]
-        private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var exception = e.Exception;
 
@@ -116,6 +158,26 @@ namespace Fyreplace
 
             return new ApiClient(url.ToString(), client);
         }
+
+        private void AppInstance_Activated(object? sender, AppActivationArguments e)
+        {
+            var protocolActivatedArgs = e.Data as ProtocolActivatedEventArgs;
+
+            if (protocolActivatedArgs != null)
+            {
+                var window = GetService<MainWindow>();
+                window.DispatcherQueue.EnqueueAsync(
+                    async () =>
+                    {
+                        window.Show();
+                        await CompleteConnection(protocolActivatedArgs);
+                    },
+                    DispatcherQueuePriority.High
+                );
+            }
+        }
+
+        private static Task CompleteConnection(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnection(protocolActivatedArgs.Uri.Fragment.Replace("#", ""));
     }
 
     class RequestIdHandler(ResiliencePipeline resilience) : DelegatingHandler(new HttpClientHandler())

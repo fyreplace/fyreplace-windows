@@ -1,6 +1,5 @@
 ﻿using Fyreplace.Config;
 using Fyreplace.ViewModels;
-using Fyreplace.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -18,6 +17,7 @@ namespace Fyreplace
         protected virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<BuildInfo>();
+            services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<RegisterViewModel>();
             services.AddSingleton<AccountViewModel>();

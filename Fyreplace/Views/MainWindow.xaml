@@ -8,6 +8,7 @@
     xmlns:pages="using:Fyreplace.Views.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d"
     Activated="Root_Activated">
 
@@ -15,5 +16,16 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <pages:MainPage x:Name="MainPage" AppWindow="{x:Bind AppWindow}" />
+    <Grid>
+        <pages:MainPage x:Name="MainPage" AppWindow="{x:Bind AppWindow}" />
+        <TeachingTip
+            x:Uid="MainWindow_ConnectionTip"
+            PreferredPlacement="BottomRight"
+            IconSource="{ui:FontIconSource Glyph=&#xF427;}"
+            IsOpen="{x:Bind viewModel.ShowConnectionTip, Mode=TwoWay}">
+            <TeachingTip.HeroContent>
+                <ProgressBar IsIndeterminate="True" />
+            </TeachingTip.HeroContent>
+        </TeachingTip>
+    </Grid>
 </Window>
