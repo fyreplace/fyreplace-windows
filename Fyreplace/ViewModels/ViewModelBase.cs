@@ -18,13 +18,16 @@ namespace Fyreplace.ViewModels
 
         protected async Task<T?> Call<T>(Func<Task<T>> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure)
         {
+            FailureEvent? failureEvent;
+            Exception? capturedException = default;
+
             try
             {
                 return await action();
             }
             catch (HttpRequestException)
             {
-                await eventBus.Publish(new FailureEvent("Error_Connection"));
+                failureEvent = new FailureEvent("Error_Connection");
             }
             catch (ApiException exception)
             {
@@ -33,24 +36,30 @@ namespace Fyreplace.ViewModels
                 if (statusCode == HttpStatusCode.Unauthorized)
                 {
                     secrets.Token = "";
-                    await eventBus.Publish(new FailureEvent("Error_Unauthorized"));
+                    failureEvent = new FailureEvent("Error_Unauthorized");
                 }
                 else
                 {
                     var violationReport = (exception as ApiException<ViolationReport>)?.Result;
                     var explainedFailure = (exception as ApiException<ExplainedFailure>)?.Result;
-                    var failureEvent = onFailure(statusCode, violationReport, explainedFailure);
-
-                    if (failureEvent != null)
-                    {
-                        await eventBus.Publish(failureEvent);
-                    }
+                    failureEvent = onFailure(statusCode, violationReport, explainedFailure);
+                    capturedException = exception;
                 }
             }
             catch (Exception exception)
             {
-                await eventBus.Publish(new FailureEvent());
-                SentrySdk.CaptureException(exception);
+                failureEvent = new FailureEvent();
+                capturedException = exception;
+            }
+
+            if (failureEvent != null)
+            {
+                await eventBus.Publish(failureEvent);
+
+                if (capturedException != null && failureEvent.Key == new FailureEvent().Key)
+                {
+                    SentrySdk.CaptureException(capturedException);
+                }
             }
 
             return default;
