@@ -109,7 +109,7 @@ namespace Fyreplace
             services.AddSingleton<MainWindow>();
             services.AddSingleton<ISecrets, PasswordVaultSecrets>();
             services.AddSingleton<IEventBus, EventBus>();
-            services.AddResiliencePipeline(typeof(RequestIdHandler), MakeResiliencePipeline);
+            services.AddResiliencePipeline(typeof(RequestHeadersHandler), MakeResiliencePipeline);
             services.AddTransient(MakeApiClient);
 
             var info = services.BuildServiceProvider().GetRequiredService<BuildInfo>();
@@ -149,18 +149,12 @@ namespace Fyreplace
 
         private IApiClient MakeApiClient(IServiceProvider provider)
         {
-            var resilience = provider.GetRequiredKeyedService<ResiliencePipeline>(typeof(RequestIdHandler));
+            var resilience = provider.GetRequiredKeyedService<ResiliencePipeline>(typeof(RequestHeadersHandler));
             var preferences = provider.GetRequiredService<IPreferences>();
             var secrets = provider.GetRequiredService<ISecrets>();
             var api = provider.GetRequiredService<BuildInfo>().Api;
             var url = api.ForEnvironment(preferences.Connection_Environment);
-            var client = new HttpClient(new RequestIdHandler(resilience));
-
-            if (secrets.Token != string.Empty)
-            {
-                client.DefaultRequestHeaders.Authorization = new("Bearer", secrets.Token);
-            }
-
+            var client = new HttpClient(new RequestHeadersHandler(secrets, resilience));
             return new ApiClient(url.ToString(), client);
         }
 
@@ -185,7 +179,7 @@ namespace Fyreplace
         private static Task CompleteConnection(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnection(protocolActivatedArgs.Uri.Fragment.Replace("#", ""));
     }
 
-    class RequestIdHandler(ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())
+    class RequestHeadersHandler(ISecrets secrets, ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())
     {
         public ResiliencePipeline resilience = resilience;
 
@@ -193,6 +187,11 @@ namespace Fyreplace
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            if (secrets.Token != string.Empty)
+            {
+                request.Headers.Authorization = new("Bearer", secrets.Token);
+            }
+
             if (!request.Headers.Contains(headerName))
             {
                 request.Headers.Add(headerName, Guid.NewGuid().ToString());
