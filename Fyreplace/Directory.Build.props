@@ -1,4 +1,5 @@
 <Project>
+  <Import Condition="Exists('Directory.Build.user.props')" Project="Directory.Build.user.props" />
   <PropertyGroup>
     <FyreplaceApiUrlMain>https://rest.api.fyreplace.app</FyreplaceApiUrlMain>
     <FyreplaceApiUrlDev>https://dev.rest.api.fyreplace.app</FyreplaceApiUrlDev>

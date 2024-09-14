@@ -1,2 +1,3 @@
 app.manifest
 Package.appxmanifest
+Directory.Build.user.props

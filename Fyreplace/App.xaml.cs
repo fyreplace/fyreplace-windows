@@ -47,6 +47,11 @@ namespace Fyreplace
                     options.IsGlobalModeEnabled = true;
                     options.CaptureFailedRequests = true;
                     options.DisableWinUiUnhandledExceptionIntegration();
+#if DEBUG
+                    options.TracesSampleRate = 1;
+                    options.ProfilesSampleRate = 1;
+                    options.EnableSpotlight = true;
+#endif
                 });
 
                 UnhandledException += OnUnhandledException;
@@ -180,7 +185,7 @@ namespace Fyreplace
         private static Task CompleteConnection(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnection(protocolActivatedArgs.Uri.Fragment.Replace("#", ""));
     }
 
-    class RequestIdHandler(ResiliencePipeline resilience) : DelegatingHandler(new HttpClientHandler())
+    class RequestIdHandler(ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())
     {
         public ResiliencePipeline resilience = resilience;
 
