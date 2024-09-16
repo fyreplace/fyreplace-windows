@@ -396,7 +396,7 @@ namespace Fyreplace.Tests.Services
                 Bio = string.Empty,
                 Banned = false,
                 Blocked = false,
-                Tint = "#7F7F7F"
+                Tint = new() { R = 0x7F, G = 0x7F, B = 0x7F },
             });
 
         public Task DeleteCurrentUserAsync()
