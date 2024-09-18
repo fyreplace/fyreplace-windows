@@ -5,7 +5,7 @@ namespace Fyreplace.Views.Pages
 {
     public sealed partial class AccountPage : Page
     {
-        private AccountViewModel viewModel => AppBase.GetService<AccountViewModel>();
+        private readonly AccountViewModel viewModel = AppBase.GetService<AccountViewModel>();
 
         public AccountPage() => InitializeComponent();
     }

@@ -1,5 +1,6 @@
 using Fyreplace.Data;
 using Fyreplace.Events;
+using Fyreplace.ViewModels;
 using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -24,6 +25,7 @@ namespace Fyreplace.Views.Pages
         private NavigationViewItemBase currentInvokedItem;
         private readonly ISecrets secrets = AppBase.GetService<ISecrets>();
         private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
+        private readonly AccountViewModel accountViewModel = AppBase.GetService<AccountViewModel>();
 
         public MainPage()
         {
@@ -64,7 +66,7 @@ namespace Fyreplace.Views.Pages
 
         #endregion
 
-        #region navigation
+        #region Navigation
 
         private void GoBack()
         {

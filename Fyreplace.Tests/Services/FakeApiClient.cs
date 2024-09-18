@@ -386,18 +386,7 @@ namespace Fyreplace.Tests.Services
             ? throw new FakeApiException(HttpStatusCode.BadRequest)
             : body.Email == usedEmail
             ? throw new FakeApiException(HttpStatusCode.Conflict)
-            : Task.FromResult(new User()
-            {
-                Id = new Guid(),
-                DateCreated = DateTime.UtcNow,
-                Username = body.Username,
-                Rank = Rank.CITIZEN,
-                Avatar = string.Empty,
-                Bio = string.Empty,
-                Banned = false,
-                Blocked = false,
-                Tint = new() { R = 0x7F, G = 0x7F, B = 0x7F },
-            });
+            : Task.FromResult(MakeUser(body.Username));
 
         public Task DeleteCurrentUserAsync()
         {
@@ -409,10 +398,7 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        public Task<User> GetCurrentUserAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<User> GetCurrentUserAsync() => Task.FromResult(MakeUser("random_user"));
 
         public Task<User> GetUserAsync(Guid id)
         {
@@ -448,6 +434,19 @@ namespace Fyreplace.Tests.Services
         {
             throw new NotImplementedException();
         }
+
+        private User MakeUser(string username) => new User()
+        {
+            Id = new Guid(),
+            DateCreated = DateTime.UtcNow,
+            Username = username,
+            Rank = Rank.CITIZEN,
+            Avatar = string.Empty,
+            Bio = "Hello there",
+            Banned = false,
+            Blocked = false,
+            Tint = new() { R = 0x7F, G = 0x7F, B = 0x7F },
+        };
     }
 
     #endregion

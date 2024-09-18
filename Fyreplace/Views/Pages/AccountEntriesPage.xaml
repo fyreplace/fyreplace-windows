@@ -15,7 +15,6 @@
     </Page.Resources>
 
     <StackPanel
-        MinWidth="240"
         Orientation="Vertical"
         Spacing="12">
         <controls:Segmented

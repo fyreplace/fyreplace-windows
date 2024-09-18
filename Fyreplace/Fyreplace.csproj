@@ -76,6 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\Controls\Avatar.xaml" />
     <None Remove="Views\Controls\KeyboardShortcut.xaml" />
     <None Remove="Views\Pages\AccountEntriesPage.xaml" />
     <None Remove="Views\Pages\AccountPage.xaml" />
@@ -106,6 +107,11 @@
     <Content Update="Assets\Icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Controls\Avatar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Controls\KeyboardShortcut.xaml">

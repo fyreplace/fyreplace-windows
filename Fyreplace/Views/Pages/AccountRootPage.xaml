@@ -8,5 +8,5 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Frame x:Name="Host" />
+    <Frame x:Name="Host" MinWidth="240" />
 </Page>
