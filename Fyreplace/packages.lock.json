@@ -10,31 +10,31 @@
       },
       "CommunityToolkit.WinUI.Controls.Segmented": {
         "type": "Direct",
-        "requested": "[8.1.240821, )",
-        "resolved": "8.1.240821",
-        "contentHash": "ATbIo2toZoxmxuOnSfFekpRni8srKxIo5AiZQuA/tMiaMujuO6Z9MEUTvogm99mR/z1rTS0ZtVVK6FntHOQRNw==",
+        "requested": "[8.1.240916, )",
+        "resolved": "8.1.240916",
+        "contentHash": "4M5joQ0KBV+RPXaOUC52f20XQ0fCSgJHj5ZloVbELdHVc7Kq3cQWXCx3AlCnNzK1AAvcTsYaw1kfqxECQNxwcw==",
         "dependencies": {
-          "CommunityToolkit.WinUI.Extensions": "8.1.240821",
+          "CommunityToolkit.WinUI.Extensions": "8.1.240916",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
           "Microsoft.WindowsAppSDK": "1.5.240311000"
         }
       },
       "CommunityToolkit.WinUI.Controls.SettingsControls": {
         "type": "Direct",
-        "requested": "[8.1.240821, )",
-        "resolved": "8.1.240821",
-        "contentHash": "a5eEsR1wQSuVUsQALEpZiq6dNrTuw0POQCD6NXMBID+mY0g672Pg8OPG4MyTbwOgj+1NPua51WM22WFVGteRlQ==",
+        "requested": "[8.1.240916, )",
+        "resolved": "8.1.240916",
+        "contentHash": "KLdK3ibSzuz8xg5jIawC7xFXRQDOCFzTjF471fTD1gCsKTG44H8D39+6NhGKmXMRwlk6i2sidWb+jLUitzFeHw==",
         "dependencies": {
-          "CommunityToolkit.WinUI.Triggers": "8.1.240821",
+          "CommunityToolkit.WinUI.Triggers": "8.1.240916",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
           "Microsoft.WindowsAppSDK": "1.5.240311000"
         }
       },
       "CommunityToolkit.WinUI.Converters": {
         "type": "Direct",
-        "requested": "[8.1.240821, )",
-        "resolved": "8.1.240821",
-        "contentHash": "Fz8uewTFTrtj3qsPrgRQ2Ld7efjdGb7EVYLxGoNuii9pS4SiKqGC2KEUJqZ8oQlXX4eUFiO5pqOeE5SC/fQoPw==",
+        "requested": "[8.1.240916, )",
+        "resolved": "8.1.240916",
+        "contentHash": "UELI/UNyc9lf8NqKfuBZJGnrpUgXqqRZ3L/fP8RTRP/t8DWDr9JTdhgPUbXaF/Z16DVPZRId9c+nRfVINbme4Q==",
         "dependencies": {
           "CommunityToolkit.Common": "8.2.1",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
@@ -43,9 +43,9 @@
       },
       "CommunityToolkit.WinUI.Extensions": {
         "type": "Direct",
-        "requested": "[8.1.240821, )",
-        "resolved": "8.1.240821",
-        "contentHash": "mYVvEWQYF6keFQ0X2yEcTFNCarhw9fTSqMDFM00/fxWmGG2RvyyC0t8k/BeqAuV9azM9ZkRNTCqRt36usUsdFg==",
+        "requested": "[8.1.240916, )",
+        "resolved": "8.1.240916",
+        "contentHash": "y8FEzoy5HF3dBkxe/pU87hlh0QACtGZhnv881x2SFq9fvDjukLQz6VpoOkjxSZjEILmYu1NoI/tYjqXlETRGlw==",
         "dependencies": {
           "CommunityToolkit.Common": "8.2.1",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
@@ -143,20 +143,20 @@
       },
       "CommunityToolkit.WinUI.Helpers": {
         "type": "Transitive",
-        "resolved": "8.1.240821",
-        "contentHash": "/h4p1+5Hv9j61mp++IfiWxVihq0yb6maRcIRrehzB4YTXFU60P3pZwQShNytTVnGMDRm6AgupbtnBoG+38PBnA==",
+        "resolved": "8.1.240916",
+        "contentHash": "Q2eipdR9ntktYT1b3Dn927lZjdwQsmSU9cq6Pf2GwXW+R2IwkbGn7uYKJhmr5athOT6mnNgc7pMmfwFHIsFPLQ==",
         "dependencies": {
-          "CommunityToolkit.WinUI.Extensions": "8.1.240821",
+          "CommunityToolkit.WinUI.Extensions": "8.1.240916",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
           "Microsoft.WindowsAppSDK": "1.5.240311000"
         }
       },
       "CommunityToolkit.WinUI.Triggers": {
         "type": "Transitive",
-        "resolved": "8.1.240821",
-        "contentHash": "D5Xr3MsJX1n3iIi7SnAW29Nec6K1rQDSfuFNZGHrdIsqnVw5Tu8ITmWjv3oWQAdEWql7vcyY/Hezb7l4uFXP0w==",
+        "resolved": "8.1.240916",
+        "contentHash": "4XUtIdhjTj9mTWgqUvnVIa3Ox+CW+fBks94DUOndAuxtHlDf9Oc8EguHXp4W8qxp7x4tUeYDoRPmcsnXgjt3Sw==",
         "dependencies": {
-          "CommunityToolkit.WinUI.Helpers": "8.1.240821",
+          "CommunityToolkit.WinUI.Helpers": "8.1.240916",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756",
           "Microsoft.WindowsAppSDK": "1.5.240311000"
         }
