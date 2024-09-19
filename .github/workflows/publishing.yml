@@ -172,5 +172,4 @@ jobs:
       - name: Run tests
         run: |
           .\vs vstest.console `
-            /p:Platform=${{ matrix.architecture }} `
             Fyreplace.Tests\bin\${{ matrix.architecture }}\Debug\*\win-${{ matrix.architecture }}\Fyreplace.Tests.build.appxrecipe
