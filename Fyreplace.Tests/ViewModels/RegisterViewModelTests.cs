@@ -84,8 +84,8 @@ namespace Fyreplace.Tests.ViewModels
             {
                 preferences.Account_Username = invalidValues[i];
                 await viewModel.Submit();
-                Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
                 Assert.AreEqual(i + 1, eventBus.Events.Count(e => e is FailureEvent));
+                Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
             }
         }
 
@@ -102,8 +102,8 @@ namespace Fyreplace.Tests.ViewModels
             {
                 preferences.Account_Email = invalidValues[i];
                 await viewModel.Submit();
-                Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
                 Assert.AreEqual(i + 1, eventBus.Events.Count(e => e is FailureEvent));
+                Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
             }
         }
 
@@ -117,8 +117,8 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_Username = FakeApiClient.goodUsername;
             preferences.Account_Email = FakeApiClient.goodEmail;
             await viewModel.Submit();
-            Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
         }
 
         [TestMethod]

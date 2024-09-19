@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -337,17 +338,20 @@ namespace Fyreplace.Tests.Services
 
     public sealed partial class FakeApiClient
     {
+        public static string[] GoodIdentifiers => [goodUsername, goodEmail];
         public static readonly string badSecret = "nopenope";
         public static readonly string goodSecret = "abcd1234";
         public static readonly string token = "token";
 
         public Task CreateNewTokenAsync(bool? customDeepLinks, NewTokenCreation body) =>
-            body.Identifier == goodEmail
-            ? Task.FromResult(token)
-            : throw new FakeApiException(HttpStatusCode.NotFound);
+            body.Identifier == passwordUsername
+            ? throw new FakeApiException(HttpStatusCode.Forbidden)
+            : !GoodIdentifiers.Contains(body.Identifier)
+            ? throw new FakeApiException(HttpStatusCode.NotFound)
+            : Task.FromResult(token);
 
         public Task<string> CreateTokenAsync(TokenCreation body) =>
-            body.Identifier != goodEmail
+            !GoodIdentifiers.Contains(body.Identifier)
             ? throw new FakeApiException(HttpStatusCode.NotFound)
             : body.Secret != goodSecret
             ? throw new FakeApiException(HttpStatusCode.NotFound)
@@ -365,6 +369,7 @@ namespace Fyreplace.Tests.Services
         public static readonly string badUsername = "bad-username";
         public static readonly string reservedUsername = "reserved-username";
         public static readonly string usedUsername = "used-username";
+        public static readonly string passwordUsername = "password-username";
         public static readonly string goodUsername = "good-username";
         public static readonly string badEmail = "bad-email";
         public static readonly string usedEmail = "used-email";
@@ -380,7 +385,7 @@ namespace Fyreplace.Tests.Services
             ? throw new FakeApiException(HttpStatusCode.BadRequest)
             : body.Username == reservedUsername
             ? throw new FakeApiException(HttpStatusCode.Forbidden)
-            : body.Username == usedUsername
+            : body.Username == usedUsername || body.Username == passwordUsername
             ? throw new FakeApiException(HttpStatusCode.Conflict)
             : body.Email == badEmail
             ? throw new FakeApiException(HttpStatusCode.BadRequest)

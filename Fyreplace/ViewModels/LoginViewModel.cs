@@ -1,5 +1,6 @@
 ﻿using Fyreplace.Data;
 using Fyreplace.Events;
+using Fyreplace.Extensions;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -32,6 +33,8 @@ namespace Fyreplace.ViewModels
             onFailure: (statusCode, _, _) => statusCode switch
             {
                 HttpStatusCode.BadRequest => new FailureEvent("Error_BadRequest"),
+                HttpStatusCode.Forbidden => new FailureEvent("LoginPage_Error_Forbidden")
+                    .Also(() => preferences.Account_IsWaitingForRandomCode = true),
                 HttpStatusCode.NotFound => new FailureEvent("LoginPage_Error_NotFound"),
                 _ => new FailureEvent()
             }
