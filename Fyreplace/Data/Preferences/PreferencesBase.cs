@@ -7,7 +7,7 @@ namespace Fyreplace.Data.Preferences
     {
         private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
-        public PreferencesBase() => PropertyChanged += (sender, args) => eventBus.Publish(new PreferenceChangedEvent(args.PropertyName!));
+        public PreferencesBase() => PropertyChanged += (sender, args) => eventBus.PublishAsync(new PreferenceChangedEvent(args.PropertyName!));
 
         public abstract string Read(K key, string defaultValue);
 

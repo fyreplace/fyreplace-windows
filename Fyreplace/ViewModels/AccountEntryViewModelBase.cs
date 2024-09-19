@@ -49,22 +49,22 @@ namespace Fyreplace.ViewModels
         protected static IApiClient Api => AppBase.GetService<IApiClient>();
         private static readonly Environment[] environments = Enum.GetValues<Environment>();
 
-        public AccountEntryViewModelBase() => eventBus.Subscribe<PreferenceChangedEvent>(OnPreferenceChanged);
+        public AccountEntryViewModelBase() => eventBus.Subscribe<PreferenceChangedEvent>(OnPreferenceChangedAsync);
 
-        protected abstract Task CreateToken();
+        protected abstract Task CreateTokenAsync();
 
-        protected abstract Task SendEmail();
+        protected abstract Task SendEmailAsync();
 
         [RelayCommand(CanExecute = nameof(CanSubmit))]
-        public Task Submit()
+        public Task SubmitAsync()
         {
             if (preferences.Account_IsWaitingForRandomCode)
             {
-                return CreateToken();
+                return CreateTokenAsync();
             }
             else
             {
-                return SendEmail();
+                return SendEmailAsync();
             }
         }
 
@@ -76,7 +76,7 @@ namespace Fyreplace.ViewModels
             IsRandomCodeTipShown = false;
         }
 
-        protected Task CallWhileLoading(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => Call(async () =>
+        protected Task CallWhileLoading(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => CallAsync(async () =>
             {
                 try
                 {
@@ -91,7 +91,7 @@ namespace Fyreplace.ViewModels
             onFailure
         );
 
-        protected virtual Task OnPreferenceChanged(PreferenceChangedEvent e)
+        protected virtual Task OnPreferenceChangedAsync(PreferenceChangedEvent e)
         {
             switch (e.Name)
             {

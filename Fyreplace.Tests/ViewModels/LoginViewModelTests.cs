@@ -40,7 +40,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new LoginViewModel();
 
             preferences.Account_Identifier = FakeApiClient.badUsername;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
             Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
         }
@@ -53,7 +53,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new LoginViewModel();
 
             preferences.Account_Identifier = FakeApiClient.goodUsername;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
         }
@@ -66,7 +66,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new LoginViewModel();
 
             preferences.Account_Identifier = FakeApiClient.passwordUsername;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
             Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
         }
@@ -94,7 +94,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
 
             viewModel.RandomCode = FakeApiClient.badSecret;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
         }
 
@@ -108,7 +108,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
 
             viewModel.RandomCode = FakeApiClient.goodSecret;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
         }
     }

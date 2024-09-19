@@ -7,7 +7,7 @@ namespace Fyreplace.Data.Secrets
         private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
         private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
-        public SecretsBase() => PropertyChanged += (sender, args) => eventBus.Publish(new SecretChangedEvent(args.PropertyName!));
+        public SecretsBase() => PropertyChanged += (sender, args) => eventBus.PublishAsync(new SecretChangedEvent(args.PropertyName!));
 
         public string Token
         {

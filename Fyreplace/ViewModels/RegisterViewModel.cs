@@ -18,9 +18,9 @@ namespace Fyreplace.ViewModels
             && preferences.Account_Email.Length >= 3
             && preferences.Account_Email.Length <= 254;
 
-        protected override async Task OnPreferenceChanged(PreferenceChangedEvent e)
+        protected override async Task OnPreferenceChangedAsync(PreferenceChangedEvent e)
         {
-            await base.OnPreferenceChanged(e);
+            await base.OnPreferenceChangedAsync(e);
 
             switch (e.Name)
             {
@@ -31,7 +31,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        protected override Task SendEmail() => CallWhileLoading(async () =>
+        protected override Task SendEmailAsync() => CallWhileLoading(async () =>
             {
                 await Api.CreateUserAsync(true, new()
                 {
@@ -57,7 +57,7 @@ namespace Fyreplace.ViewModels
                 _ => new FailureEvent()
             });
 
-        protected override Task CreateToken() => CallWhileLoading(async () =>
+        protected override Task CreateTokenAsync() => CallWhileLoading(async () =>
             {
                 var  token = await Api.CreateTokenAsync(new()
                 {

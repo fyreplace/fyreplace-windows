@@ -15,7 +15,7 @@ namespace Fyreplace.Views.Pages
         {
             InitializeComponent();
             UpdateContent();
-            eventBus.Subscribe<SecretChangedEvent>(OnSecretChanged);
+            eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
         }
 
         private void UpdateContent()
@@ -30,7 +30,7 @@ namespace Fyreplace.Views.Pages
             Host.BackStack.Clear();
         }
 
-        private Task OnSecretChanged(SecretChangedEvent e)
+        private Task OnSecretChangedAsync(SecretChangedEvent e)
         {
             switch (e.Name)
             {

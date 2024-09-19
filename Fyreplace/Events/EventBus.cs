@@ -30,7 +30,7 @@ namespace Fyreplace.Events
             }
         }
 
-        public Task Publish(IEvent someEvent)
+        public Task PublishAsync(IEvent someEvent)
         {
             if (!eventHandlers.TryGetValue(someEvent.GetType(), out var handlers))
             {

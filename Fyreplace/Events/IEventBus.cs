@@ -11,6 +11,6 @@ namespace Fyreplace.Events
 
         public void Unsubscribe<T>(Func<T, Task> handler) where T : IEvent;
 
-        public Task Publish(IEvent someEvent);
+        public Task PublishAsync(IEvent someEvent);
     }
 }

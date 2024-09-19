@@ -25,7 +25,7 @@ namespace Fyreplace.Views
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
             AppWindow.SetIcon(@"Assets\Icon.ico");
             SetTitleBar(MainPage.GetTitleBar());
-            EventBus.Subscribe<FailureEvent>(OnFailureEvent);
+            EventBus.Subscribe<FailureEvent>(OnFailureEventAsync);
         }
 
         public void Show() => SwitchToThisWindow(WindowNative.GetWindowHandle(this), false);
@@ -34,7 +34,7 @@ namespace Fyreplace.Views
 
         private void Root_Activated(object sender, WindowActivatedEventArgs args) => MainPage.SetIsTitleBarActive(args.WindowActivationState != WindowActivationState.Deactivated);
 
-        private async Task OnFailureEvent(FailureEvent e)
+        private async Task OnFailureEventAsync(FailureEvent e)
         {
             var resourceLoader = new ResourceLoader();
             var dialog = new ContentDialog

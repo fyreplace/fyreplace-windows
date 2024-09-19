@@ -83,7 +83,7 @@ namespace Fyreplace.Tests.ViewModels
             for (var i = 0; i < invalidValues.Count; i++)
             {
                 preferences.Account_Username = invalidValues[i];
-                await viewModel.Submit();
+                await viewModel.SubmitAsync();
                 Assert.AreEqual(i + 1, eventBus.Events.Count(e => e is FailureEvent));
                 Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
             }
@@ -101,7 +101,7 @@ namespace Fyreplace.Tests.ViewModels
             for (var i = 0; i < invalidValues.Count; i++)
             {
                 preferences.Account_Email = invalidValues[i];
-                await viewModel.Submit();
+                await viewModel.SubmitAsync();
                 Assert.AreEqual(i + 1, eventBus.Events.Count(e => e is FailureEvent));
                 Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
             }
@@ -116,7 +116,7 @@ namespace Fyreplace.Tests.ViewModels
 
             preferences.Account_Username = FakeApiClient.goodUsername;
             preferences.Account_Email = FakeApiClient.goodEmail;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
         }
@@ -145,7 +145,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
 
             viewModel.RandomCode = FakeApiClient.badSecret;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
         }
 
@@ -160,7 +160,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
 
             viewModel.RandomCode = FakeApiClient.goodSecret;
-            await viewModel.Submit();
+            await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
         }
     }

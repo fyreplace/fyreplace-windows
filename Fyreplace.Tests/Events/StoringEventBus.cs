@@ -16,10 +16,10 @@ namespace Fyreplace.Tests.Events
 
         public void Unsubscribe<T>(Func<T, Task> handler) where T : IEvent => realBus.Unsubscribe(handler);
 
-        public Task Publish(IEvent someEvent)
+        public Task PublishAsync(IEvent someEvent)
         {
             events.Add(someEvent);
-            return realBus.Publish(someEvent);
+            return realBus.PublishAsync(someEvent);
         }
 
         public void Clear() => events.Clear();

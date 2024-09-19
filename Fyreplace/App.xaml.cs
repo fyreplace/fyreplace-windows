@@ -76,7 +76,7 @@ namespace Fyreplace
                 case "/register":
                     if (isSingleInstance)
                     {
-                        _ = CompleteConnection(protocolActivatedArgs!);
+                        _ = CompleteConnectionAsync(protocolActivatedArgs!);
                     }
                     else
                     {
@@ -169,14 +169,14 @@ namespace Fyreplace
                     async () =>
                     {
                         window.Show();
-                        await CompleteConnection(protocolActivatedArgs);
+                        await CompleteConnectionAsync(protocolActivatedArgs);
                     },
                     DispatcherQueuePriority.High
                 );
             }
         }
 
-        private static Task CompleteConnection(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnection(protocolActivatedArgs.Uri.Fragment.Replace("#", ""));
+        private static Task CompleteConnectionAsync(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnectionAsync(protocolActivatedArgs.Uri.Fragment.Replace("#", ""));
     }
 
     class RequestHeadersHandler(ISecrets secrets, ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())

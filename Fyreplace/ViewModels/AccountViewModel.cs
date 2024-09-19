@@ -22,7 +22,7 @@ namespace Fyreplace.ViewModels
         private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
 
-        public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChanged);
+        public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
 
         [RelayCommand]
         public void Logout()
@@ -32,12 +32,12 @@ namespace Fyreplace.ViewModels
             preferences.Account_Email = string.Empty;
         }
 
-        private async Task OnSecretChanged(SecretChangedEvent e)
+        private async Task OnSecretChangedAsync(SecretChangedEvent e)
         {
             switch (e.Name)
             {
                 case nameof(ISecrets.Token):
-                    User = secrets.Token != string.Empty ? await Call(api.GetCurrentUserAsync) : null;
+                    User = secrets.Token != string.Empty ? await CallAsync(api.GetCurrentUserAsync) : null;
                     break;
             }
         }

@@ -12,7 +12,7 @@ namespace Fyreplace.ViewModels
                 ? AppBase.GetService<RegisterViewModel>()
                 : AppBase.GetService<LoginViewModel>();
 
-        public async Task CompleteConnection(string randomCode)
+        public async Task CompleteConnectionAsync(string randomCode)
         {
             if (!preferences.Account_IsWaitingForRandomCode)
             {

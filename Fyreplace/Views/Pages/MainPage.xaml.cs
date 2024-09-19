@@ -32,7 +32,7 @@ namespace Fyreplace.Views.Pages
             InitializeComponent();
             currentInvokedItem = Feed;
             Host.Navigate(typeof(FeedPage), null, new SuppressNavigationTransitionInfo());
-            eventBus.Subscribe<SecretChangedEvent>(OnSecretChanged);
+            eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
         }
 
         #region Title Bar
@@ -168,7 +168,7 @@ namespace Fyreplace.Views.Pages
 
         private void Avatar_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout(Avatar);
 
-        private Task OnSecretChanged(SecretChangedEvent e)
+        private Task OnSecretChangedAsync(SecretChangedEvent e)
         {
             switch (e.Name)
             {

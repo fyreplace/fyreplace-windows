@@ -12,9 +12,9 @@ namespace Fyreplace.ViewModels
             && preferences.Account_Identifier.Length >= 3
             && preferences.Account_Identifier.Length <= 254;
 
-        protected override async Task OnPreferenceChanged(PreferenceChangedEvent e)
+        protected override async Task OnPreferenceChangedAsync(PreferenceChangedEvent e)
         {
-            await base.OnPreferenceChanged(e);
+            await base.OnPreferenceChangedAsync(e);
 
             switch (e.Name)
             {
@@ -24,7 +24,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        protected override Task SendEmail() => CallWhileLoading(async () =>
+        protected override Task SendEmailAsync() => CallWhileLoading(async () =>
             {
                 await Api.CreateNewTokenAsync(true, new() { Identifier = preferences.Account_Identifier });
                 preferences.Account_IsWaitingForRandomCode = true;
@@ -40,7 +40,7 @@ namespace Fyreplace.ViewModels
             }
         );
 
-        protected override Task CreateToken() => CallWhileLoading(async () =>
+        protected override Task CreateTokenAsync() => CallWhileLoading(async () =>
             {
                 var token = await Api.CreateTokenAsync(new()
                 {

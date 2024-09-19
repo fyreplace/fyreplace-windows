@@ -16,7 +16,7 @@ namespace Fyreplace.ViewModels
         protected readonly ISecrets secrets = AppBase.GetService<ISecrets>();
         protected readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
-        protected async Task<T?> Call<T>(Func<Task<T>> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?>? onFailure = null)
+        protected async Task<T?> CallAsync<T>(Func<Task<T>> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?>? onFailure = null)
         {
             onFailure ??= (_, _, _) => new FailureEvent();
             FailureEvent? failureEvent;
@@ -55,7 +55,7 @@ namespace Fyreplace.ViewModels
 
             if (failureEvent != null)
             {
-                await eventBus.Publish(failureEvent);
+                await eventBus.PublishAsync(failureEvent);
 
                 if (capturedException != null && failureEvent.Key == new FailureEvent().Key)
                 {
@@ -66,7 +66,7 @@ namespace Fyreplace.ViewModels
             return default;
         }
 
-        protected Task Call(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => Call(async () =>
+        protected Task CallAsync(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => CallAsync(async () =>
             {
                 await action();
                 return true;
