@@ -30,7 +30,7 @@
     <Application
       Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="Windows.PartialTrustApplication">
+      EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="Fyreplace"
         Description="Fyreplace"
@@ -55,7 +55,7 @@
   </Applications>
 
   <Capabilities>
-    <rescap:Capability Name="packageManagement" />
+    <rescap:Capability Name="runFullTrust" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>
