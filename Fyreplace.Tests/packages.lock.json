@@ -14,9 +14,9 @@
       },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Direct",
-        "requested": "[10.0.26100.1, )",
-        "resolved": "10.0.26100.1",
-        "contentHash": "ju02pHSp1LDEIvFgLIDbCbXGPpTTrXJrH90HxC6neclpbRpdS8RxeRbYOzPQFByUPCgT/Egbz4s/cpNMamW1Sg=="
+        "requested": "[10.0.22621.3233, )",
+        "resolved": "10.0.22621.3233",
+        "contentHash": "v67zwCb9JOpfPxdSroZukIKHruU6FUB+KwcmSPcVvUFyYtcyvcUign5y8jPQNi54CVzWvaTg646e62LbanUkxg=="
       },
       "MSTest.TestAdapter": {
         "type": "Direct",
@@ -41,8 +41,8 @@
       },
       "CommunityToolkit.Mvvm": {
         "type": "Transitive",
-        "resolved": "8.3.1",
-        "contentHash": "Fuqjp5uYzHEdrRxsZlY0EqvFX9pF2v0cZN+zfso44lVLI3wZa8Nb9jdcBoXbHxiRSU3hEDhHUqh2fM8znzodzg=="
+        "resolved": "8.3.2",
+        "contentHash": "m8EolE1A0Updj68WTsZSGI6VWb6mUqHPh7QFo0kt7+JPhYMNXRS1ch8TS/oITAdcxTLrwMOp3ku1KjeG1/Zdpg=="
       },
       "CommunityToolkit.WinUI.Controls.Segmented": {
         "type": "Transitive",
@@ -522,13 +522,13 @@
       "fyreplace": {
         "type": "Project",
         "dependencies": {
-          "CommunityToolkit.Mvvm": "[8.3.1, )",
+          "CommunityToolkit.Mvvm": "[8.3.2, )",
           "CommunityToolkit.WinUI.Controls.Segmented": "[8.1.240916, )",
           "CommunityToolkit.WinUI.Controls.SettingsControls": "[8.1.240916, )",
           "CommunityToolkit.WinUI.Converters": "[8.1.240916, )",
           "CommunityToolkit.WinUI.Extensions": "[8.1.240916, )",
           "Microsoft.Extensions.Hosting": "[8.0.0, )",
-          "Microsoft.Windows.SDK.BuildTools": "[10.0.26100.1, )",
+          "Microsoft.Windows.SDK.BuildTools": "[10.0.22621.3233, )",
           "Microsoft.WindowsAppSDK": "[1.6.240829007, )",
           "Newtonsoft.Json": "[13.0.3, )",
           "Polly": "[8.4.1, )",
