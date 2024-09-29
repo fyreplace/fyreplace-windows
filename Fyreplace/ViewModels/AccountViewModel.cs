@@ -4,6 +4,8 @@ using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.Services;
 using Microsoft.Windows.ApplicationModel.Resources;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Fyreplace.ViewModels
@@ -13,16 +15,36 @@ namespace Fyreplace.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Username))]
         [NotifyPropertyChangedFor(nameof(DateJoined))]
-        private User? user;
+        private User? currentUser;
 
-        public string Username => User?.Username ?? resources.GetString("Loading");
+        public string Username => CurrentUser?.Username ?? resources.GetString("Loading");
 
-        public string DateJoined => string.Format(resources.GetString("AccountPage_DateJoined"), User?.DateCreated.ToString("g") ?? resources.GetString("Loading"));
+        public string DateJoined => string.Format(resources.GetString("AccountPage_DateJoined"), CurrentUser?.DateCreated.ToString("g") ?? resources.GetString("Loading"));
 
         private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
 
         public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
+
+        [RelayCommand]
+        public async Task UpdateAvatarAsync(Stream stream)
+        {
+            var avatar = await CallAsync(
+                () => api.SetCurrentUserAvatarAsync(stream),
+                onFailure: (status, _, _) => status switch
+                {
+                    HttpStatusCode.RequestEntityTooLarge => new FailureEvent("Account_Error_RequestEntityTooLarge"),
+                    HttpStatusCode.UnsupportedMediaType => new FailureEvent("Account_Error_UnsupportedMediaType"),
+                    _ => new FailureEvent()
+                }
+            );
+
+            if (CurrentUser != null && avatar != null)
+            {
+                CurrentUser.Avatar = avatar;
+                await eventBus.PublishAsync(new ModelChangedEvent(CurrentUser.Id, nameof(User.Avatar)));
+            }
+        }
 
         [RelayCommand]
         public void Logout()
@@ -37,7 +59,7 @@ namespace Fyreplace.ViewModels
             switch (e.Name)
             {
                 case nameof(ISecrets.Token):
-                    User = secrets.Token != string.Empty ? await CallAsync(api.GetCurrentUserAsync) : null;
+                    CurrentUser = secrets.Token != string.Empty ? await CallAsync(api.GetCurrentUserAsync) : null;
                     break;
             }
         }

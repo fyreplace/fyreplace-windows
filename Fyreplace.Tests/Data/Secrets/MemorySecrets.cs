@@ -32,5 +32,7 @@ namespace Fyreplace.Tests.Data.Secrets
                 secrets[key] = value;
             }
         }
+
+        public void Clear() => secrets.Clear();
     }
 }

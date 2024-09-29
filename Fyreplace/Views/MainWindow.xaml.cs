@@ -7,6 +7,8 @@ using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using WinRT.Interop;
 
 namespace Fyreplace.Views
@@ -29,6 +31,20 @@ namespace Fyreplace.Views
         }
 
         public void Show() => SwitchToThisWindow(WindowNative.GetWindowHandle(this), false);
+
+        public async Task<StorageFile?> PickImageFileAsync()
+        {
+            var picker = new FileOpenPicker();
+            var handle = WindowNative.GetWindowHandle(this);
+            InitializeWithWindow.Initialize(picker, handle);
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".png");
+            picker.FileTypeFilter.Add(".wepb");
+            return await picker.PickSingleFileAsync();
+        }
 
         #region Event Handlers
 

@@ -21,23 +21,39 @@
         CornerRadius="{x:Bind Radius}"
         Padding="0"
         BorderThickness="0"
+        PointerEntered="Button_PointerEntered"
+        PointerExited="Button_PointerExited"
         Click="Button_Click">
         <Grid>
             <PersonPicture
                 Width="{x:Bind Size}"
                 Height="{x:Bind Size}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Visibility="{x:Bind IsTintApplied, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
             <PersonPicture
+                x:Name="Picture"
                 Width="{x:Bind Size}"
                 Height="{x:Bind Size}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Visibility="{x:Bind IsTintApplied, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                 Background="{x:Bind Tint, Mode=OneWay, FallbackValue={x:Null}}"
                 Foreground="White"
                 ProfilePicture="{x:Bind AvatarWrapper.Value, Mode=OneWay, FallbackValue={x:Null}}" />
+            <Canvas
+                Width="{x:Bind Size}"
+                Height="{x:Bind Size}"
+                Visibility="{x:Bind ShowEditOverlay, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Ellipse
+                    Width="{x:Bind Size}"
+                    Height="{x:Bind Size}"
+                    Fill="Black"
+                    Opacity="0.5" />
+            </Canvas>
+            <FontIcon
+                x:Name="EditIcon"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Visibility="{x:Bind ShowEditOverlay, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                Glyph="&#xE70F;"
+                Foreground="White" />
         </Grid>
     </Button>
 </UserControl>

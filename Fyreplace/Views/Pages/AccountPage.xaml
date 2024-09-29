@@ -18,11 +18,13 @@
             <local_controls:Avatar
                 VerticalAlignment="Top"
                 Size="48"
-                User="{x:Bind viewModel.User, Mode=OneWay}"
-                Tinted="True" />
-            <StackPanel
-                Orientation="Vertical"
-                Spacing="4">
+                User="{x:Bind viewModel.CurrentUser, Mode=OneWay}"
+                Tinted="True"
+                Editable="True"
+                Command="{x:Bind UpdateAvatarCommand}"/>
+                <StackPanel
+                    Orientation="Vertical"
+                    Spacing="4">
                 <TextBlock
                     Text="{x:Bind viewModel.Username, Mode=OneWay}"
                     Style="{StaticResource BodyStrongTextBlockStyle}" />

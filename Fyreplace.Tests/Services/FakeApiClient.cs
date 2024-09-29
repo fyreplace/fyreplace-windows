@@ -371,9 +371,16 @@ namespace Fyreplace.Tests.Services
         public static readonly string usedUsername = "used-username";
         public static readonly string passwordUsername = "password-username";
         public static readonly string goodUsername = "good-username";
+
         public static readonly string badEmail = "bad-email";
         public static readonly string usedEmail = "used-email";
         public static readonly string goodEmail = "good-email";
+
+        public static readonly string avatar = "avatar";
+
+        public static Stream NotImageStream => MakeStream(0xFF);
+        public static Stream LargeImageStream => MakeStream(0x7F);
+        public static Stream NormalImageStream => MakeStream(0x00);
 
         public Task<long> CountBlockedUsersAsync()
         {
@@ -417,7 +424,12 @@ namespace Fyreplace.Tests.Services
 
         public Task<string> SetCurrentUserAvatarAsync(Stream body)
         {
-            throw new NotImplementedException();
+            var id = body.ReadByte();
+            return id == NormalImageStream.ReadByte()
+                ? Task.FromResult(avatar)
+                : id == LargeImageStream.ReadByte()
+                ? throw new FakeApiException(HttpStatusCode.RequestEntityTooLarge)
+                : throw new FakeApiException(HttpStatusCode.UnsupportedMediaType);
         }
 
         public Task<string> SetCurrentUserBioAsync(string body)
@@ -440,7 +452,7 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        private User MakeUser(string username) => new User()
+        private static User MakeUser(string username) => new()
         {
             Id = new Guid(),
             DateCreated = DateTime.UtcNow,
@@ -452,6 +464,13 @@ namespace Fyreplace.Tests.Services
             Blocked = false,
             Tint = new() { R = 0x7F, G = 0x7F, B = 0x7F },
         };
+
+        private static MemoryStream MakeStream(byte id)
+        {
+            var stream = new MemoryStream();
+            stream.WriteByte(id);
+            return stream;
+        }
     }
 
     #endregion

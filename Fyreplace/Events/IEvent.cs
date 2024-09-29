@@ -1,4 +1,6 @@
-﻿namespace Fyreplace.Events
+﻿using System;
+
+namespace Fyreplace.Events
 {
     public interface IEvent { }
 
@@ -11,4 +13,6 @@
     public record class PreferenceChangedEvent(string Name) : IEvent { }
 
     public record class SecretChangedEvent(string Name) : IEvent { }
+
+    public record class ModelChangedEvent(Guid Id, string PropertyName) : IEvent { }
 }
