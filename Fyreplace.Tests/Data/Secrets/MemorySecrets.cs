@@ -23,7 +23,7 @@ namespace Fyreplace.Tests.Data.Secrets
 
         public override void Write(string key, string value)
         {
-            if (value == string.Empty)
+            if (string.IsNullOrEmpty(value))
             {
                 secrets.Remove(key);
             }

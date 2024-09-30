@@ -59,7 +59,7 @@ namespace Fyreplace.ViewModels
             switch (e.Name)
             {
                 case nameof(ISecrets.Token):
-                    CurrentUser = secrets.Token != string.Empty ? await CallAsync(api.GetCurrentUserAsync) : null;
+                    CurrentUser = string.IsNullOrEmpty(secrets.Token) ? null : await CallAsync(api.GetCurrentUserAsync);
                     break;
             }
         }

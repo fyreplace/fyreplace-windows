@@ -29,7 +29,7 @@ namespace Fyreplace.Data.Secrets
 
         public override void Write(string key, string value)
         {
-            if (value == string.Empty)
+            if (string.IsNullOrEmpty(value))
             {
                 Delete(key);
                 return;

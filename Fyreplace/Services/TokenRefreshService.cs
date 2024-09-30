@@ -20,7 +20,7 @@ namespace Fyreplace.Services
 
                 try
                 {
-                    if (secrets.Token != string.Empty)
+                    if (!string.IsNullOrEmpty(secrets.Token))
                     {
                         secrets.Token = await Api.GetNewTokenAsync(stoppingToken);
                     }

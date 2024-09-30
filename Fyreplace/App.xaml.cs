@@ -37,7 +37,7 @@ namespace Fyreplace
                 DeploymentManager.Initialize();
             }
 
-            if (info.Sentry.Dsn != string.Empty)
+            if (!string.IsNullOrEmpty(info.Sentry.Dsn))
             {
                 SentrySdk.Init(options =>
                 {
@@ -187,7 +187,7 @@ namespace Fyreplace
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (secrets.Token != string.Empty)
+            if (!string.IsNullOrEmpty(secrets.Token))
             {
                 request.Headers.Authorization = new("Bearer", secrets.Token);
             }
