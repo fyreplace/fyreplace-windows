@@ -3,7 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.Services;
+using Fyreplace.Views;
 using Microsoft.Windows.ApplicationModel.Resources;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -15,20 +17,40 @@ namespace Fyreplace.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Username))]
         [NotifyPropertyChangedFor(nameof(DateJoined))]
+        [NotifyPropertyChangedFor(nameof(HasCurrentUser))]
+        [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
+        [NotifyCanExecuteChangedFor(nameof(LogoutCommand))]
         private User? currentUser;
 
-        public string Username => CurrentUser?.Username ?? resources.GetString("Loading");
+        public string Username => CurrentUser?.Username ?? resources.GetString("Account_Username_Placeholder");
 
-        public string DateJoined => string.Format(resources.GetString("AccountPage_DateJoined"), CurrentUser?.DateCreated.ToString("g") ?? resources.GetString("Loading"));
+        public string DateJoined => CurrentUser != null
+            ? string.Format(resources.GetString("Account_DateJoined"), CurrentUser.DateCreated.ToString("f"))
+            : resources.GetString("Account_DateJoined_Placeholder");
+
+        public bool HasCurrentUser => CurrentUser != null;
 
         private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
 
         public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
 
-        [RelayCommand]
-        public async Task UpdateAvatarAsync(Stream stream)
+        [RelayCommand(CanExecute = nameof(HasCurrentUser))]
+        public async Task UpdateAvatarAsync(Stream? stream)
         {
+            if (stream == null)
+            {
+                var file = await AppBase.GetService<MainWindow>().PickImageFileAsync();
+
+                if (file != null)
+                {
+                    using var s = await file.OpenReadAsync();
+                    await UpdateAvatarAsync(s.AsStream());
+                }
+
+                return;
+            }
+
             var avatar = await CallAsync(
                 () => api.SetCurrentUserAvatarAsync(stream),
                 onFailure: (status, _, _) => status switch
@@ -46,7 +68,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(HasCurrentUser))]
         public void Logout()
         {
             secrets.Token = string.Empty;

@@ -79,8 +79,6 @@
     <None Remove="Views\Controls\Avatar.xaml" />
     <None Remove="Views\Controls\KeyboardShortcut.xaml" />
     <None Remove="Views\Pages\AccountEntriesPage.xaml" />
-    <None Remove="Views\Pages\AccountPage.xaml" />
-    <None Remove="Views\Pages\AccountRootPage.xaml" />
     <None Remove="Views\Pages\ArchivePage.xaml" />
     <None Remove="Views\Pages\DraftsPage.xaml" />
     <None Remove="Views\Pages\ErrorPage.xaml" />
@@ -120,16 +118,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Pages\AccountEntriesPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Pages\AccountPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Pages\AccountRootPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Input;
 using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.ViewModels;
@@ -22,7 +23,7 @@ namespace Fyreplace.Views.Pages
     {
         public AppWindow? AppWindow { get; set; }
 
-        private NavigationViewItemBase currentInvokedItem;
+        private NavigationViewItemBase? currentInvokedItem;
         private readonly ISecrets secrets = AppBase.GetService<ISecrets>();
         private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
         private readonly AccountViewModel accountViewModel = AppBase.GetService<AccountViewModel>();
@@ -68,6 +69,15 @@ namespace Fyreplace.Views.Pages
 
         #region Navigation
 
+        [RelayCommand]
+        public void GoToSettings()
+        {
+            if (Navigation.SelectedItem != Navigation.SettingsItem)
+            {
+                NavigatePoppingBackStack(typeof(SettingsPage));
+            }
+        }
+
         private void GoBack()
         {
             if (Host.CanGoBack)
@@ -88,6 +98,7 @@ namespace Fyreplace.Views.Pages
         {
             Host.Navigate(pageType, null, new ContinuumNavigationTransitionInfo());
             Host.BackStack.Clear();
+            currentInvokedItem = Navigation.SelectedItem as NavigationViewItemBase;
         }
 
         private void UpdateNavigationSelection() => Navigation.SelectedItem = Navigation.MenuItems
@@ -148,7 +159,6 @@ namespace Fyreplace.Views.Pages
                 return;
             }
 
-            currentInvokedItem = args.InvokedItemContainer;
             NavigatePoppingBackStack(
                 args.IsSettingsInvoked
                     ? typeof(SettingsPage)
@@ -166,14 +176,21 @@ namespace Fyreplace.Views.Pages
 
         private void Host_NavigationFailed(object sender, NavigationFailedEventArgs e) => Host.Navigate(typeof(ErrorPage), e.Exception);
 
-        private void Avatar_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout(Avatar);
+        private void Avatar_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout(string.IsNullOrEmpty(secrets.Token) ? AvatarWrapper : Avatar);
+
+        [RelayCommand]
+        public void ShowAccountFlyout() => FlyoutBase.ShowAttachedFlyout(string.IsNullOrEmpty(secrets.Token) ? AvatarWrapper : Avatar);
 
         private Task OnSecretChangedAsync(SecretChangedEvent e)
         {
             switch (e.Name)
             {
                 case nameof(ISecrets.Token):
-                    if (string.IsNullOrEmpty(secrets.Token))
+                    if (!string.IsNullOrEmpty(secrets.Token))
+                    {
+                        FlyoutBase.GetAttachedFlyout(AvatarWrapper).Hide();
+                    }
+                    else if (Navigation.SelectedItem != (object)Feed && Navigation.SelectedItem != Navigation.SettingsItem)
                     {
                         NavigatePoppingBackStack(typeof(FeedPage));
                     }

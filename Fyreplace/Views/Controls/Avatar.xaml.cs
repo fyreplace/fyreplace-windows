@@ -26,33 +26,12 @@ namespace Fyreplace.Views.Controls
         [NotifyPropertyChangedFor(nameof(Tint))]
         private User? user;
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsTintApplied))]
-        private bool tinted;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(ShowEditOverlay))]
-        private bool editable;
-
         public ICommand? Command { get; set; }
-        public event ClickHandler? Click;
-
-        private bool hoverActive;
-        private bool HoverActive
-        {
-            get => hoverActive;
-            set
-            {
-                SetProperty(ref hoverActive, value);
-                OnPropertyChanged(nameof(ShowEditOverlay));
-            }
-        }
 
         private CornerRadius Radius => new(Size / 2);
-        private ValueWrapper<string>? AvatarWrapper => User != null && User.Avatar != string.Empty ? new(User.Avatar) : null;
-        private bool IsTintApplied => Tinted && User != null;
+        private ValueWrapper<string>? AvatarWrapper => User != null && !string.IsNullOrEmpty(User.Avatar) ? new(User.Avatar) : null;
+        private bool IsTintApplied => User != null;
         private SolidColorBrush Tint => new(User?.Tint.ToWindowsColor() ?? Colors.Transparent);
-        private bool ShowEditOverlay => HoverActive && Editable;
 
         private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
 
@@ -63,17 +42,6 @@ namespace Fyreplace.Views.Controls
         }
 
         #region Event Handlers
-
-        private void Button_PointerEntered(object sender, PointerRoutedEventArgs e) => HoverActive = true;
-
-        private void Button_PointerExited(object sender, PointerRoutedEventArgs e) => HoverActive = false;
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Click?.Invoke(sender, e);
-            Command?.Execute(null);
-            HoverActive = false;
-        }
 
         private Task OnModelChangedEventAsync(ModelChangedEvent e)
         {

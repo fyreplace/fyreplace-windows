@@ -82,20 +82,30 @@
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 Style="{StaticResource CaptionTextBlockStyle}" />
-            <local_controls:Avatar
-                x:Name="Avatar"
+            <Grid
+                x:Name="AvatarWrapper"
                 Grid.Column="4"
-                Margin="0,0,48,0"
-                Size="32"
-                User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
-                Tinted="True"
-                Click="Avatar_Click">
+                Margin="0,0,48,0">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout>
-                        <local:AccountRootPage />
+                        <local:AccountEntriesPage />
                     </Flyout>
                 </FlyoutBase.AttachedFlyout>
-            </local_controls:Avatar>
+                <local_controls:Avatar
+                    x:Name="Avatar"
+                    Size="32"
+                    User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
+                    Command="{x:Bind ShowAccountFlyoutCommand}">
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                x:Uid="MainPage_Avatar_Menu_Manage"
+                                Icon="{ui:FontIcon Glyph=&#xE713;}"
+                                Command="{x:Bind GoToSettingsCommand}" />
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                </local_controls:Avatar>
+            </Grid>
         </Grid>
 
         <NavigationView

@@ -12,38 +12,83 @@
     mc:Ignorable="d">
 
     <ScrollView>
-        <StackPanel Orientation="Vertical" Spacing="4" Margin="36">
+        <StackPanel Orientation="Vertical" Spacing="4" Margin="36,24,36,36">
             <TextBlock
                 x:Uid="SettingsPage_Title"
-                Margin="0,0,0,32"
                 Style="{StaticResource TitleTextBlockStyle}" />
+            
+            <TextBlock
+                x:Uid="SettingsPage_Profile_Title"
+                Margin="0,28,0,4"
+                Style="{StaticResource BodyStrongTextBlockStyle}" />
 
             <controls:SettingsExpander
-                x:Uid="SettingsPage_Shortcuts"
+                x:Name="Profile"
+                IsEnabled="{x:Bind accountViewModel.HasCurrentUser, Mode=OneWay}">
+                <controls:SettingsExpander.Header>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="16">
+                        <local_controls:Avatar
+                            Size="64"
+                            User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
+                            Command="{x:Bind accountViewModel.UpdateAvatarCommand}" />
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Orientation="Vertical"
+                            Spacing="4">
+                            <TextBlock
+                                Text="{x:Bind accountViewModel.Username, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource BodyStrongTextBlockStyle}" />
+                            <TextBlock
+                                Text="{x:Bind accountViewModel.DateJoined, Mode=OneWay, FallbackValue=''}"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                    </StackPanel>
+                </controls:SettingsExpander.Header>
+                <controls:SettingsExpander.Items>
+                    <controls:SettingsCard>
+                        <Button
+                            x:Uid="SettingsPage_Profile_Logout"
+                            Command="{x:Bind accountViewModel.LogoutCommand}" />
+                    </controls:SettingsCard>
+                </controls:SettingsExpander.Items>
+                <Button
+                    x:Uid="SettingsPage_Profile_UpdateAvatar"
+                    Command="{x:Bind accountViewModel.UpdateAvatarCommand}" />
+            </controls:SettingsExpander>
+
+            <TextBlock
+                x:Uid="SettingsPage_About_Title"
+                Margin="0,28,0,4"
+                Style="{StaticResource BodyStrongTextBlockStyle}" />
+
+            <controls:SettingsExpander
+                x:Uid="SettingsPage_About_Shortcuts"
                 HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}">
                 <controls:SettingsExpander.Items>
                     <controls:SettingsCard
-                        x:Uid="SettingsPage_Shortcuts_Feed"
+                        x:Uid="SettingsPage_About_Shortcuts_Feed"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE80F;}">
                         <local_controls:KeyboardShortcut Key="1" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
-                        x:Uid="SettingsPage_Shortcuts_Notifications"
+                        x:Uid="SettingsPage_About_Shortcuts_Notifications"
                         HeaderIcon="{ui:FontIcon Glyph=&#xEA8F;}">
                         <local_controls:KeyboardShortcut Key="2" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
-                        x:Uid="SettingsPage_Shortcuts_Archive"
+                        x:Uid="SettingsPage_About_Shortcuts_Archive"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE81C;}">
                         <local_controls:KeyboardShortcut Key="3" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
-                        x:Uid="SettingsPage_Shortcuts_Drafts"
+                        x:Uid="SettingsPage_About_Shortcuts_Drafts"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE8A5;}">
                         <local_controls:KeyboardShortcut Key="4" Ctrl="True" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
-                        x:Uid="SettingsPage_Shortcuts_Published"
+                        x:Uid="SettingsPage_About_Shortcuts_Published"
                         HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}">
                         <local_controls:KeyboardShortcut Key="5" Ctrl="True" />
                     </controls:SettingsCard>
@@ -51,7 +96,7 @@
             </controls:SettingsExpander>
 
             <controls:SettingsExpander
-                x:Uid="SettingsPage_About"
+                x:Uid="SettingsPage_About_Links"
                 HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Icon.ico}">
                 <TextBlock
                     Text="{x:Bind appVersion}"
@@ -61,9 +106,9 @@
                         <StackPanel
                             Margin="-12,0,0,0"
                             Orientation="Vertical">
-                            <HyperlinkButton x:Uid="SettingsPage_About_Website" />
-                            <HyperlinkButton x:Uid="SettingsPage_About_Terms" />
-                            <HyperlinkButton x:Uid="SettingsPage_About_Privacy" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Links_Website" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Links_Terms" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Links_Privacy" />
                         </StackPanel>
                     </controls:SettingsCard>
                 </controls:SettingsExpander.Items>

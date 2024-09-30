@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -91,11 +150,11 @@
   <data name="AccountEntryPageBase_RandomCodeTip.Title" xml:space="preserve">
     <value>Check your email</value>
   </data>
-  <data name="AccountPage_DateJoined" xml:space="preserve">
+  <data name="Account_DateJoined" xml:space="preserve">
     <value>Joined: {0}</value>
   </data>
-  <data name="AccountPage_Logout.Content" xml:space="preserve">
-    <value>Logout</value>
+  <data name="Account_DateJoined_Placeholder" xml:space="preserve">
+    <value>Has not joined yet</value>
   </data>
   <data name="Account_Error_RequestEntityTooLarge.Message" xml:space="preserve">
     <value>This file is too heavy; please select a file under 1M.</value>
@@ -108,6 +167,9 @@
   </data>
   <data name="Account_Error_UnsupportedMediaType.Title" xml:space="preserve">
     <value>Unsupported file format</value>
+  </data>
+  <data name="Account_Username_Placeholder" xml:space="preserve">
+    <value>Guest</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>Fyreplace</value>
@@ -151,6 +213,15 @@
   <data name="Error_Unknown.Title" xml:space="preserve">
     <value>An error just occurred</value>
   </data>
+  <data name="KeyboardShortcut_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="KeyboardShortcut_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="KeyboardShortcut_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
   <data name="Loading" xml:space="preserve">
     <value>…</value>
   </data>
@@ -180,6 +251,9 @@
   </data>
   <data name="MainPage_Archive.Content" xml:space="preserve">
     <value>Archive</value>
+  </data>
+  <data name="MainPage_Avatar_Menu_Manage.Text" xml:space="preserve">
+    <value>Manage account</value>
   </data>
   <data name="MainPage_Drafts.Content" xml:space="preserve">
     <value>Drafts</value>
@@ -256,76 +330,85 @@
   <data name="RegisterPage_Username.PlaceholderText" xml:space="preserve">
     <value>Only letters, numbers and dashes</value>
   </data>
-  <data name="SettingsPage_About.Description" xml:space="preserve">
+  <data name="SettingsPage_About_Links.Description" xml:space="preserve">
     <value>Made with lots of ❤️</value>
   </data>
-  <data name="SettingsPage_About.Header" xml:space="preserve">
+  <data name="SettingsPage_About_Links.Header" xml:space="preserve">
     <value>Fyreplace</value>
   </data>
-  <data name="SettingsPage_About_Privacy.Content" xml:space="preserve">
+  <data name="SettingsPage_About_Links_Privacy.Content" xml:space="preserve">
     <value>Privacy policy</value>
   </data>
-  <data name="SettingsPage_About_Privacy.NavigateUri" xml:space="preserve">
+  <data name="SettingsPage_About_Links_Privacy.NavigateUri" xml:space="preserve">
     <value>https://fyreplace.net/privacy-policy</value>
   </data>
-  <data name="SettingsPage_About_Terms.Content" xml:space="preserve">
+  <data name="SettingsPage_About_Links_Terms.Content" xml:space="preserve">
     <value>Terms of service</value>
   </data>
-  <data name="SettingsPage_About_Terms.NavigateUri" xml:space="preserve">
+  <data name="SettingsPage_About_Links_Terms.NavigateUri" xml:space="preserve">
     <value>https://fyreplace.net/terms-of-service</value>
   </data>
-  <data name="SettingsPage_About_Website.Content" xml:space="preserve">
+  <data name="SettingsPage_About_Links_Website.Content" xml:space="preserve">
     <value>Website</value>
   </data>
-  <data name="SettingsPage_About_Website.NavigateUri" xml:space="preserve">
+  <data name="SettingsPage_About_Links_Website.NavigateUri" xml:space="preserve">
     <value>https://fyreplace.net</value>
   </data>
-  <data name="SettingsPage_Shortcuts.Description" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts.Description" xml:space="preserve">
     <value>List of all available keyboard shortcuts</value>
   </data>
-  <data name="SettingsPage_Shortcuts.Header" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts.Header" xml:space="preserve">
     <value>Keyboard shortcuts</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Archive.Header" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Archive.Header" xml:space="preserve">
     <value>Go to archive</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Archive_Detail.FontFamily" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Archive_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Drafts.Header" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Drafts.Header" xml:space="preserve">
     <value>Go to drafts</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Drafts_Detail.FontFamily" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Drafts_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Feed.Header" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Feed.Header" xml:space="preserve">
     <value>Go to feed</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Feed_Detail.FontFamily" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Feed_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Notifications.Header" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Notifications.Header" xml:space="preserve">
     <value>Go to notifications</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Notifications_Detail.FontFamily" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Notifications_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Published.Header" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Published.Header" xml:space="preserve">
     <value>Go to published</value>
   </data>
-  <data name="SettingsPage_Shortcuts_Published_Detail.FontFamily" xml:space="preserve">
+  <data name="SettingsPage_About_Shortcuts_Published_Detail.FontFamily" xml:space="preserve">
     <value>Consolas</value>
+  </data>
+  <data name="SettingsPage_About_Title.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsPage_Profile_Title.Text" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="SettingsPage_Profile_Username.Header" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="SettingsPage_Profile_DateJoined.Header" xml:space="preserve">
+    <value>Date joined</value>
+  </data>
+  <data name="SettingsPage_Profile_Logout.Content" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="SettingsPage_Profile_UpdateAvatar.Content" xml:space="preserve">
+    <value>Change avatar</value>
   </data>
   <data name="SettingsPage_Title.Text" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="Settings_KeyboardShortcut_Alt" xml:space="preserve">
-    <value>Alt</value>
-  </data>
-  <data name="Settings_KeyboardShortcut_Ctrl" xml:space="preserve">
-    <value>Ctrl</value>
-  </data>
-  <data name="Settings_KeyboardShortcut_Shift" xml:space="preserve">
-    <value>Shift</value>
   </data>
 </root>

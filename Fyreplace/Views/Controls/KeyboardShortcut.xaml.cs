@@ -24,17 +24,17 @@ namespace Fyreplace.Views.Controls
 
                 if (Ctrl)
                 {
-                    keys.Add(resourceLoader.GetString("Settings_KeyboardShortcut_Ctrl"));
+                    keys.Add(resourceLoader.GetString("KeyboardShortcut_Ctrl"));
                 }
 
                 if (Shift)
                 {
-                    keys.Add(resourceLoader.GetString("Settings_KeyboardShortcut_Shift"));
+                    keys.Add(resourceLoader.GetString("KeyboardShortcut_Shift"));
                 }
 
                 if (Alt)
                 {
-                    keys.Add(resourceLoader.GetString("Settings_KeyboardShortcut_Alt"));
+                    keys.Add(resourceLoader.GetString("KeyboardShortcut_Alt"));
                 }
 
                 keys.Add(Key);
