@@ -8,7 +8,7 @@ namespace Fyreplace.Events
     public sealed class EventBus : IEventBus
     {
         private readonly Dictionary<Type, List<WeakReference<Delegate>>> eventHandlers = [];
-        private readonly ConditionalWeakTable<object, Delegate> strongReferences = [];
+        private readonly ConditionalWeakTable<object, IList<Delegate>> strongReferences = [];
 
         public void Subscribe<T>(object? target, Func<T, Task> handler) where T : IEvent
         {
@@ -18,7 +18,7 @@ namespace Fyreplace.Events
                 eventHandlers[typeof(T)] = handlers;
             }
 
-            strongReferences.AddOrUpdate((target ?? handler.Target)!, handler);
+            strongReferences.GetValue((target ?? handler.Target)!, _ => []).Add(handler);
             handlers.Add(new WeakReference<Delegate>(handler));
         }
 
