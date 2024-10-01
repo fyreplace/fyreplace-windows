@@ -393,20 +393,23 @@
   <data name="SettingsPage_About_Title.Text" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="SettingsPage_Profile_Title.Text" xml:space="preserve">
-    <value>Profile</value>
-  </data>
-  <data name="SettingsPage_Profile_Username.Header" xml:space="preserve">
-    <value>Username</value>
-  </data>
   <data name="SettingsPage_Profile_DateJoined.Header" xml:space="preserve">
     <value>Date joined</value>
+  </data>
+  <data name="SettingsPage_Profile_Drag" xml:space="preserve">
+    <value>Use as profile picture</value>
   </data>
   <data name="SettingsPage_Profile_Logout.Content" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="SettingsPage_Profile_Title.Text" xml:space="preserve">
+    <value>Profile</value>
+  </data>
   <data name="SettingsPage_Profile_UpdateAvatar.Content" xml:space="preserve">
     <value>Change avatar</value>
+  </data>
+  <data name="SettingsPage_Profile_Username.Header" xml:space="preserve">
+    <value>Username</value>
   </data>
   <data name="SettingsPage_Title.Text" xml:space="preserve">
     <value>Settings</value>

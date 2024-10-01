@@ -5,7 +5,6 @@ using Fyreplace.Events;
 using Fyreplace.Services;
 using Fyreplace.Views;
 using Microsoft.Windows.ApplicationModel.Resources;
-using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -44,8 +43,8 @@ namespace Fyreplace.ViewModels
 
                 if (file != null)
                 {
-                    using var s = await file.OpenReadAsync();
-                    await UpdateAvatarAsync(s.AsStream());
+                    using var s = await file.OpenStreamForReadAsync();
+                    await UpdateAvatarAsync(s);
                 }
 
                 return;

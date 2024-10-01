@@ -24,7 +24,10 @@
 
             <controls:SettingsExpander
                 x:Name="Profile"
-                IsEnabled="{x:Bind accountViewModel.HasCurrentUser, Mode=OneWay}">
+                IsEnabled="{x:Bind accountViewModel.HasCurrentUser, Mode=OneWay}"
+                AllowDrop="True"
+                DragOver="Profile_DragOver"
+                Drop="Profile_Drop">
                 <controls:SettingsExpander.Header>
                     <StackPanel
                         Orientation="Horizontal"
