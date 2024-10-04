@@ -1,4 +1,5 @@
-﻿using Fyreplace.Data;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Fyreplace.Data;
 using Fyreplace.Events;
 using System.Linq;
 using System.Net;
@@ -8,7 +9,11 @@ namespace Fyreplace.ViewModels
 {
     public sealed partial class RegisterViewModel : AccountEntryViewModelBase
     {
-        public override bool CanSubmitFirstStep => IsUsernameValid && IsEmailValid;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+        private bool hasAcceptedTerms;
+
+        public override bool CanSubmitFirstStep => IsUsernameValid && IsEmailValid && HasAcceptedTerms;
 
         public bool IsUsernameValid => !string.IsNullOrWhiteSpace(preferences.Account_Username)
             && preferences.Account_Username.Length >= 3
@@ -17,6 +22,8 @@ namespace Fyreplace.ViewModels
         public bool IsEmailValid => preferences.Account_Email.Contains('@')
             && preferences.Account_Email.Length >= 3
             && preferences.Account_Email.Length <= 254;
+
+        public RegisterViewModel() => HasAcceptedTerms = preferences.Account_IsWaitingForRandomCode;
 
         protected override async Task OnPreferenceChangedAsync(PreferenceChangedEvent e)
         {

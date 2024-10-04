@@ -321,6 +321,9 @@
   <data name="RegisterPage_Submit.Content" xml:space="preserve">
     <value>Sign up</value>
   </data>
+  <data name="RegisterPage_Terms.Content" xml:space="preserve">
+    <value>I accept the terms of service and the privacy policy</value>
+  </data>
   <data name="RegisterPage_Title.Text" xml:space="preserve">
     <value>Create a new account</value>
   </data>

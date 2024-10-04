@@ -15,8 +15,8 @@ namespace Fyreplace.Tests.ViewModels
         public void UsernameMustHaveCorrectLength()
         {
             var preferences = GetPreferences();
-            var viewModel = new RegisterViewModel();
-            preferences.Account_Email = "email@example";
+            var viewModel = new RegisterViewModel { HasAcceptedTerms = true };
+            preferences.Account_Email = FakeApiClient.goodEmail;
 
             for (int i = 3; i <= 50; i++)
             {
@@ -38,8 +38,8 @@ namespace Fyreplace.Tests.ViewModels
         public void EmailMustHaveCorrectLength()
         {
             var preferences = GetPreferences();
-            var viewModel = new RegisterViewModel();
-            preferences.Account_Username = "Example";
+            var viewModel = new RegisterViewModel { HasAcceptedTerms = true };
+            preferences.Account_Username = FakeApiClient.goodUsername;
 
             for (int i = 3; i <= 254; i++)
             {
@@ -61,9 +61,9 @@ namespace Fyreplace.Tests.ViewModels
         public void EmailMustHaveAtSign()
         {
             var preferences = GetPreferences();
-            var viewModel = new RegisterViewModel();
+            var viewModel = new RegisterViewModel { HasAcceptedTerms = true };
+            preferences.Account_Username = FakeApiClient.goodUsername;
 
-            preferences.Account_Username = "Example";
             preferences.Account_Email = "email";
             Assert.IsFalse(viewModel.CanSubmit);
 

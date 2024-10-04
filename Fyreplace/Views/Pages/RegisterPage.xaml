@@ -58,6 +58,24 @@
                 <KeyboardAccelerator Key="Enter" Invoked="Accelerators_Submit" />
             </TextBox.KeyboardAccelerators>
         </TextBox>
+        <CheckBox
+            x:Uid="RegisterPage_Terms"
+            IsChecked="{x:Bind viewModel.HasAcceptedTerms, Mode=TwoWay}"
+            IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                x:Uid="SettingsPage_About_Links_Terms"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch" />
+            <HyperlinkButton
+                x:Uid="SettingsPage_About_Links_Privacy"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch" />
+        </Grid>
         <Grid
             Margin="0,8,0,0"
             CornerRadius="{x:Bind Submit.CornerRadius}"

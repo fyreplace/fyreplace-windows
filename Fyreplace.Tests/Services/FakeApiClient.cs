@@ -372,9 +372,9 @@ namespace Fyreplace.Tests.Services
         public static readonly string passwordUsername = "password-username";
         public static readonly string goodUsername = "good-username";
 
-        public static readonly string badEmail = "bad-email";
-        public static readonly string usedEmail = "used-email";
-        public static readonly string goodEmail = "good-email";
+        public static readonly string badEmail = "bad@email";
+        public static readonly string usedEmail = "used@email";
+        public static readonly string goodEmail = "good@email";
 
         public static readonly string avatar = "avatar";
 
