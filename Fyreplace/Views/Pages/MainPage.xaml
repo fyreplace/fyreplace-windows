@@ -111,6 +111,7 @@
         <NavigationView
             x:Name="Navigation"
             PaneDisplayMode="Auto"
+            CompactModeThresholdWidth="0"
             IsTitleBarAutoPaddingEnabled="False"
             IsBackEnabled="{x:Bind Host.CanGoBack, Mode=OneWay}"
             IsTabStop="False"
