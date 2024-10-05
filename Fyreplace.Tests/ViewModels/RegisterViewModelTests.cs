@@ -72,6 +72,21 @@ namespace Fyreplace.Tests.ViewModels
         }
 
         [TestMethod]
+        public void TermsMustBeAccepted()
+        {
+            var preferences = GetPreferences();
+            var viewModel = new RegisterViewModel();
+            preferences.Account_Username = FakeApiClient.goodUsername;
+            preferences.Account_Email = FakeApiClient.goodEmail;
+
+            viewModel.HasAcceptedTerms = false;
+            Assert.IsFalse(viewModel.CanSubmit);
+
+            viewModel.HasAcceptedTerms = true;
+            Assert.IsTrue(viewModel.CanSubmit);
+        }
+
+        [TestMethod]
         public async Task InvalidUsernameProducesFailure()
         {
             var eventBus = GetEventBus();
