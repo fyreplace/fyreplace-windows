@@ -176,7 +176,7 @@ namespace Fyreplace
             }
         }
 
-        private static Task CompleteConnectionAsync(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnectionAsync(protocolActivatedArgs.Uri.Fragment.Replace("#", ""));
+        private static Task CompleteConnectionAsync(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnectionAsync(protocolActivatedArgs.Uri.Fragment.Replace("#", string.Empty));
     }
 
     class RequestHeadersHandler(ISecrets secrets, ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())

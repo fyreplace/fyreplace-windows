@@ -71,7 +71,7 @@ namespace Fyreplace.ViewModels
                     Identifier = preferences.Account_Email,
                     Secret = RandomCode
                 });
-                preferences.Account_Identifier = "";
+                preferences.Account_Identifier = string.Empty;
                 preferences.Account_IsWaitingForRandomCode = false;
                 preferences.Account_IsRegistering = false;
                 secrets.Token = token;

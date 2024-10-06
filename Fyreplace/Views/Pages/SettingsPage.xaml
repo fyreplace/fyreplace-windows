@@ -38,13 +38,13 @@
                             Command="{x:Bind accountViewModel.UpdateAvatarCommand}" />
                         <StackPanel
                             VerticalAlignment="Center"
-                            Orientation="Vertical"
-                            Spacing="4">
+                            Orientation="Vertical">
                             <TextBlock
                                 Text="{x:Bind accountViewModel.Username, Mode=OneWay, FallbackValue=''}"
-                                Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                Style="{StaticResource BodyTextBlockStyle}" />
                             <TextBlock
                                 Text="{x:Bind accountViewModel.DateJoined, Mode=OneWay, FallbackValue=''}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         </StackPanel>
                     </StackPanel>
@@ -56,9 +56,18 @@
                             Command="{x:Bind accountViewModel.LogoutCommand}" />
                     </controls:SettingsCard>
                 </controls:SettingsExpander.Items>
-                <Button
-                    x:Uid="SettingsPage_Profile_UpdateAvatar"
-                    Command="{x:Bind accountViewModel.UpdateAvatarCommand}" />
+                <StackPanel
+                    Orientation="Vertical"
+                    Spacing="8">
+                    <Button
+                        x:Uid="SettingsPage_Profile_UpdateAvatar"
+                        HorizontalAlignment="Stretch"
+                        Command="{x:Bind accountViewModel.UpdateAvatarCommand}" />
+                    <Button
+                        x:Uid="SettingsPage_Profile_RemoveAvatar"
+                        HorizontalAlignment="Stretch"
+                        Command="{x:Bind accountViewModel.RemoveAvatarCommand}" />
+                </StackPanel>
             </controls:SettingsExpander>
 
             <TextBlock

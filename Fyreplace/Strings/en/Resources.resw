@@ -405,6 +405,9 @@
   <data name="SettingsPage_Profile_Logout.Content" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="SettingsPage_Profile_RemoveAvatar.Content" xml:space="preserve">
+    <value>Remove avatar</value>
+  </data>
   <data name="SettingsPage_Profile_Title.Text" xml:space="preserve">
     <value>Profile</value>
   </data>

@@ -405,10 +405,7 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteCurrentUserAvatarAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task DeleteCurrentUserAvatarAsync() => Task.CompletedTask;
 
         public Task<User> GetCurrentUserAsync() => Task.FromResult(MakeUser("random_user"));
 

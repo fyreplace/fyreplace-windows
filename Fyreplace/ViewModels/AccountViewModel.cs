@@ -17,7 +17,9 @@ namespace Fyreplace.ViewModels
         [NotifyPropertyChangedFor(nameof(Username))]
         [NotifyPropertyChangedFor(nameof(DateJoined))]
         [NotifyPropertyChangedFor(nameof(HasCurrentUser))]
+        [NotifyPropertyChangedFor(nameof(CanRemoveAvatar))]
         [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
+        [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(LogoutCommand))]
         private User? currentUser;
 
@@ -28,6 +30,7 @@ namespace Fyreplace.ViewModels
             : resources.GetString("Account_DateJoined_Placeholder");
 
         public bool HasCurrentUser => CurrentUser != null;
+        private bool CanRemoveAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar);
 
         private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
@@ -60,11 +63,17 @@ namespace Fyreplace.ViewModels
                 }
             );
 
-            if (CurrentUser != null && avatar != null)
+            if (avatar != null)
             {
-                CurrentUser.Avatar = avatar;
-                await eventBus.PublishAsync(new ModelChangedEvent(CurrentUser.Id, nameof(User.Avatar)));
+                await SetCurrentUserAvatarAsync(avatar);
             }
+        }
+
+        [RelayCommand(CanExecute = nameof(CanRemoveAvatar))]
+        public async Task RemoveAvatarAsync()
+        {
+            await CallAsync(api.DeleteCurrentUserAvatarAsync);
+            await SetCurrentUserAvatarAsync(null);
         }
 
         [RelayCommand(CanExecute = nameof(HasCurrentUser))]
@@ -82,6 +91,17 @@ namespace Fyreplace.ViewModels
                 case nameof(ISecrets.Token):
                     CurrentUser = string.IsNullOrEmpty(secrets.Token) ? null : await CallAsync(api.GetCurrentUserAsync);
                     break;
+            }
+        }
+
+        private async Task SetCurrentUserAvatarAsync(string? avatar)
+        {
+            if (CurrentUser != null)
+            {
+                CurrentUser.Avatar = avatar ?? string.Empty;
+                OnPropertyChanged(nameof(CanRemoveAvatar));
+                RemoveAvatarCommand.NotifyCanExecuteChanged();
+                await eventBus.PublishAsync(new ModelChangedEvent(CurrentUser.Id, nameof(User.Avatar)));
             }
         }
     }

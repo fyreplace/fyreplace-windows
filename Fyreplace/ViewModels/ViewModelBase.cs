@@ -36,7 +36,7 @@ namespace Fyreplace.ViewModels
 
                 if (statusCode == HttpStatusCode.Unauthorized)
                 {
-                    secrets.Token = "";
+                    secrets.Token = string.Empty;
                     failureEvent = new FailureEvent("Error_Unauthorized");
                 }
                 else
@@ -66,7 +66,7 @@ namespace Fyreplace.ViewModels
             return default;
         }
 
-        protected Task CallAsync(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => CallAsync(async () =>
+        protected Task CallAsync(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?>? onFailure = null) => CallAsync(async () =>
             {
                 await action();
                 return true;
