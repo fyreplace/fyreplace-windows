@@ -119,8 +119,9 @@
                             Margin="-12,0,0,0"
                             Orientation="Vertical">
                             <HyperlinkButton x:Uid="SettingsPage_About_Links_Website" />
-                            <HyperlinkButton x:Uid="SettingsPage_About_Links_Terms" />
-                            <HyperlinkButton x:Uid="SettingsPage_About_Links_Privacy" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Links_TermsOfService" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Links_PrivacyPolicy" />
+                            <HyperlinkButton x:Uid="SettingsPage_About_Links_SourceCode" />
                         </StackPanel>
                     </controls:SettingsCard>
                 </controls:SettingsExpander.Items>

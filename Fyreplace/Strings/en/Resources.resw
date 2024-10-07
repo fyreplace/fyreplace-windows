@@ -339,16 +339,22 @@
   <data name="SettingsPage_About_Links.Header" xml:space="preserve">
     <value>Fyreplace</value>
   </data>
-  <data name="SettingsPage_About_Links_Privacy.Content" xml:space="preserve">
+  <data name="SettingsPage_About_Links_PrivacyPolicy.Content" xml:space="preserve">
     <value>Privacy policy</value>
   </data>
-  <data name="SettingsPage_About_Links_Privacy.NavigateUri" xml:space="preserve">
+  <data name="SettingsPage_About_Links_PrivacyPolicy.NavigateUri" xml:space="preserve">
     <value>https://fyreplace.net/privacy-policy</value>
   </data>
-  <data name="SettingsPage_About_Links_Terms.Content" xml:space="preserve">
+  <data name="SettingsPage_About_Links_SourceCode.Content" xml:space="preserve">
+    <value>Source code</value>
+  </data>
+  <data name="SettingsPage_About_Links_SourceCode.NavigateUri" xml:space="preserve">
+    <value>https://github.com/fyreplace</value>
+  </data>
+  <data name="SettingsPage_About_Links_TermsOfService.Content" xml:space="preserve">
     <value>Terms of service</value>
   </data>
-  <data name="SettingsPage_About_Links_Terms.NavigateUri" xml:space="preserve">
+  <data name="SettingsPage_About_Links_TermsOfService.NavigateUri" xml:space="preserve">
     <value>https://fyreplace.net/terms-of-service</value>
   </data>
   <data name="SettingsPage_About_Links_Website.Content" xml:space="preserve">
