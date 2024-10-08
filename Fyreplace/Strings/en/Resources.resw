@@ -157,13 +157,13 @@
     <value>Has not joined yet</value>
   </data>
   <data name="Account_Error_RequestEntityTooLarge.Message" xml:space="preserve">
-    <value>This file is too heavy; please select a file under 1M.</value>
+    <value>Uploaded files can only go up to 10M.</value>
   </data>
   <data name="Account_Error_RequestEntityTooLarge.Title" xml:space="preserve">
     <value>File too large</value>
   </data>
   <data name="Account_Error_UnsupportedMediaType.Message" xml:space="preserve">
-    <value>This file you have selected is not supported.</value>
+    <value>The type of file you have selected is not supported.</value>
   </data>
   <data name="Account_Error_UnsupportedMediaType.Title" xml:space="preserve">
     <value>Unsupported file format</value>

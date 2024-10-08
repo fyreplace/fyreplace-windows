@@ -24,7 +24,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        protected override Task SendEmailAsync() => CallWhileLoading(async () =>
+        protected override Task SendEmailAsync() => CallWhileLoadingAsync(async () =>
             {
                 await Api.CreateNewTokenAsync(true, new() { Identifier = preferences.Account_Identifier });
                 preferences.Account_IsWaitingForRandomCode = true;
@@ -40,7 +40,7 @@ namespace Fyreplace.ViewModels
             }
         );
 
-        protected override Task CreateTokenAsync() => CallWhileLoading(async () =>
+        protected override Task CreateTokenAsync() => CallWhileLoadingAsync(async () =>
             {
                 var token = await Api.CreateTokenAsync(new()
                 {

@@ -76,7 +76,7 @@ namespace Fyreplace.ViewModels
             IsRandomCodeTipShown = false;
         }
 
-        protected Task CallWhileLoading(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => CallAsync(async () =>
+        protected Task CallWhileLoadingAsync(Func<Task> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?> onFailure) => CallAsync(async () =>
             {
                 try
                 {

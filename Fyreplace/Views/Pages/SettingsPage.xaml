@@ -32,10 +32,16 @@
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="16">
-                        <local_controls:Avatar
-                            Size="64"
-                            User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
-                            Command="{x:Bind accountViewModel.UpdateAvatarCommand}" />
+                        <Grid>
+                            <local_controls:Avatar
+                                Size="64"
+                                User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
+                                Command="{x:Bind accountViewModel.UpdateAvatarCommand}" />
+                            <ProgressRing
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                IsActive="{x:Bind accountViewModel.IsLoadingAvatar, Mode=OneWay}" />
+                        </Grid>
                         <StackPanel
                             VerticalAlignment="Center"
                             Orientation="Vertical">

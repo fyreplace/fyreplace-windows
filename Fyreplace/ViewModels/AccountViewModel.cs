@@ -17,11 +17,17 @@ namespace Fyreplace.ViewModels
         [NotifyPropertyChangedFor(nameof(Username))]
         [NotifyPropertyChangedFor(nameof(DateJoined))]
         [NotifyPropertyChangedFor(nameof(HasCurrentUser))]
-        [NotifyPropertyChangedFor(nameof(CanRemoveAvatar))]
+        [NotifyPropertyChangedFor(nameof(CanTouchAvatar))]
         [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(LogoutCommand))]
         private User? currentUser;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CanTouchAvatar))]
+        [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
+        [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
+        private bool isLoadingAvatar;
 
         public string Username => CurrentUser?.Username ?? resources.GetString("Account_Username_Placeholder");
 
@@ -30,14 +36,14 @@ namespace Fyreplace.ViewModels
             : resources.GetString("Account_DateJoined_Placeholder");
 
         public bool HasCurrentUser => CurrentUser != null;
-        private bool CanRemoveAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar);
+        private bool CanTouchAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar) && !IsLoadingAvatar;
 
         private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
 
         public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
 
-        [RelayCommand(CanExecute = nameof(HasCurrentUser))]
+        [RelayCommand(CanExecute = nameof(CanTouchAvatar))]
         public async Task UpdateAvatarAsync(Stream? stream)
         {
             if (stream == null)
@@ -54,7 +60,18 @@ namespace Fyreplace.ViewModels
             }
 
             var avatar = await CallAsync(
-                () => api.SetCurrentUserAvatarAsync(stream),
+                async () =>
+                {
+                    try
+                    {
+                        IsLoadingAvatar = true;
+                        return await api.SetCurrentUserAvatarAsync(stream);
+                    }
+                    finally
+                    {
+                        IsLoadingAvatar = false;
+                    }
+                },
                 onFailure: (status, _, _) => status switch
                 {
                     HttpStatusCode.RequestEntityTooLarge => new FailureEvent("Account_Error_RequestEntityTooLarge"),
@@ -69,7 +86,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        [RelayCommand(CanExecute = nameof(CanRemoveAvatar))]
+        [RelayCommand(CanExecute = nameof(CanTouchAvatar))]
         public async Task RemoveAvatarAsync()
         {
             await CallAsync(api.DeleteCurrentUserAvatarAsync);
@@ -99,7 +116,7 @@ namespace Fyreplace.ViewModels
             if (CurrentUser != null)
             {
                 CurrentUser.Avatar = avatar ?? string.Empty;
-                OnPropertyChanged(nameof(CanRemoveAvatar));
+                OnPropertyChanged(nameof(CanTouchAvatar));
                 RemoveAvatarCommand.NotifyCanExecuteChanged();
                 await eventBus.PublishAsync(new ModelChangedEvent(CurrentUser.Id, nameof(User.Avatar)));
             }

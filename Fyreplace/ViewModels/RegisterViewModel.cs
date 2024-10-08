@@ -38,7 +38,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        protected override Task SendEmailAsync() => CallWhileLoading(async () =>
+        protected override Task SendEmailAsync() => CallWhileLoadingAsync(async () =>
             {
                 await Api.CreateUserAsync(true, new()
                 {
@@ -64,7 +64,7 @@ namespace Fyreplace.ViewModels
                 _ => new FailureEvent()
             });
 
-        protected override Task CreateTokenAsync() => CallWhileLoading(async () =>
+        protected override Task CreateTokenAsync() => CallWhileLoadingAsync(async () =>
             {
                 var  token = await Api.CreateTokenAsync(new()
                 {
