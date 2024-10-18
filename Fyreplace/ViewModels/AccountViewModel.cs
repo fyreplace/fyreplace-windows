@@ -17,14 +17,16 @@ namespace Fyreplace.ViewModels
         [NotifyPropertyChangedFor(nameof(Username))]
         [NotifyPropertyChangedFor(nameof(DateJoined))]
         [NotifyPropertyChangedFor(nameof(HasCurrentUser))]
-        [NotifyPropertyChangedFor(nameof(CanTouchAvatar))]
+        [NotifyPropertyChangedFor(nameof(CanUpdateAvatar))]
+        [NotifyPropertyChangedFor(nameof(CanRemoveAvatar))]
         [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(LogoutCommand))]
         private User? currentUser;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(CanTouchAvatar))]
+        [NotifyPropertyChangedFor(nameof(CanUpdateAvatar))]
+        [NotifyPropertyChangedFor(nameof(CanRemoveAvatar))]
         [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
         private bool isLoadingAvatar;
@@ -36,14 +38,15 @@ namespace Fyreplace.ViewModels
             : resources.GetString("Account_DateJoined_Placeholder");
 
         public bool HasCurrentUser => CurrentUser != null;
-        private bool CanTouchAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar) && !IsLoadingAvatar;
+        private bool CanUpdateAvatar => HasCurrentUser && !IsLoadingAvatar;
+        private bool CanRemoveAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar) && !IsLoadingAvatar;
 
         private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
 
         public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
 
-        [RelayCommand(CanExecute = nameof(CanTouchAvatar))]
+        [RelayCommand(CanExecute = nameof(CanUpdateAvatar))]
         public async Task UpdateAvatarAsync(Stream? stream)
         {
             if (stream == null)
@@ -86,7 +89,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        [RelayCommand(CanExecute = nameof(CanTouchAvatar))]
+        [RelayCommand(CanExecute = nameof(CanRemoveAvatar))]
         public async Task RemoveAvatarAsync()
         {
             await CallAsync(api.DeleteCurrentUserAvatarAsync);
@@ -116,7 +119,7 @@ namespace Fyreplace.ViewModels
             if (CurrentUser != null)
             {
                 CurrentUser.Avatar = avatar ?? string.Empty;
-                OnPropertyChanged(nameof(CanTouchAvatar));
+                OnPropertyChanged(nameof(CanRemoveAvatar));
                 RemoveAvatarCommand.NotifyCanExecuteChanged();
                 await eventBus.PublishAsync(new ModelChangedEvent(CurrentUser.Id, nameof(User.Avatar)));
             }
