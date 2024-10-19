@@ -68,11 +68,11 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
-                x:Uid="SettingsPage_About_Links_Terms"
+                x:Uid="SettingsPage_About_Links_TermsOfService"
                 Grid.Column="0"
                 HorizontalAlignment="Stretch" />
             <HyperlinkButton
-                x:Uid="SettingsPage_About_Links_Privacy"
+                x:Uid="SettingsPage_About_Links_PrivacyPolicy"
                 Grid.Column="1"
                 HorizontalAlignment="Stretch" />
         </Grid>
