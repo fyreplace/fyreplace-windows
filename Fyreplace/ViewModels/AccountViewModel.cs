@@ -16,11 +16,13 @@ namespace Fyreplace.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Username))]
         [NotifyPropertyChangedFor(nameof(DateJoined))]
+        [NotifyPropertyChangedFor(nameof(Bio))]
         [NotifyPropertyChangedFor(nameof(HasCurrentUser))]
         [NotifyPropertyChangedFor(nameof(CanUpdateAvatar))]
         [NotifyPropertyChangedFor(nameof(CanRemoveAvatar))]
         [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
+        [NotifyCanExecuteChangedFor(nameof(UpdateBioCommand))]
         [NotifyCanExecuteChangedFor(nameof(LogoutCommand))]
         private User? currentUser;
 
@@ -32,14 +34,15 @@ namespace Fyreplace.ViewModels
         private bool isLoadingAvatar;
 
         public string Username => CurrentUser?.Username ?? resources.GetString("Account_Username_Placeholder");
-
         public string DateJoined => CurrentUser != null
             ? string.Format(resources.GetString("Account_DateJoined"), CurrentUser.DateCreated.ToString("f"))
             : resources.GetString("Account_DateJoined_Placeholder");
-
+        public string Bio => !string.IsNullOrEmpty(CurrentUser?.Bio)
+            ? CurrentUser?.Bio ?? string.Empty
+            : resources.GetString("Account_Bio_Placeholder");
         public bool HasCurrentUser => CurrentUser != null;
-        private bool CanUpdateAvatar => HasCurrentUser && !IsLoadingAvatar;
-        private bool CanRemoveAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar) && !IsLoadingAvatar;
+        public bool CanUpdateAvatar => HasCurrentUser && !IsLoadingAvatar;
+        public bool CanRemoveAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar) && !IsLoadingAvatar;
 
         private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
@@ -94,6 +97,19 @@ namespace Fyreplace.ViewModels
         {
             await CallAsync(api.DeleteCurrentUserAvatarAsync);
             await SetCurrentUserAvatarAsync(null);
+        }
+
+        [RelayCommand(CanExecute = nameof(HasCurrentUser))]
+        public async Task UpdateBioAsync(string bio)
+        {
+            bio = await CallAsync(() => api.SetCurrentUserBioAsync(bio)) ?? string.Empty;
+
+            if (CurrentUser != null)
+            {
+                CurrentUser.Bio = bio;
+                OnPropertyChanged(nameof(CurrentUser));
+                OnPropertyChanged(nameof(Bio));
+            }
         }
 
         [RelayCommand(CanExecute = nameof(HasCurrentUser))]

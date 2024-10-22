@@ -429,10 +429,7 @@ namespace Fyreplace.Tests.Services
                 : throw new FakeApiException(HttpStatusCode.UnsupportedMediaType);
         }
 
-        public Task<string> SetCurrentUserBioAsync(string body)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<string> SetCurrentUserBioAsync(string body) => Task.FromResult(body);
 
         public Task SetUserBannedAsync(Guid id)
         {

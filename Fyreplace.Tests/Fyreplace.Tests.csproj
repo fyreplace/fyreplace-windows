@@ -13,6 +13,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <UseWinUI>true</UseWinUI>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <DefaultLanguage>en</DefaultLanguage>
   </PropertyGroup>

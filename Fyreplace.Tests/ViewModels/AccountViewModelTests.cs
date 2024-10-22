@@ -73,5 +73,18 @@ namespace Fyreplace.Tests.ViewModels
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(string.Empty, viewModel.CurrentUser?.Avatar);
         }
+
+        [TestMethod]
+        public async Task UpdateBioProducesNoFailures()
+        {
+            var eventBus = GetEventBus();
+            var secrets = GetSecrets();
+            var viewModel = new AccountViewModel();
+            secrets.Token = FakeApiClient.token;
+            await viewModel.UpdateBioAsync("Hello");
+
+            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.AreEqual("Hello", viewModel.CurrentUser?.Bio);
+        }
     }
 }

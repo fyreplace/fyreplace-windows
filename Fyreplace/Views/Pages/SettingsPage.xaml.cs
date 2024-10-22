@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Input;
 using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Events;
@@ -25,6 +26,34 @@ namespace Fyreplace.Views.Pages
         {
             InitializeComponent();
             eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
+        }
+
+        [RelayCommand]
+        private async Task EditBioAsync()
+        {
+            var resources = new ResourceLoader();
+            var textBox = new TextBox
+            {
+                MaxHeight = 200,
+                MaxLength = 3000,
+                AcceptsReturn = true,
+                TextWrapping = TextWrapping.Wrap,
+                Text = accountViewModel.CurrentUser?.Bio
+            };
+            var dialog = new ContentDialog
+            {
+                XamlRoot = Content.XamlRoot,
+                Title = resources.GetString("SettingsPage_Profile_Bio_Dialog/Title"),
+                Content = textBox,
+                PrimaryButtonText = resources.GetString("Ok"),
+                CloseButtonText = resources.GetString("Cancel"),
+                DefaultButton = ContentDialogButton.Primary
+            };
+
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                await accountViewModel.UpdateBioCommand.ExecuteAsync(textBox.Text);
+            }
         }
 
         #region Event Handlers

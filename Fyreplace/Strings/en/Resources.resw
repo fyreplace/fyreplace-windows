@@ -150,6 +150,9 @@
   <data name="AccountEntryPageBase_RandomCodeTip.Title" xml:space="preserve">
     <value>Check your email</value>
   </data>
+  <data name="Account_Bio_Placeholder" xml:space="preserve">
+    <value>Empty</value>
+  </data>
   <data name="Account_DateJoined" xml:space="preserve">
     <value>Joined: {0}</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="AppName" xml:space="preserve">
     <value>Fyreplace</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
   <data name="Environment_DefaultSuffix" xml:space="preserve">
     <value>(default)</value>
@@ -401,6 +407,15 @@
   </data>
   <data name="SettingsPage_About_Title.Text" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="SettingsPage_Profile_Bio.ActionIconToolTip" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="SettingsPage_Profile_Bio_Dialog.Title" xml:space="preserve">
+    <value>Tell the community about yourself</value>
+  </data>
+  <data name="SettingsPage_Profile_Bio.Header" xml:space="preserve">
+    <value>Bio</value>
   </data>
   <data name="SettingsPage_Profile_DateJoined.Header" xml:space="preserve">
     <value>Date joined</value>

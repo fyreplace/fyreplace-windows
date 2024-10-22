@@ -8,11 +8,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
+
     <ScrollView>
-        <StackPanel Orientation="Vertical" Spacing="4" Margin="36,24,36,36">
+        <StackPanel
+            Margin="36,24,36,36"
+            Orientation="Vertical"
+            Spacing="4">
             <TextBlock
                 x:Uid="SettingsPage_Title"
                 Style="{StaticResource TitleTextBlockStyle}" />
@@ -75,6 +83,20 @@
                         Command="{x:Bind accountViewModel.RemoveAvatarCommand}" />
                 </StackPanel>
             </controls:SettingsExpander>
+
+            <controls:SettingsCard
+                x:Uid="SettingsPage_Profile_Bio"
+                IsClickEnabled="True"
+                HeaderIcon="{ui:FontIcon Glyph=&#xE8D4;}"
+                ActionIcon="{ui:FontIcon Glyph=&#xE70F;}"
+                Visibility="{x:Bind accountViewModel.HasCurrentUser, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                Command="{x:Bind EditBioCommand}">
+                <controls:SettingsCard.Description>
+                    <TextBlock
+                        MaxLines="1"
+                        Text="{x:Bind accountViewModel.Bio, Mode=OneWay, FallbackValue=''}" />
+                </controls:SettingsCard.Description>
+            </controls:SettingsCard>
 
             <TextBlock
                 x:Uid="SettingsPage_About_Title"
