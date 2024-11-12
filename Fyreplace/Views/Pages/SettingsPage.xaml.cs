@@ -21,6 +21,7 @@ namespace Fyreplace.Views.Pages
         private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
         private readonly ISecrets secrets = AppBase.GetService<ISecrets>();
         private readonly AccountViewModel accountViewModel = AppBase.GetService<AccountViewModel>();
+        private readonly SettingsViewModel viewModel = AppBase.GetService<SettingsViewModel>();
 
         public SettingsPage()
         {
@@ -88,6 +89,8 @@ namespace Fyreplace.Views.Pages
                 await accountViewModel.UpdateAvatarCommand.ExecuteAsync(stream.AsStream());
             }
         }
+
+        private async void Emails_Loaded(object sender, RoutedEventArgs e) => await viewModel.LoadEmailsAsync();
 
         private Task OnSecretChangedAsync(SecretChangedEvent e)
         {

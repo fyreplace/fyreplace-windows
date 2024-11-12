@@ -15,6 +15,7 @@ namespace Fyreplace.ViewModels
         protected readonly IPreferences preferences = AppBase.GetService<IPreferences>();
         protected readonly ISecrets secrets = AppBase.GetService<ISecrets>();
         protected readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
+        protected readonly IApiClient api = AppBase.GetService<IApiClient>();
 
         protected async Task<T?> CallAsync<T>(Func<Task<T>> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?>? onFailure = null)
         {

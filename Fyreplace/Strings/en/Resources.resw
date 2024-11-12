@@ -423,6 +423,15 @@
   <data name="SettingsPage_Profile_Drag" xml:space="preserve">
     <value>Use as profile picture</value>
   </data>
+  <data name="SettingsPage_Profile_Emails.Description" xml:space="preserve">
+    <value>Add or remove email addresses</value>
+  </data>
+  <data name="SettingsPage_Profile_Emails.Header" xml:space="preserve">
+    <value>Emails</value>
+  </data>
+  <data name="SettingsPage_Profile_Emails_Main.Text" xml:space="preserve">
+    <value>Main address</value>
+  </data>
   <data name="SettingsPage_Profile_Logout.Content" xml:space="preserve">
     <value>Logout</value>
   </data>

@@ -215,10 +215,7 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        public Task<long> CountEmailsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<long> CountEmailsAsync() => (await ListEmailsAsync(null)).Count;
 
         public Task<Email> CreateEmailAsync(bool? customDeepLinks, EmailCreation body)
         {
@@ -230,14 +227,27 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Email>> ListEmailsAsync(int? page)
+        public Task<ICollection<Email>> ListEmailsAsync(int? page) => (page ?? 0) switch
         {
-            throw new NotImplementedException();
-        }
+            0 => Task.FromResult<ICollection<Email>>([MakeEmail(main: true), MakeEmail(), MakeEmail()]),
+            _ => Task.FromResult<ICollection<Email>>([])
+        };
 
         public Task SetMainEmailAsync(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        private static Email MakeEmail(bool main = false, bool verified = true)
+        {
+            var id = new Guid();
+            return new()
+            {
+                Id = id,
+                Email1 = $"{id}@example.org",
+                Main = main,
+                Verified = verified
+            };
         }
     }
 

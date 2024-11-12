@@ -5,11 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Fyreplace.Views.Pages"
     xmlns:local_controls="using:Fyreplace.Views.Controls"
+    xmlns:local_services="using:Fyreplace.Services"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
 
     <ScrollView>
         <StackPanel
@@ -92,6 +98,25 @@
                         Text="{x:Bind accountViewModel.Bio, Mode=OneWay, FallbackValue=''}" />
                 </controls:SettingsCard.Description>
             </controls:SettingsCard>
+
+            <controls:SettingsExpander
+                x:Uid="SettingsPage_Profile_Emails"
+                IsEnabled="{x:Bind accountViewModel.HasCurrentUser, Mode=OneWay}"
+                HeaderIcon="{ui:FontIcon Glyph=&#xE910;}"
+                ItemsSource="{x:Bind viewModel.Emails}"
+                Loaded="Emails_Loaded">
+                <controls:SettingsExpander.ItemTemplate>
+                    <DataTemplate x:DataType="local_services:Email">
+                        <controls:SettingsCard Header="{x:Bind Email1}">
+                            <controls:SettingsCard.Description>
+                                <TextBlock
+                                    x:Uid="SettingsPage_Profile_Emails_Main"
+                                    Visibility="{x:Bind Main, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            </controls:SettingsCard.Description>
+                        </controls:SettingsCard>
+                    </DataTemplate>
+                </controls:SettingsExpander.ItemTemplate>
+            </controls:SettingsExpander>
 
             <TextBlock
                 x:Uid="SettingsPage_About_Title"

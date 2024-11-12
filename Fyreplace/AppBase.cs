@@ -21,6 +21,7 @@ namespace Fyreplace
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<RegisterViewModel>();
             services.AddSingleton<AccountViewModel>();
+            services.AddTransient<SettingsViewModel>();
         }
 
         public static T GetService<T>() where T : notnull => ((AppBase)Current).host.Services.GetRequiredService<T>();

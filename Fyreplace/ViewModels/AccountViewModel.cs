@@ -44,7 +44,6 @@ namespace Fyreplace.ViewModels
         public bool CanUpdateAvatar => HasCurrentUser && !IsLoadingAvatar;
         public bool CanRemoveAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar) && !IsLoadingAvatar;
 
-        private readonly IApiClient api = AppBase.GetService<IApiClient>();
         private readonly ResourceLoader resources = new();
 
         public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
