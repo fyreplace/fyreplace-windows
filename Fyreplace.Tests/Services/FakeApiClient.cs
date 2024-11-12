@@ -348,7 +348,7 @@ namespace Fyreplace.Tests.Services
             ? throw new FakeApiException(HttpStatusCode.Forbidden)
             : !GoodIdentifiers.Contains(body.Identifier)
             ? throw new FakeApiException(HttpStatusCode.NotFound)
-            : Task.FromResult(token);
+            : Task.CompletedTask;
 
         public Task<string> CreateTokenAsync(TokenCreation body) =>
             !GoodIdentifiers.Contains(body.Identifier)
