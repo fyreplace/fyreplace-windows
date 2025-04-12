@@ -6,7 +6,7 @@ namespace Fyreplace.ViewModels
     public sealed partial class MainWindowViewModel: ViewModelBase
     {
         [ObservableProperty]
-        private bool showConnectionTip;
+        public partial bool ShowUserConnectionTip { get; set; }
 
         private AccountEntryViewModelBase AccountEntryViewModel => preferences.Account_IsRegistering
                 ? AppBase.GetService<RegisterViewModel>()
@@ -20,9 +20,9 @@ namespace Fyreplace.ViewModels
             }
 
             AccountEntryViewModel.RandomCode = randomCode;
-            ShowConnectionTip = true;
+            ShowUserConnectionTip = true;
             await AccountEntryViewModel.SubmitCommand.ExecuteAsync(null);
-            ShowConnectionTip = false;
+            ShowUserConnectionTip = false;
         }
     }
 }

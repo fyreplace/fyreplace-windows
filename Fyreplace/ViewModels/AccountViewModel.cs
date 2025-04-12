@@ -24,14 +24,14 @@ namespace Fyreplace.ViewModels
         [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(UpdateBioCommand))]
         [NotifyCanExecuteChangedFor(nameof(LogoutCommand))]
-        private User? currentUser;
+        public partial User? CurrentUser { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CanUpdateAvatar))]
         [NotifyPropertyChangedFor(nameof(CanRemoveAvatar))]
         [NotifyCanExecuteChangedFor(nameof(UpdateAvatarCommand))]
         [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
-        private bool isLoadingAvatar;
+        public partial bool IsLoadingAvatar { get; set; }
 
         public string Username => CurrentUser?.Username ?? resources.GetString("Account_Username_Placeholder");
         public string DateJoined => CurrentUser != null
@@ -77,7 +77,7 @@ namespace Fyreplace.ViewModels
                         IsLoadingAvatar = false;
                     }
                 },
-                onFailure: (status, _, _) => status switch
+                onFailure: (statusCode, _, _) => statusCode switch
                 {
                     HttpStatusCode.RequestEntityTooLarge => new FailureEvent("Account_Error_RequestEntityTooLarge"),
                     HttpStatusCode.UnsupportedMediaType => new FailureEvent("Account_Error_UnsupportedMediaType"),

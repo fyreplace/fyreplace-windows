@@ -16,6 +16,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
     <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
     <DefaultLanguage>en</DefaultLanguage>
     <PackageLicenseFile>COPYING.txt</PackageLicenseFile>

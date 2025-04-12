@@ -15,25 +15,25 @@
 
     <Button
         x:Name="Button"
-        Width="{x:Bind Size}"
-        Height="{x:Bind Size}"
-        CornerRadius="{x:Bind Radius}"
+        Width="{x:Bind viewModel.Size, Mode=OneWay, FallbackValue=0}"
+        Height="{x:Bind viewModel.Size, Mode=OneWay, FallbackValue=0}"
+        CornerRadius="{x:Bind viewModel.Radius, Mode=OneWay, FallbackValue=0}"
         Padding="0"
         BorderThickness="0"
-        Command="{x:Bind Command}">
+        Command="{x:Bind viewModel.Command, Mode=OneWay, FallbackValue={x:Null}}">
         <Grid>
             <PersonPicture
-                Width="{x:Bind Size}"
-                Height="{x:Bind Size}"
-                Visibility="{x:Bind IsTintApplied, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
+                Width="{x:Bind viewModel.Size, Mode=OneWay, FallbackValue=0}"
+                Height="{x:Bind viewModel.Size, Mode=OneWay, FallbackValue=0}"
+                Visibility="{x:Bind viewModel.IsTintApplied, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
             <PersonPicture
                 x:Name="Picture"
-                Width="{x:Bind Size}"
-                Height="{x:Bind Size}"
-                Visibility="{x:Bind IsTintApplied, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                Background="{x:Bind Tint, Mode=OneWay, FallbackValue={x:Null}}"
+                Width="{x:Bind viewModel.Size, Mode=OneWay, FallbackValue=0}"
+                Height="{x:Bind viewModel.Size, Mode=OneWay, FallbackValue=0}"
+                Visibility="{x:Bind viewModel.IsTintApplied, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                Background="{x:Bind viewModel.Tint, Mode=OneWay, FallbackValue={x:Null}}"
                 Foreground="White"
-                ProfilePicture="{x:Bind AvatarWrapper.Value, Mode=OneWay, FallbackValue={x:Null}}" />
+                ProfilePicture="{x:Bind viewModel.AvatarWrapper.Value, Mode=OneWay, FallbackValue={x:Null}}" />
         </Grid>
     </Button>
 </UserControl>

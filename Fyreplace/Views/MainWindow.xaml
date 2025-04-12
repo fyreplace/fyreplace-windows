@@ -22,7 +22,7 @@
             x:Uid="MainWindow_ConnectionTip"
             PreferredPlacement="BottomRight"
             IconSource="{ui:FontIconSource Glyph=&#xF427;}"
-            IsOpen="{x:Bind viewModel.ShowConnectionTip, Mode=TwoWay}">
+            IsOpen="{x:Bind viewModel.ShowUserConnectionTip, Mode=TwoWay}">
             <TeachingTip.HeroContent>
                 <ProgressBar IsIndeterminate="True" />
             </TeachingTip.HeroContent>

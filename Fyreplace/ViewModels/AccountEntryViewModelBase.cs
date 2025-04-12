@@ -37,14 +37,14 @@ namespace Fyreplace.ViewModels
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
         [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
-        private bool isLoading = false;
+        public partial bool IsLoading { get; set; } = false;
 
         [ObservableProperty]
-        private bool isRandomCodeTipShown = false;
+        public partial bool IsRandomCodeTipShown { get; set; } = false;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
-        private string randomCode = string.Empty;
+        public partial string RandomCode { get; set; } = string.Empty;
 
         protected static IApiClient Api => AppBase.GetService<IApiClient>();
         private static readonly Environment[] environments = Enum.GetValues<Environment>();

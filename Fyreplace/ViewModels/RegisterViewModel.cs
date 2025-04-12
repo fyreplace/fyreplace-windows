@@ -11,7 +11,7 @@ namespace Fyreplace.ViewModels
     {
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
-        private bool hasAcceptedTerms;
+        public partial bool HasAcceptedTerms { get; set; }
 
         public override bool CanSubmitFirstStep => IsUsernameValid && IsEmailValid && HasAcceptedTerms;
 
