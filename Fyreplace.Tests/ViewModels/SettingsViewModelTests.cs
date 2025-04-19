@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fyreplace.Tests.ViewModels
 {
+    [TestClass]
     public sealed partial class SettingsViewModelTests : TestsBase
     {
         [TestMethod]
