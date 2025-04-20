@@ -473,6 +473,7 @@ namespace Fyreplace.Tests.Services
         {
             var stream = new MemoryStream();
             stream.WriteByte(id);
+            stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
     }
