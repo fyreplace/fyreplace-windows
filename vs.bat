@@ -11,5 +11,6 @@ if defined devshell (
 )
 
 %*
+exit %ERRORLEVEL%
 
 endlocal
