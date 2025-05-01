@@ -43,8 +43,6 @@ namespace Fyreplace.Tests.Services
 
         #region Emails
 
-        public Task ActivateEmailAsync(EmailActivation body, CancellationToken cancellationToken) => ActivateEmailAsync(body);
-
         public Task<long> CountEmailsAsync(CancellationToken cancellationToken) => CountEmailsAsync();
 
         public Task<Email> CreateEmailAsync(bool? customDeepLinks, EmailCreation body, CancellationToken cancellationToken) => CreateEmailAsync(customDeepLinks, body);
@@ -54,6 +52,8 @@ namespace Fyreplace.Tests.Services
         public Task<ICollection<Email>> ListEmailsAsync(int? page, CancellationToken cancellationToken) => ListEmailsAsync(page);
 
         public Task SetMainEmailAsync(Guid id, CancellationToken cancellationToken) => SetMainEmailAsync(id);
+
+        public Task VerifyEmailAsync(EmailVerification body, CancellationToken cancellationToken) => VerifyEmailAsync(body);
 
         #endregion
 
@@ -210,11 +210,6 @@ namespace Fyreplace.Tests.Services
 
     public sealed partial class FakeApiClient
     {
-        public Task ActivateEmailAsync(EmailActivation body)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<long> CountEmailsAsync() => (await ListEmailsAsync(null)).Count;
 
         public Task<Email> CreateEmailAsync(bool? customDeepLinks, EmailCreation body)
@@ -234,6 +229,11 @@ namespace Fyreplace.Tests.Services
         };
 
         public Task SetMainEmailAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task VerifyEmailAsync(EmailVerification body)
         {
             throw new NotImplementedException();
         }
