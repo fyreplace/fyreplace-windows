@@ -63,10 +63,8 @@ namespace Fyreplace.Tests.ViewModels
             var preferences = GetPreferences();
             var viewModel = new RegisterViewModel { HasAcceptedTerms = true };
             preferences.Account_Username = FakeApiClient.goodUsername;
-
             preferences.Account_Email = "email";
             Assert.IsFalse(viewModel.CanSubmit);
-
             preferences.Account_Email = "email@example";
             Assert.IsTrue(viewModel.CanSubmit);
         }
@@ -78,10 +76,8 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new RegisterViewModel();
             preferences.Account_Username = FakeApiClient.goodUsername;
             preferences.Account_Email = FakeApiClient.goodEmail;
-
             viewModel.HasAcceptedTerms = false;
             Assert.IsFalse(viewModel.CanSubmit);
-
             viewModel.HasAcceptedTerms = true;
             Assert.IsTrue(viewModel.CanSubmit);
         }
@@ -128,7 +124,6 @@ namespace Fyreplace.Tests.ViewModels
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
             var viewModel = new RegisterViewModel();
-
             preferences.Account_Username = FakeApiClient.goodUsername;
             preferences.Account_Email = FakeApiClient.goodEmail;
             await viewModel.SubmitAsync();
@@ -142,7 +137,6 @@ namespace Fyreplace.Tests.ViewModels
             var preferences = GetPreferences();
             var viewModel = new RegisterViewModel();
             preferences.Account_IsWaitingForRandomCode = true;
-
             viewModel.RandomCode = "abcd123";
             Assert.IsFalse(viewModel.CanSubmit);
             viewModel.RandomCode = "abcd1234";
@@ -158,7 +152,6 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_Username = FakeApiClient.goodUsername;
             preferences.Account_Email = FakeApiClient.goodEmail;
             preferences.Account_IsWaitingForRandomCode = true;
-
             viewModel.RandomCode = FakeApiClient.badSecret;
             await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -173,7 +166,6 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_Username = FakeApiClient.goodUsername;
             preferences.Account_Email = FakeApiClient.goodEmail;
             preferences.Account_IsWaitingForRandomCode = true;
-
             viewModel.RandomCode = FakeApiClient.goodSecret;
             await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));

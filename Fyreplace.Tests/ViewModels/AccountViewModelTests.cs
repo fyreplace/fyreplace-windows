@@ -16,7 +16,6 @@ namespace Fyreplace.Tests.ViewModels
         {
             var secrets = GetSecrets();
             var viewModel = new AccountViewModel();
-
             secrets.Token = FakeApiClient.token;
             await Task.Delay(100);
             Assert.IsNotNull(viewModel.CurrentUser);
@@ -29,7 +28,6 @@ namespace Fyreplace.Tests.ViewModels
             var secrets = GetSecrets();
             var viewModel = new AccountViewModel();
             secrets.Token = FakeApiClient.token;
-
             await viewModel.UpdateAvatarAsync(FakeApiClient.LargeImageStream);
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(string.Empty, viewModel.CurrentUser?.Avatar);
@@ -42,7 +40,6 @@ namespace Fyreplace.Tests.ViewModels
             var secrets = GetSecrets();
             var viewModel = new AccountViewModel();
             secrets.Token = FakeApiClient.token;
-
             await viewModel.UpdateAvatarAsync(FakeApiClient.NotImageStream);
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(string.Empty, viewModel.CurrentUser?.Avatar);
@@ -55,7 +52,6 @@ namespace Fyreplace.Tests.ViewModels
             var secrets = GetSecrets();
             var viewModel = new AccountViewModel();
             secrets.Token = FakeApiClient.token;
-
             await viewModel.UpdateAvatarAsync(FakeApiClient.NormalImageStream);
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(FakeApiClient.avatar, viewModel.CurrentUser?.Avatar);
@@ -69,7 +65,6 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new AccountViewModel();
             secrets.Token = FakeApiClient.token;
             await viewModel.UpdateAvatarAsync(FakeApiClient.NormalImageStream);
-
             await viewModel.RemoveAvatarAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(string.Empty, viewModel.CurrentUser?.Avatar);
@@ -83,7 +78,6 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new AccountViewModel();
             secrets.Token = FakeApiClient.token;
             await viewModel.UpdateBioAsync("Hello");
-
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual("Hello", viewModel.CurrentUser?.Bio);
         }

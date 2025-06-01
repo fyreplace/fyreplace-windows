@@ -15,4 +15,8 @@ namespace Fyreplace.Events
     public record class SecretChangedEvent(string Name) : IEvent { }
 
     public record class ModelChangedEvent(Guid Id, string PropertyName) : IEvent { }
+
+    public record class EmailVerificationEvent(string Email, string RandomCode) : IEvent { }
+
+    public record class EmailVerifiedEvent(string Email) : IEvent { }
 }

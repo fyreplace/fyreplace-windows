@@ -1,4 +1,5 @@
 ﻿using Fyreplace.Events;
+using Fyreplace.Tests.Services;
 using Fyreplace.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -15,10 +16,35 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var viewModel = new SettingsViewModel();
-
             await viewModel.LoadEmailsAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(3, viewModel.Emails.Count);
+        }
+
+        [TestMethod]
+        public async Task InvalidEmailProducesFailure()
+        {
+            var eventBus = GetEventBus();
+            var viewModel = new SettingsViewModel
+            {
+                NewEmail = FakeApiClient.badEmail
+            };
+            await viewModel.AddEmailAsync();
+            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.AreEqual(0, viewModel.Emails.Count);
+        }
+
+        [TestMethod]
+        public async Task ValidEmailProducesNoFailures()
+        {
+            var eventBus = GetEventBus();
+            var viewModel = new SettingsViewModel
+            {
+                NewEmail = FakeApiClient.goodEmail
+            };
+            await viewModel.AddEmailAsync();
+            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.AreEqual(1, viewModel.Emails.Count);
         }
     }
 }

@@ -14,7 +14,14 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.SettingsControls/SettingsExpander/SettingsExpander.xaml" />
+                <ResourceDictionary>
+                    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
 
     <ScrollView>
@@ -113,10 +120,55 @@
                                     x:Uid="SettingsPage_Profile_Emails_Main"
                                     Visibility="{x:Bind Main, Converter={StaticResource BoolToVisibilityConverter}}" />
                             </controls:SettingsCard.Description>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                Visibility="{x:Bind Verified, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                                <TextBox
+                                    x:Uid="SettingsPage_Profile_Emails_Unverified"
+                                    Tag="{x:Bind Email1}"
+                                    Text="{x:Bind Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox.KeyboardAccelerators>
+                                        <KeyboardAccelerator
+                                            Key="Enter"
+                                            IsEnabled="{x:Bind CanVerify, Mode=OneWay}"
+                                            Invoked="{x:Bind VerifyAsync}" />
+                                    </TextBox.KeyboardAccelerators>
+                                </TextBox>
+                                <Button
+                                    x:Uid="SettingsPage_Profile_Emails_Unverified_Button"
+                                    Command="{x:Bind VerifyCommand}" />
+                            </StackPanel>
                         </controls:SettingsCard>
                     </DataTemplate>
                 </controls:SettingsExpander.ItemTemplate>
+                <controls:SettingsExpander.ItemsFooter>
+                    <controls:SettingsCard Style="{StaticResource DefaultSettingsExpanderItemStyle}">
+                        <controls:SettingsCard.Header>
+                            <TextBox
+                                x:Uid="SettingsPage_Profile_Emails_NewEmail"
+                                MinWidth="240"
+                                Text="{x:Bind viewModel.NewEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.KeyboardAccelerators>
+                                    <KeyboardAccelerator
+                                        Key="Enter"
+                                        IsEnabled="{x:Bind viewModel.CanAddEmail, Mode=OneWay}"
+                                        Invoked="Accelerators_AddEmail" />
+                                </TextBox.KeyboardAccelerators>
+                            </TextBox>
+                        </controls:SettingsCard.Header>
+                        <Button
+                            x:Uid="SettingsPage_Profile_Emails_Add"
+                            Command="{x:Bind viewModel.AddEmailCommand}" />
+                    </controls:SettingsCard>
+                </controls:SettingsExpander.ItemsFooter>
             </controls:SettingsExpander>
+            
+            <TeachingTip
+                x:Uid="SettingsPage_Profile_Emails_RandomCodeTip"
+                PreferredPlacement="BottomRight"
+                IconSource="{ui:FontIconSource Glyph=&#xE715;}"
+                IsOpen="{x:Bind viewModel.IsRandomCodeTipShown, Mode=TwoWay}" />
 
             <TextBlock
                 x:Uid="SettingsPage_About_Title"

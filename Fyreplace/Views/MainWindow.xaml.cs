@@ -61,7 +61,6 @@ namespace Fyreplace.Views
                 DefaultButton = ContentDialogButton.Close,
                 Content = resourceLoader.GetString(e.Message)
             };
-
             await dialog.ShowAsync();
         }
 

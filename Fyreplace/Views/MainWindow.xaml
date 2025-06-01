@@ -19,10 +19,19 @@
     <Grid>
         <pages:MainPage x:Name="MainPage" AppWindow="{x:Bind AppWindow}" />
         <TeachingTip
-            x:Uid="MainWindow_ConnectionTip"
+            x:Uid="MainWindow_UserConnectionTip"
             PreferredPlacement="BottomRight"
             IconSource="{ui:FontIconSource Glyph=&#xF427;}"
             IsOpen="{x:Bind viewModel.ShowUserConnectionTip, Mode=TwoWay}">
+            <TeachingTip.HeroContent>
+                <ProgressBar IsIndeterminate="True" />
+            </TeachingTip.HeroContent>
+        </TeachingTip>
+        <TeachingTip
+            x:Uid="MainWindow_EmailVerificationTip"
+            PreferredPlacement="BottomRight"
+            IconSource="{ui:FontIconSource Glyph=&#xE715;}"
+            IsOpen="{x:Bind viewModel.ShowEmailVerificationTip, Mode=TwoWay}">
             <TeachingTip.HeroContent>
                 <ProgressBar IsIndeterminate="True" />
             </TeachingTip.HeroContent>

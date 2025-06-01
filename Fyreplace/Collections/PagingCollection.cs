@@ -11,6 +11,13 @@ namespace Fyreplace.Collections
         private bool full;
         private int currentPage;
 
+        public void Reset()
+        {
+            Clear();
+            full = false;
+            currentPage = 0;
+        }
+
         public async Task<bool> FetchMoreAsync()
         {
             if (full)

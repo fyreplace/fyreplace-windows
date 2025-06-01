@@ -68,15 +68,16 @@ namespace Fyreplace
             var isSingleInstance = instances.Count == 1;
             var protocolActivatedArgs = currentInstance.GetActivatedEventArgs().Data as ProtocolActivatedEventArgs;
             AppInstance.FindOrRegisterForKey(Guid.NewGuid().ToString());
-            var shouldExit = false;
 
-            switch (protocolActivatedArgs?.Uri.AbsolutePath)
-            {
-                case "/login":
-                case "/register":
                     if (isSingleInstance)
                     {
-                        _ = CompleteConnectionAsync(protocolActivatedArgs!);
+                if (protocolActivatedArgs != null)
+                {
+                    _ = HandleActivatedArgs(protocolActivatedArgs);
+                }
+
+                GetService<MainWindow>().Activate();
+                currentInstance.Activated += AppInstance_Activated;
                     }
                     else
                     {
@@ -85,20 +86,7 @@ namespace Fyreplace
                             _ = instance.RedirectActivationToAsync(currentInstance.GetActivatedEventArgs());
                         }
 
-                        shouldExit = true;
-                    }
-
-                    break;
-            }
-
-            if (shouldExit)
-            {
                 Exit();
-            }
-            else
-            {
-                GetService<MainWindow>().Activate();
-                currentInstance.Activated += AppInstance_Activated;
             }
         }
 
@@ -169,14 +157,35 @@ namespace Fyreplace
                     async () =>
                     {
                         window.Show();
-                        await CompleteConnectionAsync(protocolActivatedArgs);
+                        await HandleActivatedArgs(protocolActivatedArgs);
                     },
                     DispatcherQueuePriority.High
                 );
             }
         }
 
-        private static Task CompleteConnectionAsync(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteConnectionAsync(protocolActivatedArgs.Uri.Fragment.Replace("#", string.Empty));
+        private static async Task HandleActivatedArgs(ProtocolActivatedEventArgs protocolActivatedArgs)
+        {
+            switch (protocolActivatedArgs.Uri.AbsolutePath)
+            {
+                case "/login":
+                case "/register":
+                    await CompleteUserConnectionAsync(protocolActivatedArgs);
+                    break;
+
+                case "/settings/emails":
+                    await CompleteEmailVerificationAsync(protocolActivatedArgs);
+                    break;
+            }
+        }
+
+        private static Task CompleteUserConnectionAsync(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteUserConnectionAsync(protocolActivatedArgs.Uri.Fragment.Replace("#", string.Empty));
+
+        private static Task CompleteEmailVerificationAsync(ProtocolActivatedEventArgs protocolActivatedArgs)
+        {
+            var fragmentParts = protocolActivatedArgs.Uri.Fragment.Replace("#", string.Empty).Split(":");
+            return GetService<MainWindowViewModel>().CompleteEmailVerificationAsync(fragmentParts[0], fragmentParts[1]);
+        }
     }
 
     class RequestHeadersHandler(ISecrets secrets, ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())

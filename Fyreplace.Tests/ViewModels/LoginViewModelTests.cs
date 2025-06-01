@@ -38,7 +38,6 @@ namespace Fyreplace.Tests.ViewModels
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
-
             preferences.Account_Identifier = FakeApiClient.badUsername;
             await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -51,7 +50,6 @@ namespace Fyreplace.Tests.ViewModels
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
-
             preferences.Account_Identifier = FakeApiClient.goodUsername;
             await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
@@ -64,7 +62,6 @@ namespace Fyreplace.Tests.ViewModels
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
-
             preferences.Account_Identifier = FakeApiClient.passwordUsername;
             await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -77,7 +74,6 @@ namespace Fyreplace.Tests.ViewModels
             var preferences = GetPreferences();
             var viewModel = new LoginViewModel();
             preferences.Account_IsWaitingForRandomCode = true;
-
             viewModel.RandomCode = "abcd123";
             Assert.IsFalse(viewModel.CanSubmit);
             viewModel.RandomCode = "abcd1234";
@@ -92,7 +88,6 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new LoginViewModel();
             preferences.Account_Identifier = FakeApiClient.goodUsername;
             preferences.Account_IsWaitingForRandomCode = true;
-
             viewModel.RandomCode = FakeApiClient.badSecret;
             await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -106,7 +101,6 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = new LoginViewModel();
             preferences.Account_Identifier = FakeApiClient.goodUsername;
             preferences.Account_IsWaitingForRandomCode = true;
-
             viewModel.RandomCode = FakeApiClient.goodSecret;
             await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));

@@ -4,11 +4,11 @@ namespace Fyreplace.Extensions
 {
     public static class ColorExtensions
     {
-        public static Windows.UI.Color ToWindowsColor(this Color color) => new()
+        public static Windows.UI.Color ToWindowsColor(this Color self) => new()
         {
-            R = (byte)color.R,
-            G = (byte)color.G,
-            B = (byte)color.B,
+            R = (byte)self.R,
+            G = (byte)self.G,
+            B = (byte)self.B,
             A = byte.MaxValue
         };
     }

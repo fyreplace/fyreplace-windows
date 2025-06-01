@@ -212,10 +212,17 @@ namespace Fyreplace.Tests.Services
     {
         public async Task<long> CountEmailsAsync() => (await ListEmailsAsync(null)).Count;
 
-        public Task<Email> CreateEmailAsync(bool? customDeepLinks, EmailCreation body)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<Email> CreateEmailAsync(bool? customDeepLinks, EmailCreation body) => body.Email == goodEmail
+            ? Task.FromResult(new Email()
+            {
+                Id = new(),
+                Email1 = goodEmail,
+                Main = false,
+                Verified = false
+            })
+            : body.Email == usedEmail
+            ? throw new FakeApiException(HttpStatusCode.Conflict)
+            : throw new FakeApiException(HttpStatusCode.BadRequest);
 
         public Task DeleteEmailAsync(Guid id)
         {
@@ -224,7 +231,7 @@ namespace Fyreplace.Tests.Services
 
         public Task<ICollection<Email>> ListEmailsAsync(int? page) => (page ?? 0) switch
         {
-            0 => Task.FromResult<ICollection<Email>>([MakeEmail(main: true), MakeEmail(), MakeEmail()]),
+            0 => Task.FromResult<ICollection<Email>>([MakeEmail(main: true), MakeEmail(), MakeEmail(verified: false)]),
             _ => Task.FromResult<ICollection<Email>>([])
         };
 
@@ -233,12 +240,11 @@ namespace Fyreplace.Tests.Services
             throw new NotImplementedException();
         }
 
-        public Task VerifyEmailAsync(EmailVerification body)
-        {
-            throw new NotImplementedException();
-        }
+        public Task VerifyEmailAsync(EmailVerification body) => body.Code == goodSecret
+            ? Task.CompletedTask
+            : throw new FakeApiException(HttpStatusCode.NotFound);
 
-        private static Email MakeEmail(bool main = false, bool verified = true)
+        public static Email MakeEmail(bool main = false, bool verified = true)
         {
             var id = new Guid();
             return new()

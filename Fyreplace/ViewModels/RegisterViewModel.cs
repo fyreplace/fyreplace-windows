@@ -66,7 +66,7 @@ namespace Fyreplace.ViewModels
 
         protected override Task CreateTokenAsync() => CallWhileLoadingAsync(async () =>
             {
-                var  token = await Api.CreateTokenAsync(new()
+                var token = await Api.CreateTokenAsync(new()
                 {
                     Identifier = preferences.Account_Email,
                     Secret = RandomCode

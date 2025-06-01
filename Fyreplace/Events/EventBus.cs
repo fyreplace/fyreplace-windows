@@ -44,7 +44,10 @@ namespace Fyreplace.Events
             {
                 if (handler.TryGetTarget(out var target))
                 {
-                    tasks.Add((Task)target.DynamicInvoke(someEvent)!);
+                    if (target.DynamicInvoke(someEvent) is Task task)
+                    {
+                        tasks.Add(task);
+                    }
                 }
                 else
                 {

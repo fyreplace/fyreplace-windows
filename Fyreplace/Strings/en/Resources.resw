@@ -276,7 +276,16 @@
   <data name="MainPage_Title.Text" xml:space="preserve">
     <value>Fyreplace</value>
   </data>
-  <data name="MainWindow_ConnectionTip.Title" xml:space="preserve">
+  <data name="MainWindow_EmailVerificationTip.Title" xml:space="preserve">
+    <value>Activating email...</value>
+  </data>
+  <data name="MainWindow_Error_Verification_NotFound.Message" xml:space="preserve">
+    <value>This link is not valid. It might have expired.</value>
+  </data>
+  <data name="MainWindow_Error_Verification_NotFound.Title" xml:space="preserve">
+    <value>Email not verified</value>
+  </data>
+  <data name="MainWindow_UserConnectionTip.Title" xml:space="preserve">
     <value>Signing in...</value>
   </data>
   <data name="Ok" xml:space="preserve">
@@ -408,6 +417,18 @@
   <data name="SettingsPage_About_Title.Text" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="SettingsPage_Error_Email_BadRequest.Message" xml:space="preserve">
+    <value>This email does not seem to be a valid address.</value>
+  </data>
+  <data name="SettingsPage_Error_Email_BadRequest.Title" xml:space="preserve">
+    <value>Invalid email</value>
+  </data>
+  <data name="SettingsPage_Error_Email_Conflict.Message" xml:space="preserve">
+    <value>This email address is already in use.</value>
+  </data>
+  <data name="SettingsPage_Error_Email_Conflict.Title" xml:space="preserve">
+    <value>Used email</value>
+  </data>
   <data name="SettingsPage_Profile_Bio.ActionIconToolTip" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -423,6 +444,9 @@
   <data name="SettingsPage_Profile_Drag" xml:space="preserve">
     <value>Use as profile picture</value>
   </data>
+  <data name="SettingsPage_Profile_Emails_Add.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="SettingsPage_Profile_Emails.Description" xml:space="preserve">
     <value>Add or remove email addresses</value>
   </data>
@@ -431,6 +455,21 @@
   </data>
   <data name="SettingsPage_Profile_Emails_Main.Text" xml:space="preserve">
     <value>Main address</value>
+  </data>
+  <data name="SettingsPage_Profile_Emails_NewEmail.PlaceholderText" xml:space="preserve">
+    <value>email@example.org</value>
+  </data>
+  <data name="SettingsPage_Profile_Emails_RandomCodeTip.Subtitle" xml:space="preserve">
+    <value>A one-time use code has been sent to this address.</value>
+  </data>
+  <data name="SettingsPage_Profile_Emails_RandomCodeTip.Title" xml:space="preserve">
+    <value>Check your email</value>
+  </data>
+  <data name="SettingsPage_Profile_Emails_Unverified_Button.Content" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="SettingsPage_Profile_Emails_Unverified.PlaceholderText" xml:space="preserve">
+    <value>Code</value>
   </data>
   <data name="SettingsPage_Profile_Logout.Content" xml:space="preserve">
     <value>Logout</value>
