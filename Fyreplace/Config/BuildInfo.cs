@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Linq;
 using Environment = Fyreplace.Data.Environment;
+using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace Fyreplace.Config
 {
@@ -23,7 +24,14 @@ namespace Fyreplace.Config
 
     public sealed class App
     {
+        private static ResourceLoader ResourceLoader => new();
+        public readonly string Name = GetCustomAttribute("App.Name") ?? ResourceLoader.GetString("AppName");
         public readonly bool SelfContained = GetCustomAttribute("App.SDKSelfContained")?.ToLower() == "true";
+#if DEBUG
+        public readonly string AssetPool = "Debug";
+#else
+        public readonly string AssetPool = "Release";
+#endif
     }
 
     public sealed class Api

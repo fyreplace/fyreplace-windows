@@ -1,5 +1,5 @@
-﻿using Microsoft.Win32;
-using Microsoft.Windows.ApplicationModel.Resources;
+﻿using Fyreplace.Config;
+using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,10 +9,9 @@ namespace Fyreplace.Data
     {
         public static RegistryKey GetRegistryKey(IEnumerable<string> path)
         {
-            var resourceLoader = new ResourceLoader();
             var registryKey = Registry.CurrentUser
                 .CreateSubKey("Software")
-                .CreateSubKey(resourceLoader.GetString("AppName"));
+                .CreateSubKey(AppBase.GetService<BuildInfo>().App.Name);
 
             foreach (var segment in path)
             {

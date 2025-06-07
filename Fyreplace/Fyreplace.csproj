@@ -17,7 +17,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
-    <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\$(Configuration)\Icon.ico</ApplicationIcon>
     <DefaultLanguage>en</DefaultLanguage>
     <PackageLicenseFile>COPYING.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -54,6 +54,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute" Condition="'$(Configuration)' != 'Release'">
+      <_Parameter1>App.Name</_Parameter1>
+      <_Parameter2>Fyredebug</_Parameter2>
+    </AssemblyAttribute>
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>App.SDKSelfContained</_Parameter1>
       <_Parameter2>$(SDKSelfContained)</_Parameter2>
@@ -103,7 +107,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Assets\Icon.ico">
+    <Content Update="Assets\$(Configuration)\Icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -211,6 +215,11 @@
     </ItemGroup>
   </Target>
 
+  <PropertyGroup>
+    <DisplayName Condition="'$(Configuration)' != 'Release'">Fyredebug</DisplayName>
+    <DisplayName Condition="'$(Configuration)' == 'Release'">$(PackageName)</DisplayName>
+  </PropertyGroup>
+
   <Target Name="UpdateAppManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionString;GetVersionNumber">
     <Copy SourceFiles="app.template.manifest" DestinationFiles="app.manifest" />
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='urn:schemas-microsoft-com:asm.v1' /&gt;" XmlInputPath="app.manifest" Query="/ns:assembly/ns:assemblyIdentity/@version" Value="$(VersionString).$(VersionNumber)" />
@@ -219,10 +228,22 @@
   <Target Name="UpdateAppxManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetBranchNumber">
     <Copy SourceFiles="Package.template.appxmanifest" DestinationFiles="Package.appxmanifest" />
     <XmlPoke Condition="$(PackageName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Name" Value="$(PackageName)" />
-    <XmlPoke Condition="$(PackageName) == ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Name" Value="$(AssemblyName)" />
+    <XmlPoke Condition="$(PackageName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Properties/ns:DisplayName" Value="$(PackageName)" />
+    
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/uap:VisualElements/@DisplayName" Value="$(DisplayName)" />
+    
     <XmlPoke Condition="$(PackagePublisher) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Publisher" Value="$(PackagePublisher)" />
     <XmlPoke Condition="$(PackagePublisherName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Properties/ns:PublisherDisplayName" Value="$(PackagePublisherName)" />
+    
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Version" Value="1.$(VersionNumber).$(BranchNumber).0" />
+    
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/uap:VisualElements/@Square150x150Logo" Value="Assets\$(Configuration)\Square150x150Logo.png" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/uap:VisualElements/@Square44x44Logo" Value="Assets\$(Configuration)\Square44x44Logo.png" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/uap:VisualElements/uap:DefaultTile/@Wide310x150Logo" Value="Assets\$(Configuration)\Wide310x150Logo.png" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/uap:VisualElements/uap:DefaultTile/@Square71x71Logo" Value="Assets\$(Configuration)\Square71x71Logo.png" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/uap:VisualElements/uap:DefaultTile/@Square310x310Logo" Value="Assets\$(Configuration)\Square310x310Logo.png" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/uap:VisualElements/uap:SplashScreen/@Image" Value="Assets\$(Configuration)\SplashScreen.png" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt; &lt;Namespace Prefix='uap' Uri='http://schemas.microsoft.com/appx/manifest/uap/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Applications/ns:Application/Extensions/uap:Extension/uap:Protocol/uap:Logo" Value="Assets\$(Configuration)\Icon.png" />
   </Target>
 
   <Target Name="NSwag" BeforeTargets="PrepareForBuild">

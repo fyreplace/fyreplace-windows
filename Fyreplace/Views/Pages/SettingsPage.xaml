@@ -209,7 +209,7 @@
 
             <controls:SettingsExpander
                 x:Uid="SettingsPage_About_Links"
-                HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Icon.ico}">
+                HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Release/Icon.ico}">
                 <TextBlock
                     Text="{x:Bind appVersion}"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}" />

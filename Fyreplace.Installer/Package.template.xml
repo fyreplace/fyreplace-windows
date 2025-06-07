@@ -6,7 +6,7 @@
     UpgradeCode="6f1bd025-da67-40b9-b2f4-5b6385c69c0c">
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
     <MediaTemplate EmbedCab="yes"/>
-    <Icon Id="Fyreplace.ico" SourceFile="..\Fyreplace\Assets\Icon.ico" />
+    <Icon Id="Fyreplace.ico" SourceFile="..\Fyreplace\Assets\Release\Icon.ico" />
 
     <Property Id="ARPPRODUCTICON" Value="Fyreplace.ico" />
     <Property Id="ARPNOMODIFY" Value="yes" />

@@ -75,11 +75,11 @@
                 Width="16"
                 Height="16"
                 Margin="0,0,16,0"
-                Source="ms-appx:///Assets/Icon.ico" />
+                Source="ms-appx:///Assets/Release/Icon.ico" />
             <TextBlock
                 x:Name="TitleBarText"
-                x:Uid="MainPage_Title"
                 Grid.Column="2"
+                Text="{x:Bind AppName}"
                 VerticalAlignment="Center"
                 Style="{StaticResource CaptionTextBlockStyle}" />
             <Grid

@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
+using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.ViewModels;
@@ -22,6 +23,8 @@ namespace Fyreplace.Views.Pages
     public sealed partial class MainPage : Page
     {
         public AppWindow? AppWindow { get; set; }
+
+        public string AppName => AppBase.GetService<BuildInfo>().App.Name;
 
         private NavigationViewItemBase? currentInvokedItem;
         private readonly ISecrets secrets = AppBase.GetService<ISecrets>();

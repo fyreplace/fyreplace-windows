@@ -1,3 +1,4 @@
+using Fyreplace.Config;
 using Fyreplace.Events;
 using Fyreplace.ViewModels;
 using Microsoft.UI.Windowing;
@@ -21,11 +22,11 @@ namespace Fyreplace.Views
         public MainWindow()
         {
             InitializeComponent();
-            var resourceLoader = new ResourceLoader();
-            Title = resourceLoader.GetString("AppName");
+            var info = AppBase.GetService<BuildInfo>();
+            Title = info.App.Name;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
-            AppWindow.SetIcon(@"Assets\Icon.ico");
+            AppWindow.SetIcon(@$"Assets\{info.App.AssetPool}\Icon.ico");
             SetTitleBar(MainPage.GetTitleBar());
             EventBus.Subscribe<FailureEvent>(OnFailureEventAsync);
         }

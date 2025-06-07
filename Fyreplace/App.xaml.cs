@@ -69,8 +69,8 @@ namespace Fyreplace
             var protocolActivatedArgs = currentInstance.GetActivatedEventArgs().Data as ProtocolActivatedEventArgs;
             AppInstance.FindOrRegisterForKey(Guid.NewGuid().ToString());
 
-                    if (isSingleInstance)
-                    {
+            if (isSingleInstance)
+            {
                 if (protocolActivatedArgs != null)
                 {
                     _ = HandleActivatedArgs(protocolActivatedArgs);
@@ -78,13 +78,13 @@ namespace Fyreplace
 
                 GetService<MainWindow>().Activate();
                 currentInstance.Activated += AppInstance_Activated;
-                    }
-                    else
-                    {
-                        foreach (var instance in instances)
-                        {
-                            _ = instance.RedirectActivationToAsync(currentInstance.GetActivatedEventArgs());
-                        }
+            }
+            else
+            {
+                foreach (var instance in instances)
+                {
+                    _ = instance.RedirectActivationToAsync(currentInstance.GetActivatedEventArgs());
+                }
 
                 Exit();
             }
