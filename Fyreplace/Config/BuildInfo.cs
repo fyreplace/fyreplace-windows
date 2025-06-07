@@ -27,11 +27,6 @@ namespace Fyreplace.Config
         private static ResourceLoader ResourceLoader => new();
         public readonly string Name = GetCustomAttribute("App.Name") ?? ResourceLoader.GetString("AppName");
         public readonly bool SelfContained = GetCustomAttribute("App.SDKSelfContained")?.ToLower() == "true";
-#if DEBUG
-        public readonly string AssetPool = "Debug";
-#else
-        public readonly string AssetPool = "Release";
-#endif
     }
 
     public sealed class Api

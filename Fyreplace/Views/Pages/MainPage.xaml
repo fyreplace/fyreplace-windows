@@ -75,7 +75,7 @@
                 Width="16"
                 Height="16"
                 Margin="0,0,16,0"
-                Source="ms-appx:///Assets/Release/Icon.ico" />
+                Source="ms-appx:///Assets/Current/Icon.ico" />
             <TextBlock
                 x:Name="TitleBarText"
                 Grid.Column="2"

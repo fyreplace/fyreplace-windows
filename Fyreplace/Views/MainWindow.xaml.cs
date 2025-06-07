@@ -22,11 +22,10 @@ namespace Fyreplace.Views
         public MainWindow()
         {
             InitializeComponent();
-            var info = AppBase.GetService<BuildInfo>();
-            Title = info.App.Name;
+            Title = AppBase.GetService<BuildInfo>().App.Name;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
-            AppWindow.SetIcon(@$"Assets\{info.App.AssetPool}\Icon.ico");
+            AppWindow.SetTitleBarIcon(@"Assets\Current\Icon.ico");
             SetTitleBar(MainPage.GetTitleBar());
             EventBus.Subscribe<FailureEvent>(OnFailureEventAsync);
         }
