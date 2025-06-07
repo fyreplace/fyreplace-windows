@@ -3,7 +3,6 @@ using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.ViewModels;
-using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -15,8 +14,6 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Graphics;
 
 namespace Fyreplace.Views.Pages
 {
@@ -42,31 +39,6 @@ namespace Fyreplace.Views.Pages
         #region Title Bar
 
         public UIElement GetTitleBar() => TitleBar;
-
-        public void SetIsTitleBarActive(bool active) => VisualStateManager.GoToState(this, active ? "Window_Active" : "Window_Inactive", true);
-
-        private void UpdateRegionsForTitleBar()
-        {
-            if (AppWindow == null)
-            {
-                return;
-            }
-
-            var scale = XamlRoot.RasterizationScale;
-            TitleBarLeftPadding.Width = new GridLength((AppWindow.TitleBar.LeftInset) / scale);
-            TitleBarRightPadding.Width = new GridLength((AppWindow.TitleBar.RightInset) / scale);
-
-            var transform = Avatar.TransformToVisual(null);
-            var bounds = transform.TransformBounds(new Rect(0, 0, Avatar.ActualWidth, Avatar.ActualHeight));
-            var avatarRect = new RectInt32(
-                _X: (int)Math.Round(bounds.X * scale),
-                _Y: (int)Math.Round(bounds.Y * scale),
-                _Width: (int)Math.Round(bounds.Width * scale),
-                _Height: (int)Math.Round(bounds.Height * scale)
-            );
-            var nonClientInput = InputNonClientPointerSource.GetForWindowId(AppWindow.Id);
-            nonClientInput.SetRegionRects(NonClientRegionKind.Passthrough, [avatarRect]);
-        }
 
         #endregion
 
@@ -144,10 +116,6 @@ namespace Fyreplace.Views.Pages
             GoForward();
             args.Handled = true;
         }
-
-        private void TitleBar_Loaded(object sender, RoutedEventArgs e) => UpdateRegionsForTitleBar();
-
-        private void TitleBar_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateRegionsForTitleBar();
 
         private void Navigation_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {

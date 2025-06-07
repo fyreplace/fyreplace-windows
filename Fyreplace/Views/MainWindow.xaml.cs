@@ -48,8 +48,6 @@ namespace Fyreplace.Views
 
         #region Event Handlers
 
-        private void Root_Activated(object sender, WindowActivatedEventArgs args) => MainPage.SetIsTitleBarActive(args.WindowActivationState != WindowActivationState.Deactivated);
-
         private async Task OnFailureEventAsync(FailureEvent e)
         {
             var resourceLoader = new ResourceLoader();

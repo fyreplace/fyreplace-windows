@@ -36,77 +36,36 @@
     </Page.KeyboardAccelerators>
 
     <Grid>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="TitleBarStates">
-                <VisualState x:Name="TitleBar_Default" />
-                <VisualState x:Name="TitleBar_Compact">
-                    <VisualState.Setters>
-                        <Setter Target="TitleBar.Margin" Value="96,0,0,0" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup x:Name="WindowStates">
-                <VisualState x:Name="Window_Active" />
-                <VisualState x:Name="Window_Inactive">
-                    <VisualState.Setters>
-                        <Setter Target="TitleBarText.Foreground" Value="{ThemeResource WindowCaptionForegroundDisabled}" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <Grid
+        <TitleBar
             x:Name="TitleBar"
-            Height="48"
             Margin="48,0,0,0"
             VerticalAlignment="Top"
-            Loaded="TitleBar_Loaded"
-            SizeChanged="TitleBar_SizeChanged">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="TitleBarLeftPadding" Width="0" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition x:Name="TitleBarRightPadding" Width="0" />
-            </Grid.ColumnDefinitions>
-            <Image
-                Grid.Column="1"
-                Width="16"
-                Height="16"
-                Margin="0,0,16,0"
-                Source="ms-appx:///Assets/Current/Icon.ico" />
-            <TextBlock
-                x:Name="TitleBarText"
-                Grid.Column="2"
-                Text="{x:Bind AppName}"
-                VerticalAlignment="Center"
-                Style="{StaticResource CaptionTextBlockStyle}" />
-            <Grid
-                x:Name="AvatarWrapper"
-                Grid.Column="4"
-                Margin="0,0,48,0">
-                <FlyoutBase.AttachedFlyout>
-                    <Flyout>
-                        <local:AccountEntriesPage />
-                    </Flyout>
-                </FlyoutBase.AttachedFlyout>
-                <local_controls:Avatar
+            IconSource="{ui:BitmapIconSource Source=ms-appx:///Assets/Current/Icon.ico}"
+            Title="{x:Bind AppName}">
+            <TitleBar.RightHeader>
+                <Grid x:Name="AvatarWrapper">
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout>
+                            <local:AccountEntriesPage />
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                    <local_controls:Avatar
                     x:Name="Avatar"
                     Size="32"
                     User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
                     Command="{x:Bind ShowAccountFlyoutCommand}">
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
                                 x:Uid="MainPage_Avatar_Menu_Manage"
                                 Icon="{ui:FontIcon Glyph=&#xE713;}"
                                 Command="{x:Bind GoToSettingsCommand}" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
-                </local_controls:Avatar>
-            </Grid>
-        </Grid>
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </local_controls:Avatar>
+                </Grid>
+            </TitleBar.RightHeader>
+        </TitleBar>
 
         <NavigationView
             x:Name="Navigation"
