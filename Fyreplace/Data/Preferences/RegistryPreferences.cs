@@ -2,7 +2,7 @@
 
 namespace Fyreplace.Data.Preferences
 {
-    public sealed class RegistryPreferences : PreferencesBase<string[]>
+    public sealed partial class RegistryPreferences : PreferencesBase<string[]>
     {
         public override string[] MakeCleanKey(string key) => key.Split('_');
 

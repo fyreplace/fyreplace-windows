@@ -188,7 +188,7 @@ namespace Fyreplace
         }
     }
 
-    class RequestHeadersHandler(ISecrets secrets, ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())
+    partial class RequestHeadersHandler(ISecrets secrets, ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())
     {
         public ResiliencePipeline resilience = resilience;
 

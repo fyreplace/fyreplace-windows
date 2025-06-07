@@ -2,7 +2,7 @@
 
 namespace Fyreplace.Data.Secrets
 {
-    public sealed class RegistrySecrets : SecretsBase<string[]>
+    public sealed partial class RegistrySecrets : SecretsBase<string[]>
     {
         public override string[] MakeCleanKey(string key) => key.Split('_');
 

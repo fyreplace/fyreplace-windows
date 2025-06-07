@@ -2,7 +2,7 @@
 
 namespace Fyreplace.Data.Preferences
 {
-    public sealed class LocalSettingsPreferences : PreferencesBase<string>
+    public sealed partial class LocalSettingsPreferences : PreferencesBase<string>
     {
         private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 

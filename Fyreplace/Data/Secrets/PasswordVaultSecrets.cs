@@ -4,7 +4,7 @@ using Windows.Security.Credentials;
 
 namespace Fyreplace.Data.Secrets
 {
-    public sealed class PasswordVaultSecrets : SecretsBase<string>
+    public sealed partial class PasswordVaultSecrets : SecretsBase<string>
     {
         private readonly PasswordVault vault = new();
         private readonly BuildInfo buildInfo = AppBase.GetService<BuildInfo>();
