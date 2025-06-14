@@ -5,6 +5,7 @@ using Fyreplace.Events;
 using Fyreplace.Services;
 using Fyreplace.Views;
 using Microsoft.Windows.ApplicationModel.Resources;
+using Sentry;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -125,6 +126,11 @@ namespace Fyreplace.ViewModels
             {
                 case nameof(ISecrets.Token):
                     CurrentUser = string.IsNullOrEmpty(secrets.Token) ? null : await CallAsync(api.GetCurrentUserAsync);
+                    SentrySdk.ConfigureScope(scope => scope.User = new SentryUser
+                    {
+                        Id = CurrentUser?.Id.ToString(),
+                        Username = CurrentUser?.Username
+                    });
                     break;
             }
         }
