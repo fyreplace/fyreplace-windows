@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: windows-latest
+    runs-on: windows-2025
     environment: microsoft-store
     strategy:
       matrix:
@@ -33,7 +33,7 @@ jobs:
             format: msix
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           submodules: true
@@ -131,14 +131,14 @@ jobs:
 
   test:
     name: Test
-    runs-on: windows-latest
+    runs-on: windows-2025
     strategy:
       matrix:
         architecture:
           - x64
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           submodules: true
