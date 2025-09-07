@@ -80,9 +80,9 @@
       },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Direct",
-        "requested": "[10.0.26100.4654, )",
-        "resolved": "10.0.26100.4654",
-        "contentHash": "2mgcOlj/t2RfSyyw+pVESfO+Tk1RkfQzto9Vrq42M1lUQIfQEwbi8QLha9GXWIOj+TFzeHIEJckIoF25mgiM8A=="
+        "requested": "[10.0.26100.4948, )",
+        "resolved": "10.0.26100.4948",
+        "contentHash": "o0T4CVaumDjPNNijKiM7p25vHKdyKqYvaVVLgQO02KTOoUDlgMYJVUQAXn1IG0G9/ZsdZ+bdgWxgQsrO/b37qw=="
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
@@ -108,22 +108,22 @@
       },
       "Polly": {
         "type": "Direct",
-        "requested": "[8.6.2, )",
-        "resolved": "8.6.2",
-        "contentHash": "+irkpMJQ29+o8+u/SdN+1+AP4rB4TGoKZ6gXhD04dPKG+DX2grvKJ6Z6UAK3vYkSQQcbATt+YPt+ac6/X2wVAA==",
+        "requested": "[8.6.3, )",
+        "resolved": "8.6.3",
+        "contentHash": "8X6mWAGDrgTHyqDthifiv9QGR+FgnRe13/sPhSR4ZbhXCqUDJuLrVqunB39LLbf87TXZ+06dMdopd6LpY4oK0w==",
         "dependencies": {
-          "Polly.Core": "8.6.2"
+          "Polly.Core": "8.6.3"
         }
       },
       "Polly.Extensions": {
         "type": "Direct",
-        "requested": "[8.6.2, )",
-        "resolved": "8.6.2",
-        "contentHash": "M6JVo3cA/d24YGRNct/wPDCCYGHlK15aH1czbHluNCqjobHkedLiM3w3313+Id/XGG/yF5s7lqhKTReUeLVoDw==",
+        "requested": "[8.6.3, )",
+        "resolved": "8.6.3",
+        "contentHash": "eBUOAYcByI5oqZgq8+5XoVG+l5pWq6V2Iis32QMjQGoevFImovRgpgRALmLQOcLa3NIahzjqVHo3sYC8ND1Deg==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
           "Microsoft.Extensions.Options": "8.0.0",
-          "Polly.Core": "8.6.2"
+          "Polly.Core": "8.6.3"
         }
       },
       "Sentry": {
@@ -411,8 +411,8 @@
       },
       "Polly.Core": {
         "type": "Transitive",
-        "resolved": "8.6.2",
-        "contentHash": "ImAKLH6qVDjj0vzw+QxMYxxT/NhQrHK+sZE4GT5JbIfDBOrMDbE4we3BR6SqUQCJuKdjOKf3smUjxIgOUUfNVw=="
+        "resolved": "8.6.3",
+        "contentHash": "xRlcE+1FidqIfZ7zxBT6klSblJ/7MAJq1x5yvYoLnwNhs8Xc2gp3Srf8wHG2NpFxVBqrldc3svhkMPJjSzTmzw=="
       },
       "System.Diagnostics.EventLog": {
         "type": "Transitive",
