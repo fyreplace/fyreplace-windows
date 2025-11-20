@@ -115,7 +115,7 @@ jobs:
 
       - name: Upload MSIX
         if: ${{ matrix.distribution == 'app-store' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Fyreplace.${{ matrix.architecture }}.msix
           path: Deploy\Fyreplace.msix
@@ -123,7 +123,7 @@ jobs:
 
       - name: Upload ${{ matrix.format == 'msix' && 'MSIX' || 'MSI' }}
         if: ${{ matrix.distribution == 'standalone' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Fyreplace.${{ matrix.architecture }}.standalone.${{ matrix.format }}
           path: Deploy\Fyreplace.${{ matrix.format }}
