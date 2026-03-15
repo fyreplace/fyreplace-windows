@@ -10,41 +10,13 @@ namespace Fyreplace.Views.Pages
 {
     public abstract class AccountEntryPageBase<VM> : Page where VM : AccountEntryViewModelBase
     {
-        protected abstract IDictionary<string, UIElement> ConnectedElements { get; }
-
-        protected abstract VM viewModel { get; }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            var animator = ConnectedAnimationService.GetForCurrentView();
-
-            foreach (var entry in ConnectedElements)
-            {
-                animator.GetAnimation(entry.Key)?.TryStart(entry.Value);
-            }
-        }
-
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-        {
-            var animator = ConnectedAnimationService.GetForCurrentView();
-
-            foreach (var entry in ConnectedElements)
-            {
-                animator
-                    .PrepareToAnimate(entry.Key, entry.Value)
-                    .Configuration = new DirectConnectedAnimationConfiguration();
-            }
-
-            base.OnNavigatingFrom(e);
-        }
+        protected abstract VM ViewModel { get; }
 
         protected void Accelerators_Submit(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
-            if (viewModel.CanSubmit)
+            if (ViewModel.CanSubmit)
             {
-                viewModel.SubmitAsync();
+                ViewModel.SubmitAsync();
             }
         }
     }

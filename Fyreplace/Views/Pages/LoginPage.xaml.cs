@@ -11,12 +11,7 @@ namespace Fyreplace.Views.Pages
 
     public sealed partial class LoginPage : LoginPageBase
     {
-        protected override IDictionary<string, UIElement> ConnectedElements => new Dictionary<string, UIElement>
-        {
-            ["title"] = Title,
-            ["first-field"] = Identifier
-        };
-        protected override LoginViewModel viewModel => AppBase.GetService<LoginViewModel>();
+        protected override LoginViewModel ViewModel => AppBase.GetService<LoginViewModel>();
 
         private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
 
@@ -24,7 +19,7 @@ namespace Fyreplace.Views.Pages
 
         private void Form_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!viewModel.CanSubmitFirstStep)
+            if (!ViewModel.CanSubmitFirstStep)
             {
                 Identifier.Focus(FocusState.Programmatic);
             }

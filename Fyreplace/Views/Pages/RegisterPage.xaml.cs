@@ -11,12 +11,7 @@ namespace Fyreplace.Views.Pages
 
     public sealed partial class RegisterPage : RegisterPageBase
     {
-        protected override IDictionary<string, UIElement> ConnectedElements => new Dictionary<string, UIElement>
-        {
-            ["title"] = Title,
-            ["first-field"] = Username
-        };
-        protected override RegisterViewModel viewModel => AppBase.GetService<RegisterViewModel>();
+        protected override RegisterViewModel ViewModel => AppBase.GetService<RegisterViewModel>();
 
         private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
 
@@ -24,11 +19,11 @@ namespace Fyreplace.Views.Pages
 
         private void Form_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!viewModel.IsUsernameValid)
+            if (!ViewModel.IsUsernameValid)
             {
                 Username.Focus(FocusState.Programmatic);
             }
-            else if (!viewModel.IsEmailValid)
+            else if (!ViewModel.IsEmailValid)
             {
                 Email.Focus(FocusState.Programmatic);
             }

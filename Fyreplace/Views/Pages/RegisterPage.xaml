@@ -28,8 +28,8 @@
         <ComboBox
             x:Uid="AccountEntryPageBase_Environment"
             HorizontalAlignment="Stretch"
-            ItemsSource="{x:Bind viewModel.EnvironmentNames}"
-            SelectedIndex="{x:Bind viewModel.SelectedEnvironmentIndex, Mode=TwoWay}"
+            ItemsSource="{x:Bind ViewModel.EnvironmentNames}"
+            SelectedIndex="{x:Bind ViewModel.SelectedEnvironmentIndex, Mode=TwoWay}"
             IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
         <TextBox
             x:Name="Username"
@@ -52,7 +52,7 @@
         <TextBox
             x:Name="RandomCode"
             x:Uid="AccountEntryPageBase_RandomCode"
-            Text="{x:Bind viewModel.RandomCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Text="{x:Bind ViewModel.RandomCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Visibility="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <TextBox.KeyboardAccelerators>
                 <KeyboardAccelerator Key="Enter" Invoked="Accelerators_Submit" />
@@ -60,7 +60,7 @@
         </TextBox>
         <CheckBox
             x:Uid="RegisterPage_Terms"
-            IsChecked="{x:Bind viewModel.HasAcceptedTerms, Mode=TwoWay}"
+            IsChecked="{x:Bind ViewModel.HasAcceptedTerms, Mode=TwoWay}"
             IsEnabled="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
         <Grid>
             <Grid.ColumnDefinitions>
@@ -85,21 +85,21 @@
                 x:Uid="RegisterPage_Submit"
                 HorizontalAlignment="Stretch"
                 Style="{ThemeResource AccentButtonStyle}"
-                Command="{x:Bind viewModel.SubmitCommand}" />
+                Command="{x:Bind ViewModel.SubmitCommand}" />
             <ProgressBar
                 VerticalAlignment="Top"
                 IsIndeterminate="True"
-                Visibility="{x:Bind viewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
             <TeachingTip
                 x:Uid="AccountEntryPageBase_RandomCodeTip"
                 PreferredPlacement="BottomRight"
                 IconSource="{ui:FontIconSource Glyph=&#xE715;}"
-                IsOpen="{x:Bind viewModel.IsRandomCodeTipShown, Mode=TwoWay}" />
+                IsOpen="{x:Bind ViewModel.IsRandomCodeTipShown, Mode=TwoWay}" />
         </Grid>
         <Button
             x:Uid="AccountEntryPageBase_Cancel"
             HorizontalAlignment="Stretch"
             Visibility="{x:Bind preferences.Account_IsWaitingForRandomCode, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-            Command="{x:Bind viewModel.CancelCommand}" />
+            Command="{x:Bind ViewModel.CancelCommand}" />
     </StackPanel>
 </local:RegisterPageBase>
