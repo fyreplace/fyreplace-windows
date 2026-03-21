@@ -12,6 +12,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <UseWinUI>true</UseWinUI>
+    <WindowsAppSdkBootstrapInitialize>true</WindowsAppSdkBootstrapInitialize>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
@@ -26,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="18.0.1">
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="18.3.0">
       <ExcludeAssets>build</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
