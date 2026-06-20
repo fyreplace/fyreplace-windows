@@ -11,9 +11,9 @@ namespace Fyreplace.Views.Pages
 
     public sealed partial class LoginPage : LoginPageBase
     {
-        protected override LoginViewModel ViewModel => AppBase.GetService<LoginViewModel>();
+        protected override LoginViewModel ViewModel => App.GetService<LoginViewModel>();
 
-        private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
+        private readonly IPreferences preferences = App.GetService<IPreferences>();
 
         public LoginPage() => InitializeComponent();
 

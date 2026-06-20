@@ -15,10 +15,12 @@
   <Folder Name="/Workflows/">
     <File Path=".github/workflows/publishing.yml" />
   </Folder>
+  <Project Path="Fyreplace.Core/Fyreplace.Core.csproj" />
   <Project Path="Fyreplace.Installer/Fyreplace.Installer.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0">
     <BuildDependency Project="Fyreplace/Fyreplace.csproj" />
   </Project>
   <Project Path="Fyreplace.Tests/Fyreplace.Tests.csproj">
+    <BuildDependency Project="Fyreplace.Core/Fyreplace.Core.csproj" />
     <BuildDependency Project="Fyreplace/Fyreplace.csproj" />
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
@@ -26,6 +28,7 @@
     <Deploy />
   </Project>
   <Project Path="Fyreplace/Fyreplace.csproj">
+    <BuildDependency Project="Fyreplace.Core/Fyreplace.Core.csproj" />
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="*|x86" Project="x86" />

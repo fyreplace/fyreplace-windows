@@ -14,7 +14,7 @@
   <Properties>
     <DisplayName>Name</DisplayName>
     <PublisherDisplayName>Publisher</PublisherDisplayName>
-    <Logo>Assets\Current\StoreLogo.png</Logo>
+    <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   
   <Dependencies>
@@ -35,18 +35,18 @@
         DisplayName="Name"
         Description="Description"
         BackgroundColor="transparent"
-        Square150x150Logo="Assets\Current\Square150x150Logo.png"
-        Square44x44Logo="Assets\Current\Square44x44Logo.png">
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile
-          Wide310x150Logo="Assets\Current\Wide310x150Logo.png"
-          Square71x71Logo="Assets\Current\SmallTile.png"
-          Square310x310Logo="Assets\Current\LargeTile.png" />
-        <uap:SplashScreen Image="Assets\Current\SplashScreen.png" />
+          Wide310x150Logo="Assets\Wide310x150Logo.png"
+          Square71x71Logo="Assets\SmallTile.png"
+          Square310x310Logo="Assets\LargeTile.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
           <uap:Protocol Name="fyreplace">
-            <uap:Logo>Assets\Current\Icon.png</uap:Logo>
+            <uap:Logo>Assets\Icon.png</uap:Logo>
             <uap:DisplayName>Fyreplace</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>

@@ -1,8 +1,10 @@
-﻿using Windows.Storage;
+﻿using Fyreplace.Config;
+using Fyreplace.Events;
+using Windows.Storage;
 
 namespace Fyreplace.Data.Preferences
 {
-    public sealed partial class LocalSettingsPreferences : PreferencesBase<string>
+    public sealed partial class LocalSettingsPreferences(BuildInfo buildInfo, IEventBus eventBus) : PreferencesBase<string>(buildInfo, eventBus)
     {
         private readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 

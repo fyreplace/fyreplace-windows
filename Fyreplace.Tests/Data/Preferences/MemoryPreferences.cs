@@ -1,9 +1,11 @@
-﻿using Fyreplace.Data.Preferences;
+﻿using Fyreplace.Config;
+using Fyreplace.Data.Preferences;
+using Fyreplace.Events;
 using System.Collections.Generic;
 
 namespace Fyreplace.Tests.Data.Preferences
 {
-    public sealed class MemoryPreferences : PreferencesBase<string>
+    public sealed class MemoryPreferences(BuildInfo buildInfo, IEventBus eventBus) : PreferencesBase<string>(buildInfo, eventBus)
     {
         private readonly Dictionary<string, object> preferences = [];
 

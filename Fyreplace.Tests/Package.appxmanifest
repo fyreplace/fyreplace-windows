@@ -14,7 +14,7 @@
   <Properties>
     <DisplayName>Fyreplace.Tests</DisplayName>
     <PublisherDisplayName>Fyreplace</PublisherDisplayName>
-    <Logo>Assets\Debug\StoreLogo.png</Logo>
+    <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -35,10 +35,13 @@
         DisplayName="Fyreplace.Tests"
         Description="Fyreplace.Tests"
         BackgroundColor="transparent"
-        Square150x150Logo="Assets\Debug\Square150x150Logo.png"
-        Square44x44Logo="Assets\Debug\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Assets\Debug\Wide310x150Logo.png" />
-        <uap:SplashScreen Image="Assets\Debug\SplashScreen.png" />
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile
+          Wide310x150Logo="Assets\Wide310x150Logo.png"
+          Square71x71Logo="Assets\SmallTile.png"
+          Square310x310Logo="Assets\LargeTile.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>

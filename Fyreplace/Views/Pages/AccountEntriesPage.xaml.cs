@@ -6,7 +6,7 @@ namespace Fyreplace.Views.Pages
 {
     public sealed partial class AccountEntriesPage : Page
     {
-        private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
+        private readonly IPreferences preferences = App.GetService<IPreferences>();
 
         public AccountEntriesPage()
         {

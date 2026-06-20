@@ -15,7 +15,7 @@ namespace Fyreplace.Tests.ViewModels
         public async Task ViewModelRetrievesCurrentUser()
         {
             var secrets = GetSecrets();
-            var viewModel = new AccountViewModel();
+            var viewModel = UnitTestApp.GetService<AccountViewModel>();
             secrets.Token = FakeApiClient.token;
             await Task.Delay(100);
             Assert.IsNotNull(viewModel.CurrentUser);
@@ -26,7 +26,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var secrets = GetSecrets();
-            var viewModel = new AccountViewModel();
+            var viewModel = UnitTestApp.GetService<AccountViewModel>();
             secrets.Token = FakeApiClient.token;
             await viewModel.UpdateAvatarAsync(FakeApiClient.LargeImageStream);
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -38,7 +38,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var secrets = GetSecrets();
-            var viewModel = new AccountViewModel();
+            var viewModel = UnitTestApp.GetService<AccountViewModel>();
             secrets.Token = FakeApiClient.token;
             await viewModel.UpdateAvatarAsync(FakeApiClient.NotImageStream);
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -50,7 +50,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var secrets = GetSecrets();
-            var viewModel = new AccountViewModel();
+            var viewModel = UnitTestApp.GetService<AccountViewModel>();
             secrets.Token = FakeApiClient.token;
             await viewModel.UpdateAvatarAsync(FakeApiClient.NormalImageStream);
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
@@ -62,7 +62,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var secrets = GetSecrets();
-            var viewModel = new AccountViewModel();
+            var viewModel = UnitTestApp.GetService<AccountViewModel>();
             secrets.Token = FakeApiClient.token;
             await viewModel.UpdateAvatarAsync(FakeApiClient.NormalImageStream);
             await viewModel.RemoveAvatarAsync();
@@ -75,7 +75,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var secrets = GetSecrets();
-            var viewModel = new AccountViewModel();
+            var viewModel = UnitTestApp.GetService<AccountViewModel>();
             secrets.Token = FakeApiClient.token;
             await viewModel.UpdateBioAsync("Hello");
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));

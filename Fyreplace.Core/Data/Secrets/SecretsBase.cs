@@ -4,10 +4,13 @@ namespace Fyreplace.Data.Secrets
 {
     public abstract class SecretsBase<K> : DataStoreBase<K>, ISecrets
     {
-        private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
-        private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
+        private readonly IPreferences preferences;
 
-        public SecretsBase() => PropertyChanged += (sender, args) => eventBus.PublishAsync(new SecretChangedEvent(args.PropertyName!));
+        public SecretsBase(IPreferences preferences, IEventBus eventBus)
+        {
+            this.preferences = preferences;
+            PropertyChanged += (sender, args) => eventBus.PublishAsync(new SecretChangedEvent(args.PropertyName!));
+        }
 
         public string Token
         {

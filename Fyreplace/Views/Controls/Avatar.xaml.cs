@@ -25,7 +25,7 @@ namespace Fyreplace.Views.Controls
             set { viewModel.Command = value; }
         }
 
-        private readonly AvatarViewModel viewModel = AppBase.GetService<AvatarViewModel>();
+        private readonly AvatarViewModel viewModel = App.GetService<AvatarViewModel>();
 
         public Avatar() => InitializeComponent();
     }

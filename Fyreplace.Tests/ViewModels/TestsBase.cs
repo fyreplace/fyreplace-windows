@@ -19,8 +19,8 @@ namespace Fyreplace.Tests.ViewModels
             return Task.CompletedTask;
         }
 
-        protected static StoringEventBus GetEventBus() => (StoringEventBus)AppBase.GetService<IEventBus>();
-        protected static MemoryPreferences GetPreferences() => (MemoryPreferences)AppBase.GetService<IPreferences>();
-        protected static MemorySecrets GetSecrets() => (MemorySecrets)AppBase.GetService<ISecrets>();
+        protected static StoringEventBus GetEventBus() => (StoringEventBus)UnitTestApp.GetService<IEventBus>();
+        protected static MemoryPreferences GetPreferences() => (MemoryPreferences)UnitTestApp.GetService<IPreferences>();
+        protected static MemorySecrets GetSecrets() => (MemorySecrets)UnitTestApp.GetService<ISecrets>();
     }
 }

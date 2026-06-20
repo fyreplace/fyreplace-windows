@@ -1,13 +1,18 @@
-﻿using Fyreplace.Events;
+﻿using Fyreplace.Config;
+using Fyreplace.Events;
 using System;
 
 namespace Fyreplace.Data.Preferences
 {
     public abstract class PreferencesBase<K> : DataStoreBase<K>, IPreferences
     {
-        private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
+        private readonly BuildInfo buildInfo;
 
-        public PreferencesBase() => PropertyChanged += (sender, args) => eventBus.PublishAsync(new PreferenceChangedEvent(args.PropertyName!));
+        public PreferencesBase(BuildInfo buildInfo, IEventBus eventBus)
+        {
+            this.buildInfo = buildInfo;
+            PropertyChanged += (sender, args) => eventBus.PublishAsync(new PreferenceChangedEvent(args.PropertyName!));
+        }
 
         public abstract string Read(K key, string defaultValue);
 
@@ -29,14 +34,12 @@ namespace Fyreplace.Data.Preferences
             {
                 try
                 {
-                    return (Environment)Enum.Parse(
-                        typeof(Environment),
-                        Read(MakeKey(), defaultValue: EnvironmentExtensions.Default.ToString())
-                    );
+                    return Enum.Parse<Environment>(Read(MakeKey(), defaultValue: EnvironmentExtensions.Default(buildInfo).ToString())
+);
                 }
                 catch
                 {
-                    return EnvironmentExtensions.Default;
+                    return EnvironmentExtensions.Default(buildInfo);
                 }
             }
 

@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Fyreplace.Data;
 using Fyreplace.Services;
 using Microsoft.UI.Xaml;
 using Fyreplace.Extensions;
@@ -28,7 +29,8 @@ namespace Fyreplace.ViewModels
         public bool IsTintApplied => User != null;
         public SolidColorBrush Tint => new(User?.Tint.ToWindowsColor() ?? Colors.Transparent);
 
-        public AvatarViewModel()
+        public AvatarViewModel(IPreferences preferences, ISecrets secrets, IEventBus eventBus, IApiClient api)
+            : base(preferences, secrets, eventBus, api)
         {
             eventBus.Subscribe<ModelChangedEvent>(OnModelChangedEventAsync);
         }

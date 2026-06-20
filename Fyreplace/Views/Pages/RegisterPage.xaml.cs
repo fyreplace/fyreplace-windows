@@ -11,9 +11,9 @@ namespace Fyreplace.Views.Pages
 
     public sealed partial class RegisterPage : RegisterPageBase
     {
-        protected override RegisterViewModel ViewModel => AppBase.GetService<RegisterViewModel>();
+        protected override RegisterViewModel ViewModel => App.GetService<RegisterViewModel>();
 
-        private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
+        private readonly IPreferences preferences = App.GetService<IPreferences>();
 
         public RegisterPage() => InitializeComponent();
 

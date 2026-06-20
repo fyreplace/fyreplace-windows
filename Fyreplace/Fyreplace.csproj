@@ -3,7 +3,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <WindowsSdkPackageVersion>10.0.26100.81</WindowsSdkPackageVersion>
     <RootNamespace>Fyreplace</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AppxManifest>Package.appxmanifest</AppxManifest>
@@ -13,11 +12,11 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <UseWinUI>true</UseWinUI>
+    <WinUISDKReferences>false</WinUISDKReferences>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-    <LangVersion>preview</LangVersion>
-    <ApplicationIcon>Assets\Current\Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\$(Configuration)\Icon.ico</ApplicationIcon>
     <DefaultLanguage>en</DefaultLanguage>
     <PackageLicenseFile>COPYING.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -35,23 +34,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.260224002" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="NSwag.MSBuild" Version="14.6.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Polly" Version="8.6.6" />
     <PackageReference Include="Polly.Extensions" Version="8.6.6" />
-    <PackageReference Include="Sentry" Version="6.2.0" />
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fyreplace.Core\Fyreplace.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -96,9 +91,11 @@
     <None Remove="Views\Pages\RegisterPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
   </ItemGroup>
-
   <ItemGroup>
-    <Content Remove="Assets\.gitignore" />
+    <Content Include="Assets\$(Configuration)\*">
+      <Link>Assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\COPYING.txt">
@@ -223,13 +220,6 @@
     <DisplayName Condition="'$(Configuration)' == 'Release'">$(PackageName)</DisplayName>
   </PropertyGroup>
 
-  <Target Name="CopyAssets" BeforeTargets="PrepareForBuild">
-    <ItemGroup>
-      <AssetFiles Include="Assets\$(Configuration)\*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(AssetFiles)" DestinationFolder="Assets\Current\%(RecursiveDir)" SkipUnchangedFiles="true" />
-  </Target>
-
   <Target Name="UpdateAppManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionString;GetVersionNumber">
     <Copy SourceFiles="app.template.manifest" DestinationFiles="app.manifest" />
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='urn:schemas-microsoft-com:asm.v1' /&gt;" XmlInputPath="app.manifest" Query="/ns:assembly/ns:assemblyIdentity/@version" Value="$(VersionString).$(VersionNumber)" />
@@ -246,9 +236,5 @@
     <XmlPoke Condition="$(PackagePublisherName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Properties/ns:PublisherDisplayName" Value="$(PackagePublisherName)" />
     
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Version" Value="1.$(VersionNumber).$(BranchNumber).0" />
-  </Target>
-
-  <Target Name="NSwag" BeforeTargets="PrepareForBuild">
-    <Exec Command="$(NSwagExe) openapi2csclient /Input:Services\openapi.yaml /Output:Services\ApiClient.g.cs /GenerateClientInterfaces:true /Namespace:Fyreplace.Services /ClassName:ApiClient" />
   </Target>
 </Project>

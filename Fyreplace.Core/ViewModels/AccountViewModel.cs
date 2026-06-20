@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.Services;
-using Fyreplace.Views;
-using Microsoft.Windows.ApplicationModel.Resources;
 using Sentry;
 using System.IO;
 using System.Net;
@@ -34,27 +32,34 @@ namespace Fyreplace.ViewModels
         [NotifyCanExecuteChangedFor(nameof(RemoveAvatarCommand))]
         public partial bool IsLoadingAvatar { get; set; }
 
-        public string Username => CurrentUser?.Username ?? resources.GetString("Account_Username_Placeholder");
+        public string Username => CurrentUser?.Username ?? stringsService.GetString("Account_Username_Placeholder");
         public string DateJoined => CurrentUser != null
-            ? string.Format(resources.GetString("Account_DateJoined"), CurrentUser.DateCreated.ToString("f"))
-            : resources.GetString("Account_DateJoined_Placeholder");
+            ? string.Format(stringsService.GetString("Account_DateJoined"), CurrentUser.DateCreated.ToString("f"))
+            : stringsService.GetString("Account_DateJoined_Placeholder");
         public string Bio => !string.IsNullOrEmpty(CurrentUser?.Bio)
             ? CurrentUser?.Bio ?? string.Empty
-            : resources.GetString("Account_Bio_Placeholder");
+            : stringsService.GetString("Account_Bio_Placeholder");
         public bool HasCurrentUser => CurrentUser != null;
         public bool CanUpdateAvatar => HasCurrentUser && !IsLoadingAvatar;
         public bool CanRemoveAvatar => !string.IsNullOrEmpty(CurrentUser?.Avatar) && !IsLoadingAvatar;
 
-        private readonly ResourceLoader resources = new();
+        private readonly IStringsService stringsService;
+        private readonly IImageFileService imageFileService;
 
-        public AccountViewModel() => eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
+        public AccountViewModel(IPreferences preferences, ISecrets secrets, IEventBus eventBus, IStringsService stringsService, IApiClient api, IImageFileService imageFileService)
+            : base(preferences, secrets, eventBus, api)
+        {
+            this.stringsService = stringsService;
+            this.imageFileService = imageFileService;
+            eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);
+        }
 
         [RelayCommand(CanExecute = nameof(CanUpdateAvatar))]
         public async Task UpdateAvatarAsync(Stream? stream)
         {
             if (stream == null)
             {
-                var file = await AppBase.GetService<MainWindow>().PickImageFileAsync();
+                var file = await imageFileService.PickImageFileAsync();
 
                 if (file != null)
                 {

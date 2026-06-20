@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Fyreplace.ViewModels
 {
-    public abstract partial class ViewModelBase : ObservableObject
+    public abstract partial class ViewModelBase(IPreferences preferences, ISecrets secrets, IEventBus eventBus, IApiClient api) : ObservableObject
     {
-        protected readonly IPreferences preferences = AppBase.GetService<IPreferences>();
-        protected readonly ISecrets secrets = AppBase.GetService<ISecrets>();
-        protected readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
-        protected readonly IApiClient api = AppBase.GetService<IApiClient>();
+        protected readonly IPreferences preferences = preferences;
+        protected readonly ISecrets secrets = secrets;
+        protected readonly IEventBus eventBus = eventBus;
+        protected readonly IApiClient api = api;
 
         protected async Task<T?> CallAsync<T>(Func<Task<T>> action, Func<HttpStatusCode, ViolationReport?, ExplainedFailure?, FailureEvent?>? onFailure = null)
         {

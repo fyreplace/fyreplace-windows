@@ -21,12 +21,12 @@ namespace Fyreplace.Views.Pages
     {
         public AppWindow? AppWindow { get; set; }
 
-        public string AppName => AppBase.GetService<BuildInfo>().App.Name;
+        public string AppName => App.GetService<BuildInfo>().App.Name;
 
         private NavigationViewItemBase? currentInvokedItem;
-        private readonly ISecrets secrets = AppBase.GetService<ISecrets>();
-        private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
-        private readonly AccountViewModel accountViewModel = AppBase.GetService<AccountViewModel>();
+        private readonly ISecrets secrets = App.GetService<ISecrets>();
+        private readonly IEventBus eventBus = App.GetService<IEventBus>();
+        private readonly AccountViewModel accountViewModel = App.GetService<AccountViewModel>();
 
         public MainPage()
         {

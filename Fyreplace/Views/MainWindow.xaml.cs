@@ -1,5 +1,6 @@
 using Fyreplace.Config;
 using Fyreplace.Events;
+using Fyreplace.Services;
 using Fyreplace.ViewModels;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -14,20 +15,21 @@ using WinRT.Interop;
 
 namespace Fyreplace.Views
 {
-    public sealed partial class MainWindow : Window
+    public sealed partial class MainWindow : Window, IImageFileService
     {
-        private readonly IEventBus EventBus = AppBase.GetService<IEventBus>();
-        private readonly MainWindowViewModel viewModel = AppBase.GetService<MainWindowViewModel>();
+        private readonly IEventBus eventBus = App.GetService<IEventBus>();
+        private readonly IStringsService stringsService = App.GetService<IStringsService>();
+        private readonly MainWindowViewModel viewModel = App.GetService<MainWindowViewModel>();
 
         public MainWindow()
         {
             InitializeComponent();
-            Title = AppBase.GetService<BuildInfo>().App.Name;
+            Title = App.GetService<BuildInfo>().App.Name;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
-            AppWindow.SetTitleBarIcon(@"Assets\Current\Icon.ico");
+            AppWindow.SetTitleBarIcon(@"Assets\Icon.ico");
             SetTitleBar(MainPage.GetTitleBar());
-            EventBus.Subscribe<FailureEvent>(OnFailureEventAsync);
+            eventBus.Subscribe<FailureEvent>(OnFailureEventAsync);
         }
 
         public void Show() => SwitchToThisWindow(WindowNative.GetWindowHandle(this), false);
@@ -50,14 +52,13 @@ namespace Fyreplace.Views
 
         private async Task OnFailureEventAsync(FailureEvent e)
         {
-            var resourceLoader = new ResourceLoader();
             var dialog = new ContentDialog
             {
                 XamlRoot = MainPage.XamlRoot,
-                Title = resourceLoader.GetString(e.Title),
-                CloseButtonText = resourceLoader.GetString("Ok"),
+                Title = stringsService.GetString(e.Title),
+                CloseButtonText = stringsService.GetString("Ok"),
                 DefaultButton = ContentDialogButton.Close,
-                Content = resourceLoader.GetString(e.Message)
+                Content = stringsService.GetString(e.Message)
             };
             await dialog.ShowAsync();
         }

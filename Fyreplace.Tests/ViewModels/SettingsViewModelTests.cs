@@ -15,7 +15,7 @@ namespace Fyreplace.Tests.ViewModels
         public async Task LoadingEmailsProducesNoFailures()
         {
             var eventBus = GetEventBus();
-            var viewModel = new SettingsViewModel();
+            var viewModel = UnitTestApp.GetService<SettingsViewModel>();
             await viewModel.LoadEmailsAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(3, viewModel.Emails.Count);
@@ -25,10 +25,8 @@ namespace Fyreplace.Tests.ViewModels
         public async Task InvalidEmailProducesFailure()
         {
             var eventBus = GetEventBus();
-            var viewModel = new SettingsViewModel
-            {
-                NewEmail = FakeApiClient.badEmail
-            };
+            var viewModel = UnitTestApp.GetService<SettingsViewModel>();
+            viewModel.NewEmail = FakeApiClient.badEmail;
             await viewModel.AddEmailAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(0, viewModel.Emails.Count);
@@ -38,10 +36,8 @@ namespace Fyreplace.Tests.ViewModels
         public async Task ValidEmailProducesNoFailures()
         {
             var eventBus = GetEventBus();
-            var viewModel = new SettingsViewModel
-            {
-                NewEmail = FakeApiClient.goodEmail
-            };
+            var viewModel = UnitTestApp.GetService<SettingsViewModel>();
+            viewModel.NewEmail = FakeApiClient.goodEmail;
             await viewModel.AddEmailAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
             Assert.AreEqual(1, viewModel.Emails.Count);

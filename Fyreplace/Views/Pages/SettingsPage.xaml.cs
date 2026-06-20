@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.Input;
 using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Events;
+using Fyreplace.Services;
 using Fyreplace.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -18,11 +19,12 @@ namespace Fyreplace.Views.Pages
 {
     public sealed partial class SettingsPage : Page
     {
-        private readonly string appVersion = AppBase.GetService<BuildInfo>().Version.Main;
-        private readonly IEventBus eventBus = AppBase.GetService<IEventBus>();
-        private readonly ISecrets secrets = AppBase.GetService<ISecrets>();
-        private readonly AccountViewModel accountViewModel = AppBase.GetService<AccountViewModel>();
-        private readonly SettingsViewModel viewModel = AppBase.GetService<SettingsViewModel>();
+        private readonly string appVersion = App.GetService<BuildInfo>().Version.Main;
+        private readonly IEventBus eventBus = App.GetService<IEventBus>();
+        private readonly ISecrets secrets = App.GetService<ISecrets>();
+        private readonly IStringsService stringsService = App.GetService<IStringsService>();
+        private readonly AccountViewModel accountViewModel = App.GetService<AccountViewModel>();
+        private readonly SettingsViewModel viewModel = App.GetService<SettingsViewModel>();
 
         public SettingsPage()
         {
@@ -33,7 +35,6 @@ namespace Fyreplace.Views.Pages
         [RelayCommand]
         private async Task EditBioAsync()
         {
-            var resources = new ResourceLoader();
             var textBox = new TextBox
             {
                 MaxHeight = 200,
@@ -45,10 +46,10 @@ namespace Fyreplace.Views.Pages
             var dialog = new ContentDialog
             {
                 XamlRoot = Content.XamlRoot,
-                Title = resources.GetString("SettingsPage_Profile_Bio_Dialog/Title"),
+                Title = stringsService.GetString("SettingsPage_Profile_Bio_Dialog/Title"),
                 Content = textBox,
-                PrimaryButtonText = resources.GetString("Ok"),
-                CloseButtonText = resources.GetString("Cancel"),
+                PrimaryButtonText = stringsService.GetString("Ok"),
+                CloseButtonText = stringsService.GetString("Cancel"),
                 DefaultButton = ContentDialogButton.Primary
             };
 
@@ -62,10 +63,9 @@ namespace Fyreplace.Views.Pages
 
         private void Profile_DragOver(object sender, DragEventArgs e)
         {
-            var resources = new ResourceLoader();
             e.AcceptedOperation = DataPackageOperation.Copy;
             e.DragUIOverride.IsGlyphVisible = false;
-            e.DragUIOverride.Caption = resources.GetString("SettingsPage_Profile_Drag");
+            e.DragUIOverride.Caption = stringsService.GetString("SettingsPage_Profile_Drag");
         }
 
         private async void Profile_Drop(object sender, DragEventArgs e)

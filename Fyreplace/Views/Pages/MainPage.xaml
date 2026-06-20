@@ -40,7 +40,7 @@
             x:Name="TitleBar"
             Margin="48,0,0,0"
             VerticalAlignment="Top"
-            IconSource="{ui:BitmapIconSource Source=ms-appx:///Assets/Current/Icon.ico}"
+            IconSource="{ui:BitmapIconSource Source=ms-appx:///Assets/Icon.ico}"
             Title="{x:Bind AppName}">
             <TitleBar.RightHeader>
                 <Grid x:Name="AvatarWrapper">

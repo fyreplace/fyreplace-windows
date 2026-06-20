@@ -14,7 +14,7 @@ namespace Fyreplace.Tests.ViewModels
         public void IdentifierMustHaveCorrectLength()
         {
             var preferences = GetPreferences();
-            var viewModel = new LoginViewModel();
+            var viewModel = UnitTestApp.GetService<LoginViewModel>();
 
             for (int i = 3; i <= 254; i++)
             {
@@ -37,7 +37,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
-            var viewModel = new LoginViewModel();
+            var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.badUsername;
             await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -49,7 +49,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
-            var viewModel = new LoginViewModel();
+            var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.goodUsername;
             await viewModel.SubmitAsync();
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
@@ -61,7 +61,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
-            var viewModel = new LoginViewModel();
+            var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.passwordUsername;
             await viewModel.SubmitAsync();
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -72,7 +72,7 @@ namespace Fyreplace.Tests.ViewModels
         public void RandomCodeMustHaveCorrectLength()
         {
             var preferences = GetPreferences();
-            var viewModel = new LoginViewModel();
+            var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = "abcd123";
             Assert.IsFalse(viewModel.CanSubmit);
@@ -85,7 +85,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
-            var viewModel = new LoginViewModel();
+            var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.goodUsername;
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = FakeApiClient.badSecret;
@@ -98,7 +98,7 @@ namespace Fyreplace.Tests.ViewModels
         {
             var eventBus = GetEventBus();
             var preferences = GetPreferences();
-            var viewModel = new LoginViewModel();
+            var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.goodUsername;
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = FakeApiClient.goodSecret;

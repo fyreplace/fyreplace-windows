@@ -1,3 +1,4 @@
+using Fyreplace.Services;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.ApplicationModel.Resources;
 using System.Collections.Generic;
@@ -15,26 +16,26 @@ namespace Fyreplace.Views.Controls
 
         public bool Alt { get; set; } = false;
 
+        private readonly IStringsService stringsService = App.GetService<IStringsService>();
         private IEnumerable<KeyboardKey> KeyboardKeys
         {
             get
             {
                 IList<string> keys = [];
-                var resourceLoader = new ResourceLoader();
 
                 if (Ctrl)
                 {
-                    keys.Add(resourceLoader.GetString("KeyboardShortcut_Ctrl"));
+                    keys.Add(stringsService.GetString("KeyboardShortcut_Ctrl"));
                 }
 
                 if (Shift)
                 {
-                    keys.Add(resourceLoader.GetString("KeyboardShortcut_Shift"));
+                    keys.Add(stringsService.GetString("KeyboardShortcut_Shift"));
                 }
 
                 if (Alt)
                 {
-                    keys.Add(resourceLoader.GetString("KeyboardShortcut_Alt"));
+                    keys.Add(stringsService.GetString("KeyboardShortcut_Alt"));
                 }
 
                 keys.Add(Key);

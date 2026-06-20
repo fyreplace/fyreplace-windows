@@ -26,7 +26,8 @@ namespace Fyreplace.ViewModels
 
         private readonly PagingCollection<Email> emails;
 
-        public SettingsViewModel()
+        public SettingsViewModel(IPreferences preferences, ISecrets secrets, IEventBus eventBus, IApiClient api)
+            : base(preferences, secrets, eventBus, api)
         {
             emails = new(api.ListEmailsAsync);
             eventBus.Subscribe<SecretChangedEvent>(OnSecretChangedAsync);

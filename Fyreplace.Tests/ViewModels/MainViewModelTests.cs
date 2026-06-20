@@ -14,7 +14,7 @@ namespace Fyreplace.Tests.ViewModels
         public async Task InvalidRandomCodeProducesFailure()
         {
             var eventBus = GetEventBus();
-            var viewModel = new MainWindowViewModel();
+            var viewModel = UnitTestApp.GetService<MainWindowViewModel>();
             var email = FakeApiClient.MakeEmail(verified: false);
             await viewModel.CompleteEmailVerificationAsync(email.Email1, FakeApiClient.badSecret);
             Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
@@ -25,7 +25,7 @@ namespace Fyreplace.Tests.ViewModels
         public async Task ValidRandomCodeProducesNoFailures()
         {
             var eventBus = GetEventBus();
-            var viewModel = new MainWindowViewModel();
+            var viewModel = UnitTestApp.GetService<MainWindowViewModel>();
             var email = FakeApiClient.MakeEmail(verified: false);
             await viewModel.CompleteEmailVerificationAsync(email.Email1, FakeApiClient.goodSecret);
             Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.Services;
@@ -32,7 +33,7 @@ namespace Fyreplace.ViewModels
             }
         }
 
-        public IEnumerable<string> EnvironmentNames => environments.Select(e => e.Description());
+        public IEnumerable<string> EnvironmentNames => from e in environments select e.Description(buildInfo, stringsService);
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
@@ -46,10 +47,17 @@ namespace Fyreplace.ViewModels
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
         public partial string RandomCode { get; set; } = string.Empty;
 
-        protected static IApiClient Api => AppBase.GetService<IApiClient>();
+        private readonly BuildInfo buildInfo;
+        private readonly IStringsService stringsService;
         private static readonly Environment[] environments = Enum.GetValues<Environment>();
 
-        public AccountEntryViewModelBase() => eventBus.Subscribe<PreferenceChangedEvent>(OnPreferenceChangedAsync);
+        public AccountEntryViewModelBase(BuildInfo buildInfo, IPreferences preferences, ISecrets secrets, IEventBus eventBus, IStringsService stringsService, IApiClient api)
+            : base(preferences, secrets, eventBus, api)
+        {
+            this.buildInfo = buildInfo;
+            this.stringsService = stringsService;
+            eventBus.Subscribe<PreferenceChangedEvent>(OnPreferenceChangedAsync);
+        }
 
         protected abstract Task CreateTokenAsync();
 

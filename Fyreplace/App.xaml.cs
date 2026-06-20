@@ -8,7 +8,9 @@ using Fyreplace.Services;
 using Fyreplace.ViewModels;
 using Fyreplace.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
 using Microsoft.Windows.AppLifecycle;
 using Polly;
@@ -26,11 +28,14 @@ using UnhandledExceptionEventArgs = Microsoft.UI.Xaml.UnhandledExceptionEventArg
 
 namespace Fyreplace
 {
-    public partial class App : AppBase
+    public partial class App : Application
     {
+        private readonly IHost host;
+
         public App()
         {
-            var info = GetService<BuildInfo>();
+            host = Host.CreateDefaultBuilder().ConfigureServices(ConfigureServices).Build();
+            var info = host.Services.GetRequiredService<BuildInfo>();
 
             if (!info.App.SelfContained && DeploymentManager.GetStatus().Status != DeploymentStatus.Ok)
             {
@@ -63,6 +68,7 @@ namespace Fyreplace
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
+            host.Start();
             var instances = AppInstance.GetInstances();
             var currentInstance = AppInstance.GetCurrent();
             var isSingleInstance = instances.Count == 1;
@@ -76,8 +82,8 @@ namespace Fyreplace
                     _ = HandleActivatedArgs(protocolActivatedArgs);
                 }
 
-                GetService<MainWindow>().Activate();
                 currentInstance.Activated += AppInstance_Activated;
+                host.Services.GetRequiredService<MainWindow>().Activate();
             }
             else
             {
@@ -87,28 +93,6 @@ namespace Fyreplace
                 }
 
                 Exit();
-            }
-        }
-
-        protected override void ConfigureServices(IServiceCollection services)
-        {
-            base.ConfigureServices(services);
-            services.AddHostedService<TokenRefreshService>();
-            services.AddSingleton<MainWindow>();
-            services.AddSingleton<ISecrets, PasswordVaultSecrets>();
-            services.AddSingleton<IEventBus, EventBus>();
-            services.AddResiliencePipeline(typeof(RequestHeadersHandler), MakeResiliencePipeline);
-            services.AddTransient(MakeApiClient);
-
-            var info = services.BuildServiceProvider().GetRequiredService<BuildInfo>();
-
-            if (info.App.SelfContained)
-            {
-                services.AddSingleton<IPreferences, RegistryPreferences>();
-            }
-            else
-            {
-                services.AddSingleton<IPreferences, LocalSettingsPreferences>();
             }
         }
 
@@ -126,6 +110,37 @@ namespace Fyreplace
             exception.Data[Mechanism.MechanismKey] = "Application.UnhandledException";
             SentrySdk.CaptureException(exception);
             SentrySdk.FlushAsync(TimeSpan.FromSeconds(3)).GetAwaiter().GetResult();
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            services.AddResiliencePipeline(typeof(RequestHeadersHandler), MakeResiliencePipeline);
+            services.AddHostedService<TokenRefreshService>();
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<BuildInfo>();
+            services.AddSingleton<ISecrets, PasswordVaultSecrets>();
+            services.AddSingleton<IEventBus, EventBus>();
+            services.AddSingleton<IStringsService, StringsService>();
+            services.AddSingleton<IImageFileService, DelegatingImageFileService>();
+            services.AddTransient(MakeApiClient);
+
+            services.AddSingleton<MainWindowViewModel>();
+            services.AddSingleton<LoginViewModel>();
+            services.AddSingleton<RegisterViewModel>();
+            services.AddSingleton<AccountViewModel>();
+            services.AddTransient<SettingsViewModel>();
+            services.AddTransient<AvatarViewModel>();
+
+            var info = services.BuildServiceProvider().GetRequiredService<BuildInfo>();
+
+            if (info.App.SelfContained)
+            {
+                services.AddSingleton<IPreferences, RegistryPreferences>();
+            }
+            else
+            {
+                services.AddSingleton<IPreferences, LocalSettingsPreferences>();
+            }
         }
 
         private void MakeResiliencePipeline(ResiliencePipelineBuilder builder) => builder
@@ -152,7 +167,7 @@ namespace Fyreplace
 
             if (protocolActivatedArgs != null)
             {
-                var window = GetService<MainWindow>();
+                var window = host.Services.GetRequiredService<MainWindow>();
                 window.DispatcherQueue.EnqueueAsync(
                     async () =>
                     {
@@ -164,7 +179,7 @@ namespace Fyreplace
             }
         }
 
-        private static async Task HandleActivatedArgs(ProtocolActivatedEventArgs protocolActivatedArgs)
+        private async Task HandleActivatedArgs(ProtocolActivatedEventArgs protocolActivatedArgs)
         {
             switch (protocolActivatedArgs.Uri.AbsolutePath)
             {
@@ -179,13 +194,15 @@ namespace Fyreplace
             }
         }
 
-        private static Task CompleteUserConnectionAsync(ProtocolActivatedEventArgs protocolActivatedArgs) => GetService<MainWindowViewModel>().CompleteUserConnectionAsync(protocolActivatedArgs.Uri.Fragment.Replace("#", string.Empty));
+        private Task CompleteUserConnectionAsync(ProtocolActivatedEventArgs protocolActivatedArgs) => host.Services.GetRequiredService<MainWindowViewModel>().CompleteUserConnectionAsync(protocolActivatedArgs.Uri.Fragment.Replace("#", string.Empty));
 
-        private static Task CompleteEmailVerificationAsync(ProtocolActivatedEventArgs protocolActivatedArgs)
+        private Task CompleteEmailVerificationAsync(ProtocolActivatedEventArgs protocolActivatedArgs)
         {
             var fragmentParts = protocolActivatedArgs.Uri.Fragment.Replace("#", string.Empty).Split(":");
-            return GetService<MainWindowViewModel>().CompleteEmailVerificationAsync(fragmentParts[0], fragmentParts[1]);
+            return host.Services.GetRequiredService<MainWindowViewModel>().CompleteEmailVerificationAsync(fragmentParts[0], fragmentParts[1]);
         }
+
+        public static T GetService<T>() where T : notnull => ((App)Current).host.Services.GetRequiredService<T>();
     }
 
     partial class RequestHeadersHandler(ISecrets secrets, ResiliencePipeline resilience) : DelegatingHandler(new SentryHttpMessageHandler())

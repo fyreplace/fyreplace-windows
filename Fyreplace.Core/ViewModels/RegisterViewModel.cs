@@ -1,17 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Events;
+using Fyreplace.Services;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace Fyreplace.ViewModels
 {
-    public sealed partial class RegisterViewModel : AccountEntryViewModelBase
+    public sealed partial class RegisterViewModel(BuildInfo buildInfo, IPreferences preferences, ISecrets secrets, IEventBus eventBus, IStringsService stringsService, IApiClient api)
+        : AccountEntryViewModelBase(buildInfo, preferences, secrets, eventBus, stringsService, api)
     {
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
-        public partial bool HasAcceptedTerms { get; set; }
+        public partial bool HasAcceptedTerms { get; set; } = preferences.Account_IsWaitingForRandomCode;
 
         public override bool CanSubmitFirstStep => IsUsernameValid && IsEmailValid && HasAcceptedTerms;
 
@@ -22,8 +25,6 @@ namespace Fyreplace.ViewModels
         public bool IsEmailValid => preferences.Account_Email.Contains('@')
             && preferences.Account_Email.Length >= 3
             && preferences.Account_Email.Length <= 254;
-
-        public RegisterViewModel() => HasAcceptedTerms = preferences.Account_IsWaitingForRandomCode;
 
         protected override async Task OnPreferenceChangedAsync(PreferenceChangedEvent e)
         {
@@ -40,7 +41,7 @@ namespace Fyreplace.ViewModels
 
         protected override Task SendEmailAsync() => CallWhileLoadingAsync(async () =>
             {
-                await Api.CreateUserAsync(true, new()
+                await api.CreateUserAsync(true, new()
                 {
                     Username = preferences.Account_Username,
                     Email = preferences.Account_Email
@@ -66,7 +67,7 @@ namespace Fyreplace.ViewModels
 
         protected override Task CreateTokenAsync() => CallWhileLoadingAsync(async () =>
             {
-                var token = await Api.CreateTokenAsync(new()
+                var token = await api.CreateTokenAsync(new()
                 {
                     Identifier = preferences.Account_Email,
                     Secret = RandomCode

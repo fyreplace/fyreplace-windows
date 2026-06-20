@@ -1,14 +1,15 @@
 ﻿using Fyreplace.Config;
+using Fyreplace.Events;
 using System;
 using Windows.Security.Credentials;
 
 namespace Fyreplace.Data.Secrets
 {
-    public sealed partial class PasswordVaultSecrets : SecretsBase<string>
+    public sealed partial class PasswordVaultSecrets(BuildInfo buildInfo, IPreferences preferences, IEventBus eventBus)
+        : SecretsBase<string>(preferences, eventBus)
     {
         private readonly PasswordVault vault = new();
-        private readonly BuildInfo buildInfo = AppBase.GetService<BuildInfo>();
-        private readonly IPreferences preferences = AppBase.GetService<IPreferences>();
+
         private string Resource => buildInfo.Api.ForEnvironment(preferences.Connection_Environment).ToString();
 
         public override string MakeCleanKey(string key) => key;

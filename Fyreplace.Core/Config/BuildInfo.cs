@@ -1,17 +1,17 @@
 ﻿using static Fyreplace.Config.Metadata;
+using Fyreplace.Services;
 using System;
 using System.Reflection;
 using System.Diagnostics;
 using System.Linq;
 using Environment = Fyreplace.Data.Environment;
-using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace Fyreplace.Config
 {
-    public sealed class BuildInfo
+    public sealed class BuildInfo(IStringsService stringsService)
     {
         public readonly Version Version = new();
-        public readonly App App = new();
+        public readonly App App = new(stringsService);
         public readonly Api Api = new();
         public readonly Sentry Sentry = new();
     }
@@ -22,10 +22,9 @@ namespace Fyreplace.Config
         public readonly string Informational = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion!;
     }
 
-    public sealed class App
+    public sealed class App(IStringsService stringsService)
     {
-        private static ResourceLoader ResourceLoader => new();
-        public readonly string Name = GetCustomAttribute("App.Name") ?? ResourceLoader.GetString("AppName");
+        public readonly string Name = GetCustomAttribute("App.Name") ?? stringsService.GetString("AppName");
         public readonly bool SelfContained = GetCustomAttribute("App.SDKSelfContained")?.ToLower() == "true";
     }
 
@@ -56,7 +55,7 @@ namespace Fyreplace.Config
 
     public static class Metadata
     {
-        public static string? GetCustomAttribute(string key) => Assembly.GetExecutingAssembly()
+        public static string? GetCustomAttribute(string key) => Assembly.GetEntryAssembly()!
                 .GetCustomAttributes(false)
                 .OfType<AssemblyMetadataAttribute>()
                 .Where(a => a.Key == key)

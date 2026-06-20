@@ -1,9 +1,11 @@
-﻿using Fyreplace.Data.Secrets;
+﻿using Fyreplace.Data;
+using Fyreplace.Data.Secrets;
+using Fyreplace.Events;
 using System.Collections.Generic;
 
 namespace Fyreplace.Tests.Data.Secrets
 {
-    public sealed class MemorySecrets : SecretsBase<string>
+    public sealed class MemorySecrets(IPreferences preferences, IEventBus eventBus) : SecretsBase<string>(preferences, eventBus)
     {
         private readonly Dictionary<string, string> secrets = [];
 

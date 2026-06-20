@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Fyreplace.Services
 {
-    sealed class TokenRefreshService : BackgroundService
+    sealed class TokenRefreshService(ISecrets secrets, IApiClient api) : BackgroundService
     {
-        private readonly ISecrets secrets = AppBase.GetService<ISecrets>();
-
-        private static IApiClient Api => AppBase.GetService<IApiClient>();
-
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -22,7 +18,7 @@ namespace Fyreplace.Services
                 {
                     if (!string.IsNullOrEmpty(secrets.Token))
                     {
-                        secrets.Token = await Api.GetNewTokenAsync(stoppingToken);
+                        secrets.Token = await api.GetNewTokenAsync(stoppingToken);
                     }
                 }
                 catch

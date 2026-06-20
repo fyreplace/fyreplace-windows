@@ -1,12 +1,15 @@
-﻿using Fyreplace.Data;
+﻿using Fyreplace.Config;
+using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.Extensions;
+using Fyreplace.Services;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace Fyreplace.ViewModels
 {
-    public sealed partial class LoginViewModel : AccountEntryViewModelBase
+    public sealed partial class LoginViewModel(BuildInfo buildInfo, IPreferences preferences, ISecrets secrets, IEventBus eventBus, IStringsService stringsService, IApiClient api)
+        : AccountEntryViewModelBase(buildInfo, preferences, secrets, eventBus, stringsService, api)
     {
         public override bool CanSubmitFirstStep => !string.IsNullOrWhiteSpace(preferences.Account_Identifier)
             && preferences.Account_Identifier.Length >= 3
@@ -26,7 +29,7 @@ namespace Fyreplace.ViewModels
 
         protected override Task SendEmailAsync() => CallWhileLoadingAsync(async () =>
             {
-                await Api.CreateNewTokenAsync(true, new() { Identifier = preferences.Account_Identifier });
+                await api.CreateNewTokenAsync(true, new() { Identifier = preferences.Account_Identifier });
                 preferences.Account_IsWaitingForRandomCode = true;
                 IsRandomCodeTipShown = true;
             },
@@ -42,7 +45,7 @@ namespace Fyreplace.ViewModels
 
         protected override Task CreateTokenAsync() => CallWhileLoadingAsync(async () =>
             {
-                var token = await Api.CreateTokenAsync(new()
+                var token = await api.CreateTokenAsync(new()
                 {
                     Identifier = preferences.Account_Identifier,
                     Secret = RandomCode
