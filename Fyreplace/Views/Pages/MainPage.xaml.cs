@@ -1,8 +1,10 @@
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI;
 using Fyreplace.Config;
 using Fyreplace.Data;
 using Fyreplace.Events;
 using Fyreplace.ViewModels;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -164,7 +166,7 @@ namespace Fyreplace.Views.Pages
                 case nameof(ISecrets.Token):
                     if (!string.IsNullOrEmpty(secrets.Token))
                     {
-                        FlyoutBase.GetAttachedFlyout(AvatarWrapper).Hide();
+                        return DispatcherQueue.EnqueueAsync(() => FlyoutBase.GetAttachedFlyout(AvatarWrapper).Hide());
                     }
                     else if (Navigation.SelectedItem != (object)Feed && Navigation.SelectedItem != Navigation.SettingsItem)
                     {
