@@ -177,22 +177,7 @@
     </Page>
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+  <PropertyGroup>
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
 
@@ -220,12 +205,12 @@
     <DisplayName Condition="'$(Configuration)' == 'Release'">$(PackageName)</DisplayName>
   </PropertyGroup>
 
-  <Target Name="UpdateAppManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionString;GetVersionNumber">
+  <Target Name="UpdateAppManifest" Outputs="app.manifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionString;GetVersionNumber">
     <Copy SourceFiles="app.template.manifest" DestinationFiles="app.manifest" />
     <XmlPoke Namespaces="&lt;Namespace Prefix='ns' Uri='urn:schemas-microsoft-com:asm.v1' /&gt;" XmlInputPath="app.manifest" Query="/ns:assembly/ns:assemblyIdentity/@version" Value="$(VersionString).$(VersionNumber)" />
   </Target>
 
-  <Target Name="UpdateAppxManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetBranchNumber">
+  <Target Name="UpdateAppxManifest" Outputs="Package.appxmanifest" BeforeTargets="PrepareForBuild" DependsOnTargets="GetVersionNumber;GetBranchNumber">
     <Copy SourceFiles="Package.template.appxmanifest" DestinationFiles="Package.appxmanifest" />
     <XmlPoke Condition="$(PackageName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Identity/@Name" Value="$(PackageName)" />
     <XmlPoke Condition="$(PackageName) != ''" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10' /&gt;" XmlInputPath="Package.appxmanifest" Query="/ns:Package/ns:Properties/ns:DisplayName" Value="$(PackageName)" />

@@ -23,7 +23,16 @@
     <PackageReference Include="Sentry" Version="6.2.0" />
   </ItemGroup>
 
-  <Target Name="NSwag" BeforeTargets="PrepareForBuild">
-    <Exec Command="$(NSwagExe) openapi2csclient /Input:Services\openapi.yaml /Output:Services\ApiClient.g.cs /GenerateClientInterfaces:true /Namespace:Fyreplace.Services /ClassName:ApiClient" />
+  <PropertyGroup>
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+
+  <Target Name="NSwag" Outputs="Services\ApiClient.g.cs" BeforeTargets="PrepareForBuild">
+    <Exec Command="$(NSwagExe) openapi2csclient /Input:Services\openapi.yaml /Output:$(IntermediateOutputPath)Services\ApiClient.g.cs /GenerateClientInterfaces:true /Namespace:Fyreplace.Services /ClassName:ApiClient" />
+    <ItemGroup>
+      <Compile Include="$(IntermediateOutputPath)Services\ApiClient.g.cs">
+        <Link>Services\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      </Compile>
+    </ItemGroup>
   </Target>
 </Project>

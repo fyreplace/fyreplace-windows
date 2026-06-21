@@ -69,4 +69,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <PropertyGroup>
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
 </Project>
