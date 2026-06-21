@@ -7,7 +7,6 @@ using Fyreplace.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.IO;
 using System.Linq;

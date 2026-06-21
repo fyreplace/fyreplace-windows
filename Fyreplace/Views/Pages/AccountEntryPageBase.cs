@@ -1,10 +1,7 @@
 ﻿using Fyreplace.ViewModels;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.UI.Xaml.Navigation;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Fyreplace.Views.Pages
 {
@@ -12,6 +9,7 @@ namespace Fyreplace.Views.Pages
     {
         protected abstract VM ViewModel { get; }
 
+        [SuppressMessage("Style", "IDE0060", Justification = "Needs to conform to the callback interface")]
         protected void Accelerators_Submit(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             if (ViewModel.CanSubmit)

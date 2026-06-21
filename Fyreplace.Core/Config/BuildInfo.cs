@@ -1,9 +1,9 @@
-﻿using static Fyreplace.Config.Metadata;
-using Fyreplace.Services;
+﻿using Fyreplace.Services;
 using System;
-using System.Reflection;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using static Fyreplace.Config.Metadata;
 using Environment = Fyreplace.Data.Environment;
 
 namespace Fyreplace.Config

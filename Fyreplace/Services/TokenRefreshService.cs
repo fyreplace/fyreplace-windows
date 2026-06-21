@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fyreplace.Services
 {
-    sealed class TokenRefreshService(ISecrets secrets, IApiClient api) : BackgroundService
+    public sealed partial class TokenRefreshService(ISecrets secrets, IApiClient api) : BackgroundService
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

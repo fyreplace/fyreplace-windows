@@ -2,7 +2,6 @@
 using Fyreplace.Tests.Services;
 using Fyreplace.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fyreplace.Tests.ViewModels
@@ -40,7 +39,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.badUsername;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.ContainsSingle(e => e is FailureEvent, eventBus.Events);
             Assert.IsFalse(preferences.Account_IsWaitingForRandomCode);
         }
 
@@ -52,7 +51,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.goodUsername;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.DoesNotContain(e => e is FailureEvent, eventBus.Events);
             Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
         }
 
@@ -64,7 +63,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = UnitTestApp.GetService<LoginViewModel>();
             preferences.Account_Identifier = FakeApiClient.passwordUsername;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.ContainsSingle(e => e is FailureEvent, eventBus.Events);
             Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
         }
 
@@ -90,7 +89,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = FakeApiClient.badSecret;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.ContainsSingle(e => e is FailureEvent, eventBus.Events);
         }
 
         [TestMethod]
@@ -103,7 +102,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = FakeApiClient.goodSecret;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.DoesNotContain(e => e is FailureEvent, eventBus.Events);
         }
     }
 }

@@ -50,10 +50,10 @@
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                     <local_controls:Avatar
-                    x:Name="Avatar"
-                    Size="32"
-                    User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
-                    Command="{x:Bind ShowAccountFlyoutCommand}">
+                        x:Name="Avatar"
+                        Size="32"
+                        User="{x:Bind accountViewModel.CurrentUser, Mode=OneWay}"
+                        Command="{x:Bind ShowAccountFlyoutCommand}">
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem

@@ -5,7 +5,6 @@ using Fyreplace.ViewModels;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;

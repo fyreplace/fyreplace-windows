@@ -21,7 +21,6 @@
   </Project>
   <Project Path="Fyreplace.Tests/Fyreplace.Tests.csproj">
     <BuildDependency Project="Fyreplace.Core/Fyreplace.Core.csproj" />
-    <BuildDependency Project="Fyreplace/Fyreplace.csproj" />
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="*|x86" Project="x86" />

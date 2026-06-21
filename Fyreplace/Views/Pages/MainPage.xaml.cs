@@ -11,8 +11,8 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Fyreplace.Views.Pages
@@ -21,12 +21,21 @@ namespace Fyreplace.Views.Pages
     {
         public AppWindow? AppWindow { get; set; }
 
+        [SuppressMessage("Performance", "CA1822", Justification = "Used in the XAML page")]
         public string AppName => App.GetService<BuildInfo>().App.Name;
 
         private NavigationViewItemBase? currentInvokedItem;
         private readonly ISecrets secrets = App.GetService<ISecrets>();
         private readonly IEventBus eventBus = App.GetService<IEventBus>();
         private readonly AccountViewModel accountViewModel = App.GetService<AccountViewModel>();
+
+        private static readonly Type[] navigablePageTypes = [
+            typeof(FeedPage),
+            typeof(NotificationsPage),
+            typeof(ArchivePage),
+            typeof(DraftsPage),
+            typeof(SettingsPage),
+        ];
 
         public MainPage()
         {
@@ -133,9 +142,7 @@ namespace Fyreplace.Views.Pages
             NavigatePoppingBackStack(
                 args.IsSettingsInvoked
                     ? typeof(SettingsPage)
-                    : Assembly.GetExecutingAssembly()
-                        .GetTypes()
-                        .Where(page => page.Namespace == typeof(MainPage).Namespace)
+                    : navigablePageTypes
                         .Where(page => page.Name == (string)args.InvokedItemContainer.Tag)
                         .SingleOrDefault(typeof(ErrorPage))
             );
@@ -146,8 +153,6 @@ namespace Fyreplace.Views.Pages
         private void Host_Navigated(object sender, NavigationEventArgs e) => UpdateNavigationSelection();
 
         private void Host_NavigationFailed(object sender, NavigationFailedEventArgs e) => Host.Navigate(typeof(ErrorPage), e.Exception);
-
-        private void Avatar_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout(string.IsNullOrEmpty(secrets.Token) ? AvatarWrapper : Avatar);
 
         [RelayCommand]
         public void ShowAccountFlyout() => FlyoutBase.ShowAttachedFlyout(string.IsNullOrEmpty(secrets.Token) ? AvatarWrapper : Avatar);

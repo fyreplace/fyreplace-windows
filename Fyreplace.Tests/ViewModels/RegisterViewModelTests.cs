@@ -130,7 +130,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_Username = FakeApiClient.goodUsername;
             preferences.Account_Email = FakeApiClient.goodEmail;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.DoesNotContain(e => e is FailureEvent, eventBus.Events);
             Assert.IsTrue(preferences.Account_IsWaitingForRandomCode);
         }
 
@@ -157,7 +157,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = FakeApiClient.badSecret;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.ContainsSingle(e => e is FailureEvent, eventBus.Events);
         }
 
         [TestMethod]
@@ -171,7 +171,7 @@ namespace Fyreplace.Tests.ViewModels
             preferences.Account_IsWaitingForRandomCode = true;
             viewModel.RandomCode = FakeApiClient.goodSecret;
             await viewModel.SubmitAsync();
-            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.DoesNotContain(e => e is FailureEvent, eventBus.Events);
         }
     }
 }

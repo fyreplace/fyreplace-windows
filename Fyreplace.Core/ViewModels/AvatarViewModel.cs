@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Media;
+using Fyreplace.Data;
+using Fyreplace.Events;
+using Fyreplace.Extensions;
+using Fyreplace.Services;
 using Microsoft.UI;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Fyreplace.Data;
-using Fyreplace.Services;
-using Microsoft.UI.Xaml;
-using Fyreplace.Extensions;
-using Fyreplace.Events;
 
 namespace Fyreplace.ViewModels
 {

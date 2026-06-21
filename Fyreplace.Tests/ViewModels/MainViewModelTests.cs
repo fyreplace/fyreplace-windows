@@ -2,7 +2,6 @@
 using Fyreplace.Tests.Services;
 using Fyreplace.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fyreplace.Tests.ViewModels
@@ -17,7 +16,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = UnitTestApp.GetService<MainWindowViewModel>();
             var email = FakeApiClient.MakeEmail(verified: false);
             await viewModel.CompleteEmailVerificationAsync(email.Email1, FakeApiClient.badSecret);
-            Assert.AreEqual(1, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.ContainsSingle(e => e is FailureEvent, eventBus.Events);
             Assert.IsFalse(email.Verified);
         }
 
@@ -28,7 +27,7 @@ namespace Fyreplace.Tests.ViewModels
             var viewModel = UnitTestApp.GetService<MainWindowViewModel>();
             var email = FakeApiClient.MakeEmail(verified: false);
             await viewModel.CompleteEmailVerificationAsync(email.Email1, FakeApiClient.goodSecret);
-            Assert.AreEqual(0, eventBus.Events.Count(e => e is FailureEvent));
+            Assert.DoesNotContain(e => e is FailureEvent, eventBus.Events);
             Assert.IsFalse(email.Verified);
         }
     }

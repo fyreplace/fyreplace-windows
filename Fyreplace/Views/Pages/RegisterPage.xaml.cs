@@ -1,7 +1,6 @@
 using Fyreplace.Data;
 using Fyreplace.ViewModels;
 using Microsoft.UI.Xaml;
-using System.Collections.Generic;
 
 namespace Fyreplace.Views.Pages
 {

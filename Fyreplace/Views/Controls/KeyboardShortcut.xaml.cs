@@ -1,6 +1,5 @@
 using Fyreplace.Services;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.ApplicationModel.Resources;
 using System.Collections.Generic;
 using System.Linq;
 
