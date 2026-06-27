@@ -48,9 +48,6 @@ jobs:
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Prepare files
-        run: .\prepare
-
       - name: Restore Nuget packages
         run: |
           msbuild Fyreplace `
@@ -59,47 +56,27 @@ jobs:
             /p:PublishReadyToRun=true
 
       - name: Build app
-        if: ${{ matrix.distribution == 'app-store' }}
         env:
           PackageName: ${{ vars.PACKAGE_NAME }}
-          PackagePublisher: ${{ vars.PACKAGE_PUBLISHER }}
+          PackagePublisher: ${{ matrix.distribution == 'standalone' && vars.PACKAGE_PUBLISHER_STANDALONE || vars.PACKAGE_PUBLISHER  }}
           PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
-          SentryDsn: ${{ secrets.SENTRY_DSN}}
-          SentryOrg: ${{ vars.SENTRY_ORG }}
-          SentryProject: ${{ vars.SENTRY_PROJECT }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SentryDsn: ${{ matrix.distribution == 'app-store' && secrets.SENTRY_DSN || '' }}
+          SentryOrg: ${{ matrix.distribution == 'app-store' && vars.SENTRY_ORG || '' }}
+          SentryProject: ${{ matrix.distribution == 'app-store' && vars.SENTRY_PROJECT || '' }}
+          SENTRY_AUTH_TOKEN: ${{ matrix.distribution == 'app-store' && secrets.SENTRY_AUTH_TOKEN || '' }}
         run: |
           msbuild Fyreplace `
+            /t:UpdateAppManifest `
+            /t:UpdateAppxManifest `
+            /p:Platform=${{ matrix.architecture }} `
+            /p:Configuration=Release
+          msbuild ${{ matrix.format == 'msix' && 'Fyreplace' || 'Fyreplace.Installer' }} `
             /t:Build `
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release `
-            /p:GenerateAppxPackageOnBuild=True `
-            /p:AppxPackageDir=AppPackages\
-
-      - name: Build app
-        if: ${{ matrix.distribution == 'standalone' && matrix.format == 'msix' }}
-        env:
-          PackageName: ${{ vars.PACKAGE_NAME }}
-          PackagePublisher: ${{ vars.PACKAGE_PUBLISHER_STANDALONE }}
-          PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
-        run: |
-          msbuild Fyreplace `
-            /t:Build `
-            /p:Platform=${{ matrix.architecture }} `
-            /p:Configuration=Release `
-            /p:GenerateAppxPackageOnBuild=True `
-            /p:AppxPackageDir=AppPackages\
-
-      - name: Build app
-        if: ${{ matrix.format == 'msi' }}
-        env:
-          PackagePublisherName: ${{ vars.PACKAGE_PUBLISHER_NAME }}
-        run: |
-          msbuild Fyreplace.Installer `
-            /t:Build `
-            /p:Platform=${{ matrix.architecture }} `
-            /p:Configuration=Release `
-            /p:SDKSelfContained=true
+            /p:GenerateAppxPackageOnBuild=${{ matrix.format == 'msix' && 'true' || 'false' }} `
+            /p:AppxPackageDir=AppPackages\ `
+            /p:SDKSelfContained=${{ matrix.format == 'msi' && 'true' || 'false' }}
 
       - name: Simplify MSIX path
         if: ${{ matrix.format == 'msix' }}
@@ -152,9 +129,6 @@ jobs:
 
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
-
-      - name: Prepare files
-        run: .\prepare
 
       - name: Restore Nuget packages
         run: |

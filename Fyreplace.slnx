@@ -8,7 +8,6 @@
     <File Path=".gitattributes" />
     <File Path=".gitignore" />
     <File Path="COPYING.txt" />
-    <File Path="prepare.bat" />
     <File Path="README.md" />
     <File Path="vs.bat" />
   </Folder>
