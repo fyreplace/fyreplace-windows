@@ -1,6 +1,7 @@
 bin
 obj
 AppPackages
+BundleArtifacts
 Export
 .vs
 *.user

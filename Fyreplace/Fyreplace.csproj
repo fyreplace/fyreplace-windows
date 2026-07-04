@@ -38,10 +38,10 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.251219" />
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.260224002" />
-    <PackageReference Include="Polly" Version="8.6.6" />
-    <PackageReference Include="Polly.Extensions" Version="8.6.6" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2270" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
+    <PackageReference Include="Polly" Version="8.7.0" />
+    <PackageReference Include="Polly.Extensions" Version="8.7.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 

@@ -33,12 +33,12 @@ jobs:
             format: msix
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: true
 
-      - uses: actions/cache@v5
+      - uses: actions/cache@v6
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-${{ matrix.architecture }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -46,7 +46,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.architecture }}-nuget-
 
       - name: Set up MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Restore Nuget packages
         run: |
@@ -70,6 +70,10 @@ jobs:
             /t:UpdateAppxManifest `
             /p:Platform=${{ matrix.architecture }} `
             /p:Configuration=Release
+          msbuild Fyreplace.Installer `
+            /t:UpdatePackage `
+            /p:Platform=${{ matrix.architecture }} `
+            /p:Configuration=Release
           msbuild ${{ matrix.format == 'msix' && 'Fyreplace' || 'Fyreplace.Installer' }} `
             /t:Build `
             /p:Platform=${{ matrix.architecture }} `
@@ -82,8 +86,8 @@ jobs:
         if: ${{ matrix.format == 'msix' }}
         run: |
           ren .\Fyreplace\AppPackages\* Result
-          ren .\Fyreplace\AppPackages\Result\*.msix Fyreplace.msix
-          move .\Fyreplace\AppPackages\Result\Fyreplace.msix .\Deploy\
+          ren .\Fyreplace\AppPackages\Result\*.msixbundle Fyreplace.msixbundle
+          move .\Fyreplace\AppPackages\Result\Fyreplace.msixbundle .\Deploy\
 
       - name: Simplify MSI path
         if: ${{ matrix.format == 'msi' }}
@@ -92,15 +96,15 @@ jobs:
 
       - name: Upload MSIX
         if: ${{ matrix.distribution == 'app-store' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
-          name: Fyreplace.${{ matrix.architecture }}.msix
-          path: Deploy\Fyreplace.msix
+          name: Fyreplace.${{ matrix.architecture }}.msixbundle
+          path: Deploy\Fyreplace.msixbundle
           if-no-files-found: error
 
       - name: Upload ${{ matrix.format == 'msix' && 'MSIX' || 'MSI' }}
         if: ${{ matrix.distribution == 'standalone' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Fyreplace.${{ matrix.architecture }}.standalone.${{ matrix.format }}
           path: Deploy\Fyreplace.${{ matrix.format }}
@@ -115,12 +119,12 @@ jobs:
           - x64
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: true
 
-      - uses: actions/cache@v5
+      - uses: actions/cache@v6
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-${{ matrix.architecture }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -128,7 +132,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.architecture }}-nuget-
 
       - name: Set up MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Restore Nuget packages
         run: |
