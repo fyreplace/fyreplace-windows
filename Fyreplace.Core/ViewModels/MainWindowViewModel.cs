@@ -15,7 +15,9 @@ namespace Fyreplace.ViewModels
         [ObservableProperty]
         public partial bool ShowEmailVerificationTip { get; set; }
 
-        private readonly AccountEntryViewModelBase accountEntryViewModel;
+        private readonly RegisterViewModel registerViewModel;
+        private readonly LoginViewModel loginViewModel;
+        private AccountEntryViewModelBase AccountEntryViewModel => preferences.Account_IsRegistering ? registerViewModel : loginViewModel;
 
         public MainWindowViewModel(
             IPreferences preferences,
@@ -27,7 +29,8 @@ namespace Fyreplace.ViewModels
         )
             : base(preferences, secrets, eventBus, api)
         {
-            accountEntryViewModel = preferences.Account_IsRegistering ? registerViewModel : loginViewModel;
+            this.registerViewModel = registerViewModel;
+            this.loginViewModel = loginViewModel;
             eventBus.Subscribe<EmailVerificationEvent>(OnEmailVerificationAsync);
         }
 
@@ -38,9 +41,9 @@ namespace Fyreplace.ViewModels
                 return;
             }
 
-            accountEntryViewModel.RandomCode = randomCode;
+            AccountEntryViewModel.RandomCode = randomCode;
             ShowUserConnectionTip = true;
-            var task = accountEntryViewModel.SubmitCommand.ExecuteAsync(null);
+            var task = AccountEntryViewModel.SubmitCommand.ExecuteAsync(null);
             var delay = Task.Delay(500);
             await Task.WhenAll(task, delay);
             ShowUserConnectionTip = false;
