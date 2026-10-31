@@ -394,9 +394,13 @@ namespace Fyreplace.Tests.Services
 
         public static readonly string avatar = "avatar";
 
-        public static Stream NotImageStream => MakeStream(0xFF);
-        public static Stream LargeImageStream => MakeStream(0x7F);
-        public static Stream NormalImageStream => MakeStream(0x00);
+        private const byte NormalImageId = 0x00;
+        private const byte LargeImageId = 0x7F;
+        private const byte NotImageId = 0xFF;
+
+        public static Stream NotImageStream => MakeStream(NotImageId);
+        public static Stream LargeImageStream => MakeStream(LargeImageId);
+        public static Stream NormalImageStream => MakeStream(NormalImageId);
 
         public Task<long> CountBlockedUsersAsync()
         {
@@ -438,11 +442,12 @@ namespace Fyreplace.Tests.Services
         public Task<string> SetCurrentUserAvatarAsync(Stream body)
         {
             var id = body.ReadByte();
-            return id == NormalImageStream.ReadByte()
-                ? Task.FromResult(avatar)
-                : id == LargeImageStream.ReadByte()
-                ? throw new FakeApiException(HttpStatusCode.RequestEntityTooLarge)
-                : throw new FakeApiException(HttpStatusCode.UnsupportedMediaType);
+            return id switch
+            {
+                NormalImageId => Task.FromResult(avatar),
+                LargeImageId => throw new FakeApiException(HttpStatusCode.RequestEntityTooLarge),
+                _ => throw new FakeApiException(HttpStatusCode.UnsupportedMediaType)
+            };
         }
 
         public Task<string> SetCurrentUserBioAsync(string body) => Task.FromResult(body);
