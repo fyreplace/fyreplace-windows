@@ -34,8 +34,7 @@ namespace Fyreplace.Data.Preferences
             {
                 try
                 {
-                    return Enum.Parse<Environment>(Read(MakeKey(), defaultValue: EnvironmentExtensions.Default(buildInfo).ToString())
-);
+                    return Enum.Parse<Environment>(Read(MakeKey(), defaultValue: EnvironmentExtensions.Default(buildInfo).ToString()));
                 }
                 catch
                 {
