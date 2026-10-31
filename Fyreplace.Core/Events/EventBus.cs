@@ -28,6 +28,15 @@ namespace Fyreplace.Events
             {
                 handlers.RemoveAll(x => x.TryGetTarget(out var target) && target == handler as Delegate);
             }
+
+            if (handler.Target != null && strongReferences.TryGetValue(handler.Target, out var strongHandlers))
+            {
+                strongHandlers.Remove(handler);
+                if (strongHandlers.Count == 0)
+                {
+                    strongReferences.Remove(handler.Target);
+                }
+            }
         }
 
         public Task PublishAsync(IEvent someEvent)
