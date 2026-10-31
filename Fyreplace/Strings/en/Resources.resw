@@ -160,7 +160,7 @@
     <value>Has not joined yet</value>
   </data>
   <data name="Account_Error_RequestEntityTooLarge.Message" xml:space="preserve">
-    <value>Uploaded files can only go up to 10M.</value>
+    <value>Uploaded files can only go up to 10 MB.</value>
   </data>
   <data name="Account_Error_RequestEntityTooLarge.Title" xml:space="preserve">
     <value>File too large</value>
