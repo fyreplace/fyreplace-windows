@@ -96,7 +96,7 @@ namespace Fyreplace.ViewModels
 
         private Task OnEmailVerifiedAsync(EmailVerifiedEvent e)
         {
-            var email = emails.First(email => email.Email1 == e.Email);
+            var email = emails.FirstOrDefault(email => email.Email1 == e.Email);
 
             if (email != null)
             {
