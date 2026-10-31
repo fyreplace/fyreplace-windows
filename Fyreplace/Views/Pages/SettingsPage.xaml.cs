@@ -7,6 +7,7 @@ using Fyreplace.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Sentry;
 using System;
 using System.IO;
 using System.Linq;
@@ -69,30 +70,37 @@ namespace Fyreplace.Views.Pages
 
         private async void Profile_Drop(object sender, DragEventArgs e)
         {
-            if (e.DataView.AvailableFormats.Contains(StandardDataFormats.StorageItems))
+            try
             {
-                var items = from item in await e.DataView.GetStorageItemsAsync()
-                            where item.IsOfType(StorageItemTypes.File)
-                            select item as IStorageFile;
-
-                if (items.Any())
+                if (e.DataView.AvailableFormats.Contains(StandardDataFormats.StorageItems))
                 {
-                    var file = items.First();
-                    using var stream = await file.OpenStreamForReadAsync();
-                    await accountViewModel.UpdateAvatarCommand.ExecuteAsync(stream);
+                    var items = from item in await e.DataView.GetStorageItemsAsync()
+                                where item.IsOfType(StorageItemTypes.File)
+                                select item as IStorageFile;
+
+                    if (items.Any())
+                    {
+                        var file = items.First();
+                        using var stream = await file.OpenStreamForReadAsync();
+                        await accountViewModel.UpdateAvatarCommand.ExecuteAsync(stream);
+                    }
+                }
+                else if (e.DataView.AvailableFormats.Contains(StandardDataFormats.Bitmap))
+                {
+                    var bitmap = await e.DataView.GetBitmapAsync();
+                    using var stream = await bitmap.OpenReadAsync();
+                    await accountViewModel.UpdateAvatarCommand.ExecuteAsync(stream.AsStream());
                 }
             }
-            else if (e.DataView.AvailableFormats.Contains(StandardDataFormats.Bitmap))
+            catch (Exception ex)
             {
-                var bitmap = await e.DataView.GetBitmapAsync();
-                using var stream = await bitmap.OpenReadAsync();
-                await accountViewModel.UpdateAvatarCommand.ExecuteAsync(stream.AsStream());
+                SentrySdk.CaptureException(ex);
             }
         }
 
-        private void Emails_Loaded(object sender, RoutedEventArgs e) => viewModel.LoadEmailsCommand.ExecuteAsync(null);
+        private void Emails_Loaded(object sender, RoutedEventArgs e) => _ = viewModel.LoadEmailsCommand.ExecuteAsync(null);
 
-        private void Accelerators_AddEmail(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) => viewModel.AddEmailCommand.ExecuteAsync(null);
+        private void Accelerators_AddEmail(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) => _ = viewModel.AddEmailCommand.ExecuteAsync(null);
 
         private Task OnSecretChangedAsync(SecretChangedEvent e)
         {

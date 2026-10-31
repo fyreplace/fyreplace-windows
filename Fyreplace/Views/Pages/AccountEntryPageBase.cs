@@ -14,7 +14,7 @@ namespace Fyreplace.Views.Pages
         {
             if (ViewModel.CanSubmit)
             {
-                ViewModel.SubmitAsync();
+                _ = ViewModel.SubmitAsync();
             }
         }
     }
