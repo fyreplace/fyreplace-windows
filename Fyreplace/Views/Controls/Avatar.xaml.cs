@@ -8,8 +8,6 @@ namespace Fyreplace.Views.Controls
 {
     public sealed partial class Avatar : UserControl
     {
-        public delegate void ClickHandler(object sender, RoutedEventArgs e);
-
         public int Size {
             get { return viewModel.Size; }
             set { viewModel.Size = value; }
