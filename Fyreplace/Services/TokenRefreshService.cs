@@ -21,14 +21,16 @@ namespace Fyreplace.Services
                         secrets.Token = await api.GetNewTokenAsync(stoppingToken);
                     }
                 }
+                catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+                {
+                    break;
+                }
                 catch
                 {
                     delay = TimeSpan.FromHours(1);
                 }
-                finally
-                {
-                    await Task.Delay(delay, stoppingToken);
-                }
+
+                await Task.Delay(delay, stoppingToken);
             }
         }
     }
