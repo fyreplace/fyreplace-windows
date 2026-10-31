@@ -131,9 +131,9 @@ namespace Fyreplace
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<AvatarViewModel>();
 
-            var info = services.BuildServiceProvider().GetRequiredService<BuildInfo>();
+            var selfContained = Metadata.GetCustomAttribute("App.SDKSelfContained")?.ToLower() == "true";
 
-            if (info.App.SelfContained)
+            if (selfContained)
             {
                 services.AddSingleton<IPreferences, RegistryPreferences>();
             }
